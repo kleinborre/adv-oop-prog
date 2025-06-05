@@ -18,23 +18,25 @@ public class LightButton extends JButton {
 
     public LightButton() {
         setContentAreaFilled(false);
-        setForeground(Color.BLACK); // Initial font color
+        setForeground(new Color(54, 117, 136)); // Text color
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setBorder(new EmptyBorder(10, 20, 10, 20));
-        setFont(new Font("Arial", Font.BOLD, 14)); // Initial font
+        setFont(new Font("Arial", Font.BOLD, 14)); // Font
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 hover = true;
-                setForeground(new Color(245, 245, 245)); // Change font color on hover
+                setBackground(new Color(54, 117, 136)); // Button color on hover
+                setForeground(Color.WHITE); // Text color on hover
                 repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 hover = false;
-                setForeground(Color.BLACK); // Reset font color when not hovering
+                setBackground(null); // Reset button color when not hovering
+                setForeground(new Color(54, 117, 136)); // Reset text color when not hovering
                 repaint();
             }
         });
@@ -49,11 +51,11 @@ public class LightButton extends JButton {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (hover) {
-            // Faded white-gray effect when hovering
-            g2.setColor(new Color(0, 206, 209, 150)); // (0, 206, 209) with 150 alpha for fade effect
+            // Button color on hover
+            g2.setColor(new Color(54, 117, 136)); // (54, 117, 136)
         } else {
-            // Normal color
-            g2.setColor(new Color(0, 206, 209)); // Initial button color
+            // Default button color
+            g2.setColor(Color.WHITE);
         }
 
         g2.fillRoundRect(0, 0, width, height, height, height);

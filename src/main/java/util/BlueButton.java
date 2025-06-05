@@ -12,31 +12,29 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.border.EmptyBorder;
 
-public class DarkButton extends JButton {
+public class BlueButton extends JButton {
 
     private boolean hover = false;
 
-    public DarkButton() {
+    public BlueButton() {
         setContentAreaFilled(false);
-        setForeground(new Color(54, 117, 136)); // Text color
+        setForeground(Color.BLACK); // Initial font color
         setCursor(new Cursor(Cursor.HAND_CURSOR));
         setBorder(new EmptyBorder(10, 20, 10, 20));
-        setFont(new Font("Arial", Font.BOLD, 14)); // Font
+        setFont(new Font("Arial", Font.BOLD, 14)); // Initial font
 
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseEntered(MouseEvent e) {
                 hover = true;
-                setBackground(new Color(54, 117, 136)); // Button color on hover
-                setForeground(Color.WHITE); // Text color on hover
+                setForeground(new Color(245, 245, 245)); // Change font color on hover
                 repaint();
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
                 hover = false;
-                setBackground(null); // Reset button color when not hovering
-                setForeground(new Color(54, 117, 136)); // Reset text color when not hovering
+                setForeground(Color.BLACK); // Reset font color when not hovering
                 repaint();
             }
         });
@@ -51,11 +49,11 @@ public class DarkButton extends JButton {
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
         if (hover) {
-            // Button color on hover
-            g2.setColor(new Color(54, 117, 136)); // (54, 117, 136)
+            // Faded white-gray effect when hovering
+            g2.setColor(new Color(0, 206, 209, 150)); // (0, 206, 209) with 150 alpha for fade effect
         } else {
-            // Default button color
-            g2.setColor(Color.WHITE);
+            // Normal color
+            g2.setColor(new Color(0, 206, 209)); // Initial button color
         }
 
         g2.fillRoundRect(0, 0, width, height, height, height);
