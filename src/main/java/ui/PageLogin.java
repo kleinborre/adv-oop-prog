@@ -54,7 +54,7 @@ public class PageLogin extends javax.swing.JFrame {
                 passwordTextActionPerformed(evt);
             }
         });
-        getContentPane().add(passwordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 320, 280, 30));
+        getContentPane().add(passwordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 320, 280, 40));
 
         usernameText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         usernameText.setForeground(new java.awt.Color(51, 51, 51));
@@ -63,7 +63,7 @@ public class PageLogin extends javax.swing.JFrame {
                 usernameTextActionPerformed(evt);
             }
         });
-        getContentPane().add(usernameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(631, 222, 280, 30));
+        getContentPane().add(usernameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 280, 40));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/Login.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
