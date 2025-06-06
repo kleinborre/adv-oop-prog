@@ -26,8 +26,13 @@ public class PageEmployeeHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        dateTimeText = new javax.swing.JLabel();
+        totalWorkedHoursText = new javax.swing.JLabel();
+        leavesAvailableText = new javax.swing.JLabel();
         positionText = new javax.swing.JLabel();
         fullNameText = new javax.swing.JLabel();
+        clockOutButton = new util.BlueButton();
+        clockInButton = new util.BlueButton();
         overtimeButton = new util.BlueButton();
         leaveButton = new util.BlueButton();
         payslipButton = new util.BlueButton();
@@ -44,6 +49,24 @@ public class PageEmployeeHome extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        dateTimeText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        dateTimeText.setForeground(new java.awt.Color(0, 102, 102));
+        dateTimeText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dateTimeText.setText("Date & Time Here");
+        getContentPane().add(dateTimeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 310, 400, 110));
+
+        totalWorkedHoursText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        totalWorkedHoursText.setForeground(new java.awt.Color(0, 153, 153));
+        totalWorkedHoursText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalWorkedHoursText.setText("0");
+        getContentPane().add(totalWorkedHoursText, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 110, 80, -1));
+
+        leavesAvailableText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        leavesAvailableText.setForeground(new java.awt.Color(0, 153, 153));
+        leavesAvailableText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        leavesAvailableText.setText("0");
+        getContentPane().add(leavesAvailableText, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 80, -1));
+
         positionText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         positionText.setForeground(new java.awt.Color(0, 102, 102));
         positionText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -55,6 +78,14 @@ public class PageEmployeeHome extends javax.swing.JFrame {
         fullNameText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         fullNameText.setText("Employee");
         getContentPane().add(fullNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 190, -1));
+
+        clockOutButton.setForeground(new java.awt.Color(0, 102, 102));
+        clockOutButton.setText("Clock-Out");
+        getContentPane().add(clockOutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 470, 180, -1));
+
+        clockInButton.setForeground(new java.awt.Color(0, 102, 102));
+        clockInButton.setText("Clock-In");
+        getContentPane().add(clockInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 470, 180, -1));
 
         overtimeButton.setForeground(new java.awt.Color(0, 102, 102));
         overtimeButton.setText("Overtime");
@@ -124,12 +155,17 @@ public class PageEmployeeHome extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Background;
     private util.BlueButton attendanceButton;
+    private util.BlueButton clockInButton;
+    private util.BlueButton clockOutButton;
+    private javax.swing.JLabel dateTimeText;
     private util.BlueButton employeeDataButton;
     private javax.swing.JLabel fullNameText;
     private util.BlueButton leaveButton;
+    private javax.swing.JLabel leavesAvailableText;
     private util.LightButton logoutButton;
     private util.BlueButton overtimeButton;
     private util.BlueButton payslipButton;
     private javax.swing.JLabel positionText;
+    private javax.swing.JLabel totalWorkedHoursText;
     // End of variables declaration//GEN-END:variables
 }
