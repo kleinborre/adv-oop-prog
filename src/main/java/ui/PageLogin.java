@@ -27,8 +27,8 @@ public class PageLogin extends javax.swing.JFrame {
     private void initComponents() {
 
         loginButton = new util.BlueButton();
-        passwordText = new javax.swing.JTextField();
-        usernameText = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
+        usernameField = new javax.swing.JTextField();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -47,23 +47,23 @@ public class PageLogin extends javax.swing.JFrame {
         });
         getContentPane().add(loginButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 390, 160, 40));
 
-        passwordText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        passwordText.setForeground(new java.awt.Color(51, 51, 51));
-        passwordText.addActionListener(new java.awt.event.ActionListener() {
+        passwordField.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        passwordField.setForeground(new java.awt.Color(0, 102, 102));
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordTextActionPerformed(evt);
+                passwordFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(passwordText, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 320, 280, 40));
+        getContentPane().add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 322, 280, 40));
 
-        usernameText.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        usernameText.setForeground(new java.awt.Color(51, 51, 51));
-        usernameText.addActionListener(new java.awt.event.ActionListener() {
+        usernameField.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        usernameField.setForeground(new java.awt.Color(0, 102, 102));
+        usernameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernameTextActionPerformed(evt);
+                usernameFieldActionPerformed(evt);
             }
         });
-        getContentPane().add(usernameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 280, 40));
+        getContentPane().add(usernameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 220, 280, 40));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/Login.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -72,17 +72,17 @@ public class PageLogin extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void usernameTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameTextActionPerformed
+    private void usernameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_usernameTextActionPerformed
-
-    private void passwordTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordTextActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordTextActionPerformed
+    }//GEN-LAST:event_usernameFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,7 +122,7 @@ public class PageLogin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel background;
     private util.BlueButton loginButton;
-    private javax.swing.JTextField passwordText;
-    private javax.swing.JTextField usernameText;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField usernameField;
     // End of variables declaration//GEN-END:variables
 }

@@ -44,7 +44,6 @@ public class PageManagerHome extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MotorPH Payroll System");
         setMaximumSize(new java.awt.Dimension(1040, 590));
-        setPreferredSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -106,6 +105,7 @@ public class PageManagerHome extends javax.swing.JFrame {
         overtimeButton.setText("Overtime");
         getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 180, -1));
 
+        logoutButton.setForeground(new java.awt.Color(0, 102, 102));
         logoutButton.setText("Logout");
         getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
