@@ -26,6 +26,9 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        cancelButton = new util.LightButton();
+        updateButton = new util.BlueButton();
+        backButton = new util.LightButton();
         addressField = new javax.swing.JTextField();
         phoneNumberField = new javax.swing.JTextField();
         employeeIDText = new javax.swing.JLabel();
@@ -52,9 +55,6 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
         tinNumberText = new javax.swing.JLabel();
         label8 = new javax.swing.JLabel();
         statusText = new javax.swing.JLabel();
-        backButton = new util.LightButton();
-        cancelButton = new util.LightButton();
-        updateProfileButton = new util.BlueButton();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -63,6 +63,18 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        cancelButton.setForeground(new java.awt.Color(0, 102, 102));
+        cancelButton.setText("Cancel");
+        getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 80, 120, -1));
+
+        updateButton.setForeground(new java.awt.Color(0, 102, 102));
+        updateButton.setText("Update");
+        getContentPane().add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, 120, -1));
+
+        backButton.setForeground(new java.awt.Color(0, 102, 102));
+        backButton.setText("Back");
+        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
         addressField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressField.setForeground(new java.awt.Color(0, 102, 102));
@@ -216,23 +228,6 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
         statusText.setText("Status");
         getContentPane().add(statusText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 510, 360, -1));
 
-        backButton.setForeground(new java.awt.Color(0, 102, 102));
-        backButton.setText("Back");
-        getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
-
-        cancelButton.setForeground(new java.awt.Color(0, 102, 102));
-        cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 80, 120, -1));
-
-        updateProfileButton.setForeground(new java.awt.Color(0, 102, 102));
-        updateProfileButton.setText("Update");
-        getContentPane().add(updateProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, 120, -1));
-
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ProfileUpdate.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -309,6 +304,6 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
     private javax.swing.JLabel statusText;
     private javax.swing.JLabel supervisorText;
     private javax.swing.JLabel tinNumberText;
-    private util.BlueButton updateProfileButton;
+    private util.BlueButton updateButton;
     // End of variables declaration//GEN-END:variables
 }
