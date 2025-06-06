@@ -46,7 +46,6 @@ public class PageITHome extends javax.swing.JFrame {
         setTitle("MotorPH Payroll System");
         setMaximumSize(new java.awt.Dimension(1040, 590));
         setMinimumSize(new java.awt.Dimension(1040, 590));
-        setPreferredSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -117,6 +116,7 @@ public class PageITHome extends javax.swing.JFrame {
         sessionManagementButton.setText("Session");
         getContentPane().add(sessionManagementButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 180, -1));
 
+        logoutButton.setForeground(new java.awt.Color(0, 102, 102));
         logoutButton.setText("Logout");
         getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
