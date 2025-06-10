@@ -1,2 +1,6 @@
 /target/
 target/
+/generated_reports/
+generated_reports/
+/src/test/
+src/test/

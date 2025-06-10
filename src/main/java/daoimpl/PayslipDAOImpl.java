@@ -18,7 +18,9 @@ public class PayslipDAOImpl implements PayslipDAO {
 
     @Override
     public Payslip getPayslipByEmployeeAndPeriod(int employeeID, int payPeriodID) throws SQLException {
-        String query = getPayslipBaseQuery() + " WHERE p.employeeID = ? AND p.payPeriodID = ?";
+        String query = getPayslipBaseQuery() +
+                " WHERE p.employeeID = ? AND p.payPeriodID = ? " +
+                getPayslipGroupByClause();
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, employeeID);
@@ -36,7 +38,9 @@ public class PayslipDAOImpl implements PayslipDAO {
     @Override
     public List<Payslip> getPayslipsByEmployeeID(int employeeID) throws SQLException {
         List<Payslip> payslipList = new ArrayList<>();
-        String query = getPayslipBaseQuery() + " WHERE p.employeeID = ?";
+        String query = getPayslipBaseQuery() +
+                " WHERE p.employeeID = ? " +
+                getPayslipGroupByClause();
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, employeeID);
@@ -53,7 +57,9 @@ public class PayslipDAOImpl implements PayslipDAO {
     @Override
     public List<Payslip> getAllPayslipsByPeriod(int payPeriodID) throws SQLException {
         List<Payslip> payslipList = new ArrayList<>();
-        String query = getPayslipBaseQuery() + " WHERE p.payPeriodID = ?";
+        String query = getPayslipBaseQuery() +
+                " WHERE p.payPeriodID = ? " +
+                getPayslipGroupByClause();
 
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setInt(1, payPeriodID);
@@ -70,7 +76,7 @@ public class PayslipDAOImpl implements PayslipDAO {
     @Override
     public List<Payslip> getAllPayslips() throws SQLException {
         List<Payslip> payslipList = new ArrayList<>();
-        String query = getPayslipBaseQuery();
+        String query = getPayslipBaseQuery() + getPayslipGroupByClause();
 
         try (PreparedStatement stmt = connection.prepareStatement(query);
              ResultSet rs = stmt.executeQuery()) {
@@ -90,16 +96,24 @@ public class PayslipDAOImpl implements PayslipDAO {
                 "pp.periodName AS payPeriodName, " +
                 "p.grossPay, p.totalDeductions, p.withholdingTax, p.netPay, " +
                 "ph.totalHours, ph.amountPay AS hourPayAmount, " +
-                "IFNULL(SUM(DISTINCT pl.leaveDays), 0) AS totalLeaveDays, " +
-                "IFNULL(SUM(DISTINCT po.overtimeHours), 0) AS overtimeHours, " +
-                "IFNULL(SUM(DISTINCT po.overtimePay), 0) AS overtimePay " +
-            "FROM payroll p " +
-            "JOIN employee e ON p.employeeID = e.employeeID " +
-            "JOIN payperiod pp ON p.payPeriodID = pp.payPeriodID " +
-            "LEFT JOIN payrollHourPay ph ON p.payrollID = ph.payrollID " +
-            "LEFT JOIN payrollLeave pl ON p.payrollID = pl.payrollID " +
-            "LEFT JOIN payrollOvertime po ON p.payrollID = po.payrollID " +
-            "GROUP BY p.payrollID";
+                "COALESCE(SUM(pl.leaveDays), 0) AS totalLeaveDays, " +
+                "COALESCE(SUM(po.overtimeHours), 0) AS overtimeHours, " +
+                "COALESCE(SUM(po.overtimePay), 0) AS overtimePay " +
+                "FROM payroll p " +
+                "JOIN employee e ON p.employeeID = e.employeeID " +
+                "JOIN payperiod pp ON p.payPeriodID = pp.payPeriodID " +
+                "LEFT JOIN payrollHourPay ph ON p.payrollID = ph.payrollID " +
+                "LEFT JOIN payrollLeave pl ON p.payrollID = pl.payrollID " +
+                "LEFT JOIN payrollOvertime po ON p.payrollID = po.payrollID ";
+    }
+
+    // Helper method to generate GROUP BY clause (DRY!)
+    private String getPayslipGroupByClause() {
+        return " GROUP BY " +
+                "p.payrollID, p.employeeID, e.firstName, e.lastName, " +
+                "p.payPeriodID, pp.periodName, " +
+                "p.grossPay, p.totalDeductions, p.withholdingTax, p.netPay, " +
+                "ph.totalHours, ph.amountPay";
     }
 
     // Helper method to map ResultSet to Payslip POJO
