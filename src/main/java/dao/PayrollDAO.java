@@ -12,6 +12,8 @@ public interface PayrollDAO {
     List<Payroll> getPayrollsByEmployeeID(int employeeID) throws SQLException;
 
     List<Payroll> getAllPayrolls() throws SQLException;
+    
+    List<Payroll> getAllPayrollsByPeriod(int payPeriodID) throws SQLException;
 
     void addPayroll(Payroll payroll) throws SQLException;
 

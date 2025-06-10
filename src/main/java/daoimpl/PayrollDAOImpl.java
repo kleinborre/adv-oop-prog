@@ -57,6 +57,31 @@ public class PayrollDAOImpl implements PayrollDAO {
         }
         return payrollList;
     }
+    
+    @Override
+    public List<Payroll> getAllPayrollsByPeriod(int payPeriodID) throws SQLException {
+        List<Payroll> payrollList = new ArrayList<>();
+        String query = "SELECT * FROM payroll WHERE payPeriodID = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, payPeriodID);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    Payroll payroll = new Payroll();
+                    payroll.setPayrollID(rs.getInt("payrollID"));
+                    payroll.setGrossPay(rs.getDouble("grossPay"));
+                    payroll.setTotalDeductions(rs.getDouble("totalDeductions"));
+                    payroll.setWithholdingTax(rs.getDouble("withholdingTax"));
+                    payroll.setNetPay(rs.getDouble("netPay"));
+                    payroll.setPayPeriodID(rs.getInt("payPeriodID"));
+                    payroll.setEmployeeID(rs.getInt("employeeID"));
+                    payrollList.add(payroll);
+                }
+            }
+        }
+        return payrollList;
+    }
 
     @Override
     public void addPayroll(Payroll payroll) throws SQLException {
