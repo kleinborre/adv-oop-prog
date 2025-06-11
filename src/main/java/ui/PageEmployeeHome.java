@@ -33,6 +33,10 @@ public class PageEmployeeHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        clockInText = new javax.swing.JLabel();
+        clockOutText = new javax.swing.JLabel();
+        outLabel = new javax.swing.JLabel();
+        inLabel = new javax.swing.JLabel();
         dateTimeText = new javax.swing.JLabel();
         totalWorkedHoursText = new javax.swing.JLabel();
         leavesAvailableText = new javax.swing.JLabel();
@@ -55,11 +59,35 @@ public class PageEmployeeHome extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        clockInText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        clockInText.setForeground(new java.awt.Color(0, 102, 102));
+        clockInText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        clockInText.setText("-- : --");
+        getContentPane().add(clockInText, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 450, 180, -1));
+
+        clockOutText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        clockOutText.setForeground(new java.awt.Color(0, 102, 102));
+        clockOutText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        clockOutText.setText("-- : --");
+        getContentPane().add(clockOutText, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 450, 180, -1));
+
+        outLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        outLabel.setForeground(new java.awt.Color(0, 102, 102));
+        outLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        outLabel.setText("OUT");
+        getContentPane().add(outLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 420, 180, -1));
+
+        inLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        inLabel.setForeground(new java.awt.Color(0, 102, 102));
+        inLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        inLabel.setText("IN");
+        getContentPane().add(inLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 420, 180, -1));
+
         dateTimeText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         dateTimeText.setForeground(new java.awt.Color(0, 102, 102));
         dateTimeText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dateTimeText.setText("Date & Time Here");
-        getContentPane().add(dateTimeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 310, 400, 110));
+        getContentPane().add(dateTimeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, 690, 80));
 
         totalWorkedHoursText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         totalWorkedHoursText.setForeground(new java.awt.Color(0, 153, 153));
@@ -87,11 +115,11 @@ public class PageEmployeeHome extends javax.swing.JFrame {
 
         clockOutButton.setForeground(new java.awt.Color(0, 102, 102));
         clockOutButton.setText("Clock-Out");
-        getContentPane().add(clockOutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 470, 180, -1));
+        getContentPane().add(clockOutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 480, 180, -1));
 
         clockInButton.setForeground(new java.awt.Color(0, 102, 102));
         clockInButton.setText("Clock-In");
-        getContentPane().add(clockInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 470, 180, -1));
+        getContentPane().add(clockInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 480, 180, -1));
 
         overtimeButton.setForeground(new java.awt.Color(0, 102, 102));
         overtimeButton.setText("Overtime");
@@ -163,13 +191,17 @@ public class PageEmployeeHome extends javax.swing.JFrame {
     private javax.swing.JLabel Background;
     private util.BlueButton attendanceButton;
     private util.BlueButton clockInButton;
+    private javax.swing.JLabel clockInText;
     private util.BlueButton clockOutButton;
+    private javax.swing.JLabel clockOutText;
     private javax.swing.JLabel dateTimeText;
     private util.BlueButton employeeDataButton;
     private javax.swing.JLabel fullNameText;
+    private javax.swing.JLabel inLabel;
     private util.BlueButton leaveButton;
     private javax.swing.JLabel leavesAvailableText;
     private util.LightButton logoutButton;
+    private javax.swing.JLabel outLabel;
     private util.BlueButton overtimeButton;
     private util.BlueButton payslipButton;
     private javax.swing.JLabel positionText;
