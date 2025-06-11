@@ -7,8 +7,8 @@ public class Attendance {
 
     private int attendanceID;
     private Date date;
-    private Time timeIn;
-    private Time timeOut;
+    private Time logIn;
+    private Time logOut;
     private double workedHours;
     private int employeeID;
 
@@ -17,11 +17,11 @@ public class Attendance {
     public Attendance() {
     }
 
-    public Attendance(int attendanceID, Date date, Time timeIn, Time timeOut, double workedHours, int employeeID) {
+    public Attendance(int attendanceID, Date date, Time logIn, Time logOut, double workedHours, int employeeID) {
         this.attendanceID = attendanceID;
         this.date = date;
-        this.timeIn = timeIn;
-        this.timeOut = timeOut;
+        this.logIn = logIn;
+        this.logOut = logOut;
         this.workedHours = workedHours;
         this.employeeID = employeeID;
     }
@@ -44,20 +44,20 @@ public class Attendance {
         this.date = date;
     }
 
-    public Time getTimeIn() {
-        return timeIn;
+    public Time getLogIn() {
+        return logIn;
     }
 
-    public void setTimeIn(Time timeIn) {
-        this.timeIn = timeIn;
+    public void setLogIn(Time logIn) {
+        this.logIn = logIn;
     }
 
-    public Time getTimeOut() {
-        return timeOut;
+    public Time getLogOut() {
+        return logOut;
     }
 
-    public void setTimeOut(Time timeOut) {
-        this.timeOut = timeOut;
+    public void setLogOut(Time logOut) {
+        this.logOut = logOut;
     }
 
     public double getWorkedHours() {

@@ -1,28 +1,60 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ui;
 
-/**
- *
- * @author STUDY MODE
- */
-public class PageEmployeeHome extends javax.swing.JFrame {
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
-    private String userID;
-    private int employeeID;
+public class PageEmployeeHome extends ui.base.AbstractHomePage {
 
     public PageEmployeeHome() {
         initComponents();
     }
-    
+
     public PageEmployeeHome(String userID, int employeeID) {
-        this.userID = userID;
-        this.employeeID = employeeID;
         initComponents();
-        // Optional: loadEmployeeInfo(); → you can implement later to display info
-    }    
+
+        // Setup button listeners FIRST
+        clockInButton.addActionListener(e -> performClockIn());
+        clockOutButton.addActionListener(e -> performClockOut());
+
+        // Now delay initializeHomePage so GUI is fully ready!
+        SwingUtilities.invokeLater(() -> initializeHomePage(userID, employeeID));
+    }
+    
+    @Override
+    protected JLabel getFullNameText() {
+        return fullNameText;
+    }
+
+    @Override
+    protected JLabel getPositionText() {
+        return positionText;
+    }
+
+    @Override
+    protected JLabel getDateTimeText() {
+        return dateTimeText;
+    }
+
+    @Override
+    protected JLabel getClockInText() {
+        return clockInText;
+    }
+
+    @Override
+    protected JLabel getClockOutText() {
+        return clockOutText;
+    }
+
+    @Override
+    protected JButton getClockInButton() {
+        return clockInButton;
+    }
+
+    @Override
+    protected JButton getClockOutButton() {
+        return clockOutButton;
+    }  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -115,10 +147,20 @@ public class PageEmployeeHome extends javax.swing.JFrame {
 
         clockOutButton.setForeground(new java.awt.Color(0, 102, 102));
         clockOutButton.setText("Clock-Out");
+        clockOutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clockOutButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(clockOutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 480, 180, -1));
 
         clockInButton.setForeground(new java.awt.Color(0, 102, 102));
         clockInButton.setText("Clock-In");
+        clockInButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clockInButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(clockInButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 480, 180, -1));
 
         overtimeButton.setForeground(new java.awt.Color(0, 102, 102));
@@ -151,6 +193,14 @@ public class PageEmployeeHome extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void clockInButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clockInButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clockInButtonActionPerformed
+
+    private void clockOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clockOutButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_clockOutButtonActionPerformed
 
     /**
      * @param args the command line arguments

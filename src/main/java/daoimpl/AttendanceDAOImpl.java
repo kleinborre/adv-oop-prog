@@ -79,8 +79,8 @@ public class AttendanceDAOImpl implements AttendanceDAO {
                        "VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setDate(1, attendance.getDate());
-            stmt.setTime(2, attendance.getTimeIn());
-            stmt.setTime(3, attendance.getTimeOut());
+            stmt.setTime(2, attendance.getLogIn());
+            stmt.setTime(3, attendance.getLogOut());
             stmt.setDouble(4, attendance.getWorkedHours());
             stmt.setInt(5, attendance.getEmployeeID());
             stmt.executeUpdate();
@@ -93,8 +93,8 @@ public class AttendanceDAOImpl implements AttendanceDAO {
                        "WHERE attendanceID = ?";
         try (PreparedStatement stmt = connection.prepareStatement(query)) {
             stmt.setDate(1, attendance.getDate());
-            stmt.setTime(2, attendance.getTimeIn());
-            stmt.setTime(3, attendance.getTimeOut());
+            stmt.setTime(2, attendance.getLogIn());
+            stmt.setTime(3, attendance.getLogOut());
             stmt.setDouble(4, attendance.getWorkedHours());
             stmt.setInt(5, attendance.getEmployeeID());
             stmt.setInt(6, attendance.getAttendanceID());
@@ -116,8 +116,8 @@ public class AttendanceDAOImpl implements AttendanceDAO {
         Attendance attendance = new Attendance();
         attendance.setAttendanceID(rs.getInt("attendanceID"));
         attendance.setDate(rs.getDate("date"));
-        attendance.setTimeIn(rs.getTime("logIn"));
-        attendance.setTimeOut(rs.getTime("logOut"));
+        attendance.setLogIn(rs.getTime("logIn"));
+        attendance.setLogOut(rs.getTime("logOut"));
         attendance.setWorkedHours(rs.getDouble("workedHours"));
         attendance.setEmployeeID(rs.getInt("employeeID"));
         return attendance;
