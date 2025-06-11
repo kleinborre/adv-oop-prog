@@ -16,6 +16,8 @@ public class Employee {
     private int departmentID;
     private int supervisorID;
 
+    private String position;
+
     // Constructors
 
     public Employee() {
@@ -23,7 +25,7 @@ public class Employee {
 
     public Employee(int employeeID, String firstName, String lastName, Date birthDate,
                     String phoneNo, String email, String userID, int statusID,
-                    int positionID, int departmentID, int supervisorID) {
+                    int positionID, int departmentID, int supervisorID, String position) {
         this.employeeID = employeeID;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -35,6 +37,7 @@ public class Employee {
         this.positionID = positionID;
         this.departmentID = departmentID;
         this.supervisorID = supervisorID;
+        this.position = position;
     }
 
     // Getters and Setters
@@ -125,5 +128,13 @@ public class Employee {
 
     public void setSupervisorID(int supervisorID) {
         this.supervisorID = supervisorID;
+    }
+    
+    public String getPosition() {
+        return position;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 }

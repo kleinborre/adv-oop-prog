@@ -4,7 +4,12 @@ import dao.EmployeeDAO;
 import daoimpl.EmployeeDAOImpl;
 import pojo.Employee;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import db.DatabaseConnection;
 import java.util.List;
 
 public class EmployeeService {
@@ -21,7 +26,31 @@ public class EmployeeService {
 
     public Employee getEmployeeByID(int employeeID) {
         try {
-            return employeeDAO.getEmployeeByID(employeeID);
+            // CUSTOMIZED → add JOIN to get position name
+            String query = "SELECT e.*, p.position " +
+                           "FROM employee e " +
+                           "JOIN position p ON e.positionID = p.positionID " +
+                           "WHERE e.employeeID = ?";
+
+            try (Connection conn = DatabaseConnection.getInstance().getConnection();
+                 PreparedStatement stmt = conn.prepareStatement(query)) {
+
+                stmt.setInt(1, employeeID);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    if (rs.next()) {
+                        Employee employee = new Employee();
+                        employee.setEmployeeID(rs.getInt("employeeID"));
+                        employee.setFirstName(rs.getString("firstName"));
+                        employee.setLastName(rs.getString("lastName"));
+                        employee.setPositionID(rs.getInt("positionID"));
+                        employee.setPosition(rs.getString("position")); // NEW FIELD
+                        return employee;
+                    } else {
+                        return null;
+                    }
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException("Error retrieving employee by ID", e);
         }
