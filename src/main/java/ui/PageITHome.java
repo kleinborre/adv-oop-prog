@@ -10,10 +10,16 @@ package ui;
  */
 public class PageITHome extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PageITHome
-     */
+    private String userID;
+    private int employeeID;
+
     public PageITHome() {
+        initComponents();
+    }
+
+    public PageITHome(String userID, int employeeID) {
+        this.userID = userID;
+        this.employeeID = employeeID;
         initComponents();
     }
 

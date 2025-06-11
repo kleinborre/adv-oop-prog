@@ -10,10 +10,16 @@ package ui;
  */
 public class PageManagerHome extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PageManagerHome
-     */
+    private String userID;
+    private int employeeID;
+
     public PageManagerHome() {
+        initComponents();
+    }
+
+    public PageManagerHome(String userID, int employeeID) {
+        this.userID = userID;
+        this.employeeID = employeeID;
         initComponents();
     }
 
