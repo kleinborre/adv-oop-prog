@@ -10,12 +10,19 @@ package ui;
  */
 public class PageEmployeeHome extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PageEmployeeHome
-     */
+    private String userID;
+    private int employeeID;
+
     public PageEmployeeHome() {
         initComponents();
     }
+    
+    public PageEmployeeHome(String userID, int employeeID) {
+        this.userID = userID;
+        this.employeeID = employeeID;
+        initComponents();
+        // Optional: loadEmployeeInfo(); → you can implement later to display info
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.

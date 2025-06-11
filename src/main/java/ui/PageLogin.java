@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ui;
 
-/**
- *
- * @author STUDY MODE
- */
+import service.LoginService;
+import pojo.User;
+
 public class PageLogin extends javax.swing.JFrame {
 
     /**
@@ -15,6 +10,102 @@ public class PageLogin extends javax.swing.JFrame {
      */
     public PageLogin() {
         initComponents();
+    }
+    
+    private void performLogin() {
+        String usernameOrEmailOrUserID = usernameField.getText().trim();
+        String password = new String(passwordField.getPassword()).trim();
+
+        // First validate empty fields
+        if (usernameOrEmailOrUserID.isEmpty() && password.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Both Username/UserID/Email and Password fields are empty.");
+            return;
+        }
+
+        if (usernameOrEmailOrUserID.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Username/UserID/Email field is empty.");
+            return;
+        }
+
+        if (password.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Password field is empty.");
+            return;
+        }
+
+        // Now try login
+        try {
+            LoginService loginService = new LoginService();
+            User user = loginService.login(usernameOrEmailOrUserID, password);
+
+            if (user != null) {
+                // Successful login
+                int employeeID = loginService.getEmployeeIDByUserID(user.getUserID());
+
+                // Welcome dialog → refined
+                String welcomeMessage = String.format("Welcome, %s %s!", 
+                    user.getUserRole(), 
+                    user.getUsername());
+                javax.swing.JOptionPane.showMessageDialog(this, welcomeMessage);
+
+                // Route to correct Home Page based on role
+                switch (user.getUserRole()) {
+                    case "Employee":
+                        new PageEmployeeHome(user.getUserID(), employeeID).setVisible(true);
+                        break;
+                    case "Finance":
+                        new PageFinanceHome(user.getUserID(), employeeID).setVisible(true);
+                        break;
+                    case "HR":
+                        new PageHRHome(user.getUserID(), employeeID).setVisible(true);
+                        break;
+                    case "IT":
+                        new PageITHome(user.getUserID(), employeeID).setVisible(true);
+                        break;
+                    case "Immediate Supervisor": // roleID = 5
+                        new PageManagerHome(user.getUserID(), employeeID).setVisible(true);
+                        break;
+                    default:
+                        javax.swing.JOptionPane.showMessageDialog(this, "Unknown role: " + user.getUserRole());
+                        return;
+                }
+
+                // Close login page
+                this.dispose();
+
+            } else {
+                // Check which input is wrong (advanced logic):
+
+                boolean userExists = false;
+
+                // Check if username/email/userID exists
+                try {
+                    userExists = loginService.doesUserExist(usernameOrEmailOrUserID);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    javax.swing.JOptionPane.showMessageDialog(this, "Error checking user existence.");
+                    return;
+                }
+
+                if (!userExists) {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username/UserID/Email.");
+                    clearFields(); // Clear fields and focus on username
+                } else {
+                    javax.swing.JOptionPane.showMessageDialog(this, "Incorrect password.");
+                    clearFields(); // Clear fields and focus on username
+                }
+            }
+
+        } catch (Exception e) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error during login: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Helper method to clear username and password fields
+    private void clearFields() {
+        usernameField.setText("");
+        passwordField.setText("");
+        usernameField.requestFocus();
     }
 
     /**
@@ -77,7 +168,7 @@ public class PageLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
+        performLogin();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed

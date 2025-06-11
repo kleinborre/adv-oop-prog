@@ -10,12 +10,18 @@ package ui;
  */
 public class PageFinanceHome extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PageFinanceHome
-     */
+    private String userID;
+    private int employeeID;
+    
     public PageFinanceHome() {
         initComponents();
     }
+    
+    public PageFinanceHome(String userID, int employeeID) {
+        this.userID = userID;
+        this.employeeID = employeeID;
+        initComponents();
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
