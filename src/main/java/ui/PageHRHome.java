@@ -32,6 +32,8 @@ public class PageHRHome extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        fullNameText = new javax.swing.JLabel();
+        positionText = new javax.swing.JLabel();
         dateTimeText = new javax.swing.JLabel();
         inLabel = new javax.swing.JLabel();
         outLabel = new javax.swing.JLabel();
@@ -41,8 +43,6 @@ public class PageHRHome extends javax.swing.JFrame {
         clockOutButton = new util.BlueButton();
         leavesAvailableText = new javax.swing.JLabel();
         totalWorkedHoursText = new javax.swing.JLabel();
-        fullNameText = new javax.swing.JLabel();
-        positionText = new javax.swing.JLabel();
         employeeDataButton = new util.BlueButton();
         attendanceButton = new util.BlueButton();
         payslipButton = new util.BlueButton();
@@ -57,6 +57,18 @@ public class PageHRHome extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        fullNameText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        fullNameText.setForeground(new java.awt.Color(0, 102, 102));
+        fullNameText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fullNameText.setText("Employee");
+        getContentPane().add(fullNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 190, 30));
+
+        positionText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        positionText.setForeground(new java.awt.Color(0, 102, 102));
+        positionText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        positionText.setText("Position");
+        getContentPane().add(positionText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 190, -1));
 
         dateTimeText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         dateTimeText.setForeground(new java.awt.Color(0, 102, 102));
@@ -107,18 +119,6 @@ public class PageHRHome extends javax.swing.JFrame {
         totalWorkedHoursText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalWorkedHoursText.setText("0");
         getContentPane().add(totalWorkedHoursText, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 110, 80, -1));
-
-        fullNameText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        fullNameText.setForeground(new java.awt.Color(0, 102, 102));
-        fullNameText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        fullNameText.setText("Human Resource");
-        getContentPane().add(fullNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 190, -1));
-
-        positionText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        positionText.setForeground(new java.awt.Color(0, 102, 102));
-        positionText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        positionText.setText("Position");
-        getContentPane().add(positionText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 190, -1));
 
         employeeDataButton.setForeground(new java.awt.Color(0, 102, 102));
         employeeDataButton.setText("Employee Data");
