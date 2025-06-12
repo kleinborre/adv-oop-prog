@@ -18,6 +18,15 @@ public class Employee {
 
     private String position;
 
+    // For transient fields:
+    private String supervisorName;
+    private String statusDesc;
+    private String sssNo;
+    private String pagibigNo;
+    private String philhealthNo;
+    private String tinNo;
+    private String fullAddress;
+
     // Constructors
 
     public Employee() {
@@ -42,99 +51,61 @@ public class Employee {
 
     // Getters and Setters
 
-    public int getEmployeeID() {
-        return employeeID;
-    }
+    public int getEmployeeID() { return employeeID; }
+    public void setEmployeeID(int employeeID) { this.employeeID = employeeID; }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
-    }
+    public String getFirstName() { return firstName; }
+    public void setFirstName(String firstName) { this.firstName = firstName; }
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getLastName() { return lastName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+    public Date getBirthDate() { return birthDate; }
+    public void setBirthDate(Date birthDate) { this.birthDate = birthDate; }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public String getPhoneNo() { return phoneNo; }
+    public void setPhoneNo(String phoneNo) { this.phoneNo = phoneNo; }
 
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public Date getBirthDate() {
-        return birthDate;
-    }
+    public String getUserID() { return userID; }
+    public void setUserID(String userID) { this.userID = userID; }
 
-    public void setBirthDate(Date birthDate) {
-        this.birthDate = birthDate;
-    }
+    public int getStatusID() { return statusID; }
+    public void setStatusID(int statusID) { this.statusID = statusID; }
 
-    public String getPhoneNo() {
-        return phoneNo;
-    }
+    public int getPositionID() { return positionID; }
+    public void setPositionID(int positionID) { this.positionID = positionID; }
 
-    public void setPhoneNo(String phoneNo) {
-        this.phoneNo = phoneNo;
-    }
+    public int getDepartmentID() { return departmentID; }
+    public void setDepartmentID(int departmentID) { this.departmentID = departmentID; }
 
-    public String getEmail() {
-        return email;
-    }
+    public int getSupervisorID() { return supervisorID; }
+    public void setSupervisorID(int supervisorID) { this.supervisorID = supervisorID; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getPosition() { return position; }
+    public void setPosition(String position) { this.position = position; }
 
-    public String getUserID() {
-        return userID;
-    }
+    // For transient fields:
+    public String getSupervisorName() { return supervisorName; }
+    public void setSupervisorName(String supervisorName) { this.supervisorName = supervisorName; }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
-    }
+    public String getStatusDesc() { return statusDesc; }
+    public void setStatusDesc(String statusDesc) { this.statusDesc = statusDesc; }
 
-    public int getStatusID() {
-        return statusID;
-    }
+    public String getSssNo() { return sssNo; }
+    public void setSssNo(String sssNo) { this.sssNo = sssNo; }
 
-    public void setStatusID(int statusID) {
-        this.statusID = statusID;
-    }
+    public String getPagibigNo() { return pagibigNo; }
+    public void setPagibigNo(String pagibigNo) { this.pagibigNo = pagibigNo; }
 
-    public int getPositionID() {
-        return positionID;
-    }
+    public String getPhilhealthNo() { return philhealthNo; }
+    public void setPhilhealthNo(String philhealthNo) { this.philhealthNo = philhealthNo; }
 
-    public void setPositionID(int positionID) {
-        this.positionID = positionID;
-    }
+    public String getTinNo() { return tinNo; }
+    public void setTinNo(String tinNo) { this.tinNo = tinNo; }
 
-    public int getDepartmentID() {
-        return departmentID;
-    }
-
-    public void setDepartmentID(int departmentID) {
-        this.departmentID = departmentID;
-    }
-
-    public int getSupervisorID() {
-        return supervisorID;
-    }
-
-    public void setSupervisorID(int supervisorID) {
-        this.supervisorID = supervisorID;
-    }
-    
-    public String getPosition() {
-        return position;
-    }
-
-    public void setPosition(String position) {
-        this.position = position;
-    }
+    public String getFullAddress() { return fullAddress; }
+    public void setFullAddress(String fullAddress) { this.fullAddress = fullAddress; }
 }

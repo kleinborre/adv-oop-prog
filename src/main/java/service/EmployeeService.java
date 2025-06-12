@@ -26,10 +26,21 @@ public class EmployeeService {
 
     public Employee getEmployeeByID(int employeeID) {
         try {
-            // CUSTOMIZED → add JOIN to get position name
-            String query = "SELECT e.*, p.position " +
+            // COMPOSITE QUERY — get position, status, govid, address
+            String query = "SELECT e.*, " +
+                           "p.position, " +
+                           "s.statusType AS statusDesc, " +
+                           "g.sss AS sssNo, " +
+                           "g.pagibig AS pagibigNo, " +
+                           "g.philhealth AS philhealthNo, " +
+                           "g.tin AS tinNo, " +
+                           "CONCAT(a.houseNo, ' ', a.street, ', ', a.barangay, ', ', a.city, ', ', a.province, ', ', a.zipCode) AS fullAddress " +
                            "FROM employee e " +
                            "JOIN position p ON e.positionID = p.positionID " +
+                           "JOIN status s ON e.statusID = s.statusID " +
+                           "JOIN govid g ON e.employeeID = g.employeeID " + // <-- FIXED THIS LINE
+                           "JOIN employeeaddress ea ON e.employeeID = ea.employeeID " +
+                           "JOIN address a ON ea.addressID = a.addressID " +
                            "WHERE e.employeeID = ?";
 
             try (Connection conn = DatabaseConnection.getInstance().getConnection();
@@ -43,8 +54,41 @@ public class EmployeeService {
                         employee.setEmployeeID(rs.getInt("employeeID"));
                         employee.setFirstName(rs.getString("firstName"));
                         employee.setLastName(rs.getString("lastName"));
+                        employee.setBirthDate(rs.getDate("birthDate"));
+                        employee.setPhoneNo(rs.getString("phoneNo"));
+                        employee.setEmail(rs.getString("email"));
+                        employee.setUserID(rs.getString("userID"));
+                        employee.setStatusID(rs.getInt("statusID"));
                         employee.setPositionID(rs.getInt("positionID"));
-                        employee.setPosition(rs.getString("position")); // NEW FIELD
+                        employee.setDepartmentID(rs.getInt("departmentID"));
+                        employee.setSupervisorID(rs.getInt("supervisorID"));
+
+                        // Transient fields
+                        employee.setPosition(rs.getString("position"));
+                        employee.setStatusDesc(rs.getString("statusDesc"));
+                        employee.setSssNo(rs.getString("sssNo"));
+                        employee.setPagibigNo(rs.getString("pagibigNo"));
+                        employee.setPhilhealthNo(rs.getString("philhealthNo"));
+                        employee.setTinNo(rs.getString("tinNo"));
+                        employee.setFullAddress(rs.getString("fullAddress"));
+
+                        // Now load supervisor name if applicable:
+                        if (employee.getSupervisorID() != 0) {
+                            // Avoid infinite recursion if supervisorID == employeeID
+                            if (employee.getSupervisorID() != employee.getEmployeeID()) {
+                                Employee supervisor = getEmployeeByID(employee.getSupervisorID());
+                                if (supervisor != null) {
+                                    employee.setSupervisorName(supervisor.getLastName() + ", " + supervisor.getFirstName());
+                                } else {
+                                    employee.setSupervisorName("No Supervisor");
+                                }
+                            } else {
+                                employee.setSupervisorName("Self-Supervised");
+                            }
+                        } else {
+                            employee.setSupervisorName("No Supervisor");
+                        }
+
                         return employee;
                     } else {
                         return null;
