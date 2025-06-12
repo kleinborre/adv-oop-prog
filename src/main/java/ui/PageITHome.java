@@ -1,27 +1,67 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ui;
 
-/**
- *
- * @author STUDY MODE
- */
-public class PageITHome extends javax.swing.JFrame {
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
+import util.SessionManager;
 
-    private String userID;
-    private int employeeID;
+public class PageITHome extends ui.base.AbstractHomePage {
 
     public PageITHome() {
         initComponents();
+
+        // Setup button listeners FIRST
+        clockInButton.addActionListener(e -> performClockIn());
+        clockOutButton.addActionListener(e -> performClockOut());
+
+        // Safe fallback: check if SessionManager has user
+        if (SessionManager.getUserID() != null && SessionManager.getEmployeeID() != 0) {
+            SwingUtilities.invokeLater(() -> initializeHomePage(
+                SessionManager.getUserID(),
+                SessionManager.getEmployeeID()
+            ));
+        } else {
+            // Optional: you can warn or open login screen instead
+            javax.swing.JOptionPane.showMessageDialog(this, "No active session. Please login first.");
+            new PageLogin().setVisible(true);
+            this.dispose();
+        }
+    }
+    
+    @Override
+    protected JLabel getFullNameText() {
+        return fullNameText;
     }
 
-    public PageITHome(String userID, int employeeID) {
-        this.userID = userID;
-        this.employeeID = employeeID;
-        initComponents();
+    @Override
+    protected JLabel getPositionText() {
+        return positionText;
     }
+
+    @Override
+    protected JLabel getDateTimeText() {
+        return dateTimeText;
+    }
+
+    @Override
+    protected JLabel getClockInText() {
+        return clockInText;
+    }
+
+    @Override
+    protected JLabel getClockOutText() {
+        return clockOutText;
+    }
+
+    @Override
+    protected JButton getClockInButton() {
+        return clockInButton;
+    }
+
+    @Override
+    protected JButton getClockOutButton() {
+        return clockOutButton;
+    }  
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -152,6 +192,11 @@ public class PageITHome extends javax.swing.JFrame {
 
         logoutButton.setForeground(new java.awt.Color(0, 102, 102));
         logoutButton.setText("Logout");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/Home.png"))); // NOI18N
@@ -162,8 +207,19 @@ public class PageITHome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void employeeDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeDataButtonActionPerformed
-        // TODO add your handling code here:
+        // Open PageEmployeeData
+        new PageEmployeeData().setVisible(true); // For Testing only
+        this.dispose();
     }//GEN-LAST:event_employeeDataButtonActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        // Clear session
+        SessionManager.clearSession();
+
+        // Return to login page
+        new PageLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_logoutButtonActionPerformed
 
     /**
      * @param args the command line arguments
