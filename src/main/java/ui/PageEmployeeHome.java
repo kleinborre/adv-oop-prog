@@ -3,24 +3,31 @@ package ui;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
+import util.SessionManager;
 
 public class PageEmployeeHome extends ui.base.AbstractHomePage {
 
     public PageEmployeeHome() {
-        initComponents();
-    }
-
-    public PageEmployeeHome(String userID, int employeeID) {
         initComponents();
 
         // Setup button listeners FIRST
         clockInButton.addActionListener(e -> performClockIn());
         clockOutButton.addActionListener(e -> performClockOut());
 
-        // Now delay initializeHomePage so GUI is fully ready!
-        SwingUtilities.invokeLater(() -> initializeHomePage(userID, employeeID));
+        // Safe fallback: check if SessionManager has user
+        if (SessionManager.getUserID() != null && SessionManager.getEmployeeID() != 0) {
+            SwingUtilities.invokeLater(() -> initializeHomePage(
+                SessionManager.getUserID(),
+                SessionManager.getEmployeeID()
+            ));
+        } else {
+            // Optional: you can warn or open login screen instead
+            javax.swing.JOptionPane.showMessageDialog(this, "No active session. Please login first.");
+            new PageLogin().setVisible(true);
+            this.dispose();
+        }
     }
-    
+
     @Override
     protected JLabel getFullNameText() {
         return fullNameText;
@@ -181,10 +188,20 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
 
         employeeDataButton.setForeground(new java.awt.Color(0, 102, 102));
         employeeDataButton.setText("Employee Data");
+        employeeDataButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeeDataButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(employeeDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 180, -1));
 
         logoutButton.setForeground(new java.awt.Color(0, 102, 102));
         logoutButton.setText("Logout");
+        logoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                logoutButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/Home.png"))); // NOI18N
@@ -201,6 +218,21 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
     private void clockOutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clockOutButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_clockOutButtonActionPerformed
+
+    private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
+        // Clear session
+        SessionManager.clearSession();
+
+        // Return to login page
+        new PageLogin().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_logoutButtonActionPerformed
+
+    private void employeeDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeDataButtonActionPerformed
+        // Open PageEmployeeData
+        new PageEmployeeData().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_employeeDataButtonActionPerformed
 
     /**
      * @param args the command line arguments
