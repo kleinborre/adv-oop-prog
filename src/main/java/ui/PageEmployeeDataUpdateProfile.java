@@ -29,8 +29,19 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
         cancelButton = new util.LightButton();
         updateButton = new util.BlueButton();
         backButton = new util.LightButton();
-        addressField = new javax.swing.JTextField();
+        addressHouseNoField = new javax.swing.JTextField();
         phoneNumberField = new javax.swing.JTextField();
+        label17 = new javax.swing.JLabel();
+        addressProvinceField = new javax.swing.JTextField();
+        label18 = new javax.swing.JLabel();
+        addressZipCodeField = new javax.swing.JTextField();
+        label15 = new javax.swing.JLabel();
+        addressBarangayField = new javax.swing.JTextField();
+        addressCityField = new javax.swing.JTextField();
+        label16 = new javax.swing.JLabel();
+        label14 = new javax.swing.JLabel();
+        addressStreetField = new javax.swing.JTextField();
+        label13 = new javax.swing.JLabel();
         employeeIDText = new javax.swing.JLabel();
         label10 = new javax.swing.JLabel();
         positionText = new javax.swing.JLabel();
@@ -45,16 +56,6 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
         birthdayText = new javax.swing.JLabel();
         label2 = new javax.swing.JLabel();
         label3 = new javax.swing.JLabel();
-        label4 = new javax.swing.JLabel();
-        sssNumberText = new javax.swing.JLabel();
-        label5 = new javax.swing.JLabel();
-        pagibigNumberText = new javax.swing.JLabel();
-        label6 = new javax.swing.JLabel();
-        philhealthNumberText = new javax.swing.JLabel();
-        label7 = new javax.swing.JLabel();
-        tinNumberText = new javax.swing.JLabel();
-        label8 = new javax.swing.JLabel();
-        statusText = new javax.swing.JLabel();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,13 +77,69 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
         backButton.setText("Back");
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
-        addressField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        addressField.setForeground(new java.awt.Color(0, 102, 102));
-        getContentPane().add(addressField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 290, 360, -1));
+        addressHouseNoField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        addressHouseNoField.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(addressHouseNoField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 100, -1));
 
         phoneNumberField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         phoneNumberField.setForeground(new java.awt.Color(0, 102, 102));
-        getContentPane().add(phoneNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 260, 170, -1));
+        getContentPane().add(phoneNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 270, 170, -1));
+
+        label17.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label17.setForeground(new java.awt.Color(51, 51, 51));
+        label17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label17.setText("Province");
+        getContentPane().add(label17, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 460, 210, -1));
+
+        addressProvinceField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        addressProvinceField.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(addressProvinceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, 180, -1));
+
+        label18.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label18.setForeground(new java.awt.Color(51, 51, 51));
+        label18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label18.setText("Zip Code");
+        getContentPane().add(label18, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 460, 140, -1));
+
+        addressZipCodeField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        addressZipCodeField.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(addressZipCodeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 480, 260, -1));
+
+        label15.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label15.setForeground(new java.awt.Color(51, 51, 51));
+        label15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label15.setText("Barangay");
+        getContentPane().add(label15, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 400, 210, -1));
+
+        addressBarangayField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        addressBarangayField.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(addressBarangayField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 180, -1));
+
+        addressCityField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        addressCityField.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(addressCityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 420, 260, -1));
+
+        label16.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label16.setForeground(new java.awt.Color(51, 51, 51));
+        label16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label16.setText("City / Municipality");
+        getContentPane().add(label16, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 400, 140, -1));
+
+        label14.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label14.setForeground(new java.awt.Color(51, 51, 51));
+        label14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label14.setText("Street");
+        getContentPane().add(label14, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 220, -1));
+
+        addressStreetField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        addressStreetField.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(addressStreetField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 360, 340, -1));
+
+        label13.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label13.setForeground(new java.awt.Color(51, 51, 51));
+        label13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label13.setText("House No.");
+        getContentPane().add(label13, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 340, 210, -1));
 
         employeeIDText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         employeeIDText.setForeground(new java.awt.Color(0, 51, 51));
@@ -166,67 +223,7 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
         label3.setForeground(new java.awt.Color(51, 51, 51));
         label3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label3.setText("Address");
-        getContentPane().add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 210, -1));
-
-        label4.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        label4.setForeground(new java.awt.Color(51, 51, 51));
-        label4.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label4.setText("SSS Number");
-        getContentPane().add(label4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 220, -1));
-
-        sssNumberText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        sssNumberText.setForeground(new java.awt.Color(0, 102, 102));
-        sssNumberText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        sssNumberText.setText("SSS Number");
-        getContentPane().add(sssNumberText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 360, 360, -1));
-
-        label5.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        label5.setForeground(new java.awt.Color(51, 51, 51));
-        label5.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label5.setText("Pag-Ibig Number");
-        getContentPane().add(label5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 390, 220, -1));
-
-        pagibigNumberText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        pagibigNumberText.setForeground(new java.awt.Color(0, 102, 102));
-        pagibigNumberText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        pagibigNumberText.setText("Pag-Ibig Number");
-        getContentPane().add(pagibigNumberText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 390, 360, -1));
-
-        label6.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        label6.setForeground(new java.awt.Color(51, 51, 51));
-        label6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label6.setText("Philhealth");
-        getContentPane().add(label6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 220, -1));
-
-        philhealthNumberText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        philhealthNumberText.setForeground(new java.awt.Color(0, 102, 102));
-        philhealthNumberText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        philhealthNumberText.setText("Philhealth");
-        getContentPane().add(philhealthNumberText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 420, 360, -1));
-
-        label7.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        label7.setForeground(new java.awt.Color(51, 51, 51));
-        label7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label7.setText("TIN Number");
-        getContentPane().add(label7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 450, 220, -1));
-
-        tinNumberText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        tinNumberText.setForeground(new java.awt.Color(0, 102, 102));
-        tinNumberText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        tinNumberText.setText("TIN Number");
-        getContentPane().add(tinNumberText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 450, 360, -1));
-
-        label8.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        label8.setForeground(new java.awt.Color(51, 51, 51));
-        label8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label8.setText("Status");
-        getContentPane().add(label8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 510, 220, -1));
-
-        statusText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        statusText.setForeground(new java.awt.Color(0, 102, 102));
-        statusText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        statusText.setText("Status");
-        getContentPane().add(statusText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 510, 360, -1));
+        getContentPane().add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 470, 30));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ProfileUpdate.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -275,7 +272,12 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField addressField;
+    private javax.swing.JTextField addressBarangayField;
+    private javax.swing.JTextField addressCityField;
+    private javax.swing.JTextField addressHouseNoField;
+    private javax.swing.JTextField addressProvinceField;
+    private javax.swing.JTextField addressStreetField;
+    private javax.swing.JTextField addressZipCodeField;
     private util.LightButton backButton;
     private javax.swing.JLabel background;
     private javax.swing.JLabel birthdayText;
@@ -287,23 +289,19 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label11;
     private javax.swing.JLabel label12;
+    private javax.swing.JLabel label13;
+    private javax.swing.JLabel label14;
+    private javax.swing.JLabel label15;
+    private javax.swing.JLabel label16;
+    private javax.swing.JLabel label17;
+    private javax.swing.JLabel label18;
     private javax.swing.JLabel label2;
     private javax.swing.JLabel label3;
-    private javax.swing.JLabel label4;
-    private javax.swing.JLabel label5;
-    private javax.swing.JLabel label6;
-    private javax.swing.JLabel label7;
-    private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
     private javax.swing.JLabel lastNameText;
-    private javax.swing.JLabel pagibigNumberText;
-    private javax.swing.JLabel philhealthNumberText;
     private javax.swing.JTextField phoneNumberField;
     private javax.swing.JLabel positionText;
-    private javax.swing.JLabel sssNumberText;
-    private javax.swing.JLabel statusText;
     private javax.swing.JLabel supervisorText;
-    private javax.swing.JLabel tinNumberText;
     private util.BlueButton updateButton;
     // End of variables declaration//GEN-END:variables
 }
