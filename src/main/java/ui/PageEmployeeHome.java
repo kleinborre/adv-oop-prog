@@ -143,7 +143,7 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
         fullNameText.setForeground(new java.awt.Color(0, 102, 102));
         fullNameText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         fullNameText.setText("Employee");
-        getContentPane().add(fullNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 190, -1));
+        getContentPane().add(fullNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 230, 190, 30));
 
         clockOutButton.setForeground(new java.awt.Color(0, 102, 102));
         clockOutButton.setText("Clock-Out");
