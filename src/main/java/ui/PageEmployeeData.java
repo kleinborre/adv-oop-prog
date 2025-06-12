@@ -1,22 +1,81 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ui;
 
-/**
- *
- * @author STUDY MODE
- */
-public class PageEmployeeData extends javax.swing.JFrame {
+import javax.swing.JLabel;
 
-    /**
-     * Creates new form PageEmployeeData
-     */
+public class PageEmployeeData extends ui.base.AbstractProfilePage {
+
     public PageEmployeeData() {
         initComponents();
+
+        // Initialize profile page
+        initializeProfilePage();
     }
 
+    // Implement all required methods:
+    @Override
+    protected JLabel getEmployeeIDText() {
+        return employeeIDText;
+    }
+
+    @Override
+    protected JLabel getPositionText() {
+        return positionText;
+    }
+
+    @Override
+    protected JLabel getFirstNameText() {
+        return firstNameText;
+    }
+
+    @Override
+    protected JLabel getLastNameText() {
+        return lastNameText;
+    }
+
+    @Override
+    protected JLabel getBirthdayText() {
+        return birthdayText;
+    }
+
+    @Override
+    protected JLabel getPhoneNumberText() {
+        return phoneNumberText;
+    }
+
+    @Override
+    protected JLabel getAddressText() {
+        return addressText;
+    }
+
+    @Override
+    protected JLabel getSupervisorText() {
+        return supervisorText;
+    }
+
+    @Override
+    protected JLabel getStatusText() {
+        return statusText;
+    }
+
+    @Override
+    protected JLabel getSSSNumberText() {
+        return sssNumberText;
+    }
+
+    @Override
+    protected JLabel getPagibigNumberText() {
+        return pagibigNumberText;
+    }
+
+    @Override
+    protected JLabel getPhilhealthNumberText() {
+        return philhealthNumberText;
+    }
+
+    @Override
+    protected JLabel getTINNumberText() {
+        return tinNumberText;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -68,31 +127,35 @@ public class PageEmployeeData extends javax.swing.JFrame {
         lastNameText.setForeground(new java.awt.Color(0, 102, 102));
         lastNameText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lastNameText.setText("Last Name");
-        getContentPane().add(lastNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 180, 360, -1));
+        getContentPane().add(lastNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 190, 150, -1));
 
         firstNameText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         firstNameText.setForeground(new java.awt.Color(0, 102, 102));
         firstNameText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         firstNameText.setText("First Name");
-        getContentPane().add(firstNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 360, -1));
+        getContentPane().add(firstNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 150, -1));
 
         birthdayText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         birthdayText.setForeground(new java.awt.Color(0, 102, 102));
         birthdayText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         birthdayText.setText("Birthdate");
-        getContentPane().add(birthdayText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 240, 360, -1));
+        getContentPane().add(birthdayText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, 120, -1));
 
         phoneNumberText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         phoneNumberText.setForeground(new java.awt.Color(0, 102, 102));
         phoneNumberText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         phoneNumberText.setText("Phone Number");
-        getContentPane().add(phoneNumberText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 270, 360, -1));
+        getContentPane().add(phoneNumberText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 280, 120, -1));
 
         addressText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressText.setForeground(new java.awt.Color(0, 102, 102));
         addressText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         addressText.setText("Address");
-        getContentPane().add(addressText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 300, 360, -1));
+        addressText.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        addressText.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        addressText.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        addressText.setInheritsPopupMenu(false);
+        getContentPane().add(addressText, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 210, 200, 90));
 
         sssNumberText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         sssNumberText.setForeground(new java.awt.Color(0, 102, 102));
@@ -164,7 +227,7 @@ public class PageEmployeeData extends javax.swing.JFrame {
         label9.setForeground(new java.awt.Color(51, 51, 51));
         label9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label9.setText("First Name");
-        getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 210, -1));
+        getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 210, -1));
 
         label8.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label8.setForeground(new java.awt.Color(51, 51, 51));
@@ -200,25 +263,25 @@ public class PageEmployeeData extends javax.swing.JFrame {
         label3.setForeground(new java.awt.Color(51, 51, 51));
         label3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label3.setText("Address");
-        getContentPane().add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 210, -1));
+        getContentPane().add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 190, 200, -1));
 
         label2.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label2.setForeground(new java.awt.Color(51, 51, 51));
         label2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label2.setText("Phone Number");
-        getContentPane().add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, 210, -1));
+        getContentPane().add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 280, 210, -1));
 
         label1.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label1.setForeground(new java.awt.Color(51, 51, 51));
         label1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label1.setText("Birthdate");
-        getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, 210, -1));
+        getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 250, 210, -1));
 
         label.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label.setForeground(new java.awt.Color(51, 51, 51));
         label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label.setText("Surname");
-        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 210, -1));
+        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, 210, -1));
 
         modifyCredentialsButton.setForeground(new java.awt.Color(0, 102, 102));
         modifyCredentialsButton.setText("Modify Credentials");
