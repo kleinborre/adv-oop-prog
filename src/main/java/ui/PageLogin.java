@@ -2,6 +2,7 @@ package ui;
 
 import service.LoginService;
 import pojo.User;
+import util.SessionManager;
 
 public class PageLogin extends javax.swing.JFrame {
 
@@ -38,10 +39,11 @@ public class PageLogin extends javax.swing.JFrame {
             User user = loginService.login(usernameOrEmailOrUserID, password);
 
             if (user != null) {
-                // Successful login
                 int employeeID = loginService.getEmployeeIDByUserID(user.getUserID());
 
-                // Welcome dialog → refined
+                // Set session!
+                SessionManager.setSession(user.getUserID(), employeeID);
+
                 String welcomeMessage = String.format("Welcome, %s %s!", 
                     user.getUserRole(), 
                     user.getUsername());
@@ -50,29 +52,27 @@ public class PageLogin extends javax.swing.JFrame {
                 // Route to correct Home Page based on role
                 switch (user.getUserRole()) {
                     case "Employee":
-                        new PageEmployeeHome(user.getUserID(), employeeID).setVisible(true);
+                        new PageEmployeeHome().setVisible(true); // No need to pass userID, employeeID anymore!
                         break;
                     case "Finance":
-                        new PageFinanceHome(user.getUserID(), employeeID).setVisible(true);
+                        new PageFinanceHome().setVisible(true);
                         break;
                     case "HR":
-                        new PageHRHome(user.getUserID(), employeeID).setVisible(true);
+                        new PageHRHome().setVisible(true);
                         break;
                     case "IT":
-                        new PageITHome(user.getUserID(), employeeID).setVisible(true);
+                        new PageITHome().setVisible(true);
                         break;
-                    case "Immediate Supervisor": // roleID = 5
-                        new PageManagerHome(user.getUserID(), employeeID).setVisible(true);
+                    case "Immediate Supervisor":
+                        new PageManagerHome().setVisible(true);
                         break;
                     default:
                         javax.swing.JOptionPane.showMessageDialog(this, "Unknown role: " + user.getUserRole());
                         return;
                 }
 
-                // Close login page
                 this.dispose();
-
-            } else {
+        } else {
                 // Check which input is wrong (advanced logic):
 
                 boolean userExists = false;
