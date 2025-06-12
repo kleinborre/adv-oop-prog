@@ -26,9 +26,11 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        passwordField = new javax.swing.JTextField();
+        label18 = new javax.swing.JLabel();
+        passwordNewField = new javax.swing.JTextField();
+        passwordCurrentField = new javax.swing.JTextField();
         label8 = new javax.swing.JLabel();
-        reEnterPasswordField = new javax.swing.JTextField();
+        passwordNewReEnterField = new javax.swing.JTextField();
         emailText = new javax.swing.JLabel();
         label9 = new javax.swing.JLabel();
         label15 = new javax.swing.JLabel();
@@ -55,23 +57,32 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
         setTitle("MotorPH Payroll System");
         setMaximumSize(new java.awt.Dimension(1040, 590));
         setMinimumSize(new java.awt.Dimension(1040, 590));
-        setPreferredSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        passwordField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        passwordField.setForeground(new java.awt.Color(0, 102, 102));
-        getContentPane().add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 280, 260, -1));
+        label18.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        label18.setForeground(new java.awt.Color(51, 51, 51));
+        label18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label18.setText("New Password");
+        getContentPane().add(label18, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 310, 140, -1));
+
+        passwordNewField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        passwordNewField.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(passwordNewField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 310, 260, -1));
+
+        passwordCurrentField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        passwordCurrentField.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(passwordCurrentField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 280, 260, -1));
 
         label8.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label8.setForeground(new java.awt.Color(51, 51, 51));
         label8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label8.setText("Re-Enter Password");
-        getContentPane().add(label8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 310, 140, -1));
+        getContentPane().add(label8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 340, 140, -1));
 
-        reEnterPasswordField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        reEnterPasswordField.setForeground(new java.awt.Color(0, 102, 102));
-        getContentPane().add(reEnterPasswordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 310, 260, -1));
+        passwordNewReEnterField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        passwordNewReEnterField.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(passwordNewReEnterField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 340, 260, -1));
 
         emailText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         emailText.setForeground(new java.awt.Color(0, 102, 102));
@@ -83,37 +94,37 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
         label9.setForeground(new java.awt.Color(51, 51, 51));
         label9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label9.setText("Password Requirements:");
-        getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 370, 220, -1));
+        getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, 220, -1));
 
         label15.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         label15.setForeground(new java.awt.Color(51, 51, 51));
         label15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label15.setText("* Must contain at least 1 lowercase letter (a-z)  ");
-        getContentPane().add(label15, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 430, 430, -1));
+        getContentPane().add(label15, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 430, -1));
 
         label16.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         label16.setForeground(new java.awt.Color(51, 51, 51));
         label16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label16.setText("* Must include at least 1 number (0-9)  ");
-        getContentPane().add(label16, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 430, -1));
+        getContentPane().add(label16, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 430, -1));
 
         label17.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         label17.setForeground(new java.awt.Color(51, 51, 51));
         label17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label17.setText("* Must include at least 1 special character (! @ # $ % ^ & * etc.)  ");
-        getContentPane().add(label17, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 440, -1));
+        getContentPane().add(label17, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 490, 440, -1));
 
         label13.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         label13.setForeground(new java.awt.Color(51, 51, 51));
         label13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label13.setText("* Must be at least 8 characters long");
-        getContentPane().add(label13, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, 420, -1));
+        getContentPane().add(label13, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, 420, -1));
 
         label14.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         label14.setForeground(new java.awt.Color(51, 51, 51));
         label14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label14.setText("* Must contain at least 1 uppercase letter (A-Z)  ");
-        getContentPane().add(label14, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 410, 430, -1));
+        getContentPane().add(label14, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 430, 430, -1));
 
         label5.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label5.setForeground(new java.awt.Color(51, 51, 51));
@@ -130,7 +141,7 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
         label6.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label6.setForeground(new java.awt.Color(51, 51, 51));
         label6.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label6.setText("Password");
+        label6.setText("Current Password");
         getContentPane().add(label6, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 280, 140, -1));
 
         employeeIDText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -243,14 +254,16 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
     private javax.swing.JLabel label15;
     private javax.swing.JLabel label16;
     private javax.swing.JLabel label17;
+    private javax.swing.JLabel label18;
     private javax.swing.JLabel label5;
     private javax.swing.JLabel label6;
     private javax.swing.JLabel label7;
     private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
-    private javax.swing.JTextField passwordField;
+    private javax.swing.JTextField passwordCurrentField;
+    private javax.swing.JTextField passwordNewField;
+    private javax.swing.JTextField passwordNewReEnterField;
     private javax.swing.JLabel positionText;
-    private javax.swing.JTextField reEnterPasswordField;
     private javax.swing.JLabel supervisorText;
     private util.BlueButton updateButton;
     private javax.swing.JLabel usernameText;
