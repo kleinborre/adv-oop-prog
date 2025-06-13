@@ -285,14 +285,29 @@ public class PageEmployeeData extends ui.base.AbstractProfilePage {
 
         modifyCredentialsButton.setForeground(new java.awt.Color(0, 102, 102));
         modifyCredentialsButton.setText("Modify Credentials");
+        modifyCredentialsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                modifyCredentialsButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(modifyCredentialsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 80, -1, -1));
 
         editProfileButton.setForeground(new java.awt.Color(0, 102, 102));
         editProfileButton.setText("Edit Profile");
+        editProfileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editProfileButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(editProfileButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 80, 130, -1));
 
         backButton.setForeground(new java.awt.Color(0, 102, 102));
         backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/Profile.png"))); // NOI18N
@@ -301,6 +316,24 @@ public class PageEmployeeData extends ui.base.AbstractProfilePage {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // Back to Employee Home
+        new PageEmployeeHome().setVisible(true);
+        this.dispose(); // Close current page
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void modifyCredentialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyCredentialsButtonActionPerformed
+        // Open Modify Credentials page
+        new PageEmployeeDataUpdateCredential().setVisible(true);
+        this.dispose(); // Close current page
+    }//GEN-LAST:event_modifyCredentialsButtonActionPerformed
+
+    private void editProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileButtonActionPerformed
+        // Open Edit Profile page
+        new PageEmployeeDataUpdateProfile().setVisible(true);
+        this.dispose(); // Close current page
+    }//GEN-LAST:event_editProfileButtonActionPerformed
 
     /**
      * @param args the command line arguments
