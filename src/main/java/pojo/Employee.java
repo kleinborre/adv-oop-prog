@@ -7,25 +7,26 @@ public class Employee {
     private int employeeID;
     private String firstName;
     private String lastName;
-    private Date   birthDate;
+    private Date birthDate;
     private String phoneNo;
     private String email;
     private String userID;
-    private int    statusID;
-    private int    positionID;
-    private int    departmentID;
-    private int    supervisorID;
+    private int statusID;
+    private int positionID;
+    private int departmentID;
+    private int supervisorID;
 
-    // transient UI/service fields
     private String position;
+
+    // transient fields from govid/status
     private String supervisorName;
     private String statusDesc;
     private String sssNo;
     private String pagibigNo;
     private String philhealthNo;
     private String tinNo;
-    private String fullAddress;
-    private int    addressID;
+
+    // **discrete address fields** (no more fullAddress)
     private String houseNo;
     private String street;
     private String barangay;
@@ -93,7 +94,6 @@ public class Employee {
     public String getPosition() { return position; }
     public void setPosition(String position) { this.position = position; }
 
-    // For transient fields:
     public String getSupervisorName() { return supervisorName; }
     public void setSupervisorName(String supervisorName) { this.supervisorName = supervisorName; }
 
@@ -111,16 +111,8 @@ public class Employee {
 
     public String getTinNo() { return tinNo; }
     public void setTinNo(String tinNo) { this.tinNo = tinNo; }
-    
-    // Aware of this redundancy. Will update this later on progress
-    
-    public String getFullAddress() { return fullAddress; }
-    public void setFullAddress(String fullAddress) { this.fullAddress = fullAddress; }
 
-    public int getAddressID() { return addressID; }
-    public void setAddressID(int addressID) { this.addressID = addressID; }
-    
-    //////////////////////////////////////////////////////////////
+    // **new address getters/setters**
 
     public String getHouseNo() { return houseNo; }
     public void setHouseNo(String houseNo) { this.houseNo = houseNo; }

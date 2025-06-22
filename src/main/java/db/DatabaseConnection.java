@@ -6,22 +6,30 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/payrollsystem_db";
+    private static final String URL      = "jdbc:mysql://localhost:3306/payrollsystem_db";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "";
 
     private static DatabaseConnection instance;
     private final Connection connection;
 
-    private DatabaseConnection() throws SQLException {
-        connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+    private DatabaseConnection() {
+        try {
+            this.connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error establishing database connection", e);
+        }
     }
 
-    public static DatabaseConnection getInstance() throws SQLException {
-        if (instance == null || instance.getConnection().isClosed()) {
-            instance = new DatabaseConnection();
+    public static synchronized DatabaseConnection getInstance() {
+        try {
+            if (instance == null || instance.connection.isClosed()) {
+                instance = new DatabaseConnection();
+            }
+            return instance;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error re-initializing database connection", e);
         }
-        return instance;
     }
 
     public Connection getConnection() {

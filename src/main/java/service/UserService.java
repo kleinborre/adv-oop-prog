@@ -5,6 +5,7 @@ import daoimpl.UserDAOImpl;
 import pojo.User;
 
 import java.sql.SQLException;
+import java.sql.SQLNonTransientConnectionException;
 import java.util.List;
 
 public class UserService {
@@ -15,7 +16,6 @@ public class UserService {
         try {
             userDAO = new UserDAOImpl();
         } catch (SQLException e) {
-            // You can replace this with a proper logger or throw a custom exception
             throw new RuntimeException("Error initializing UserDAO", e);
         }
     }
@@ -64,6 +64,17 @@ public class UserService {
         try {
             userDAO.updateUser(user);
         } catch (SQLException e) {
+            // if it's a closed connection, retry once
+            if (e instanceof SQLNonTransientConnectionException
+                || e.getMessage().toLowerCase().contains("connection is closed")) {
+                try {
+                    userDAO = new UserDAOImpl();
+                    userDAO.updateUser(user);
+                    return;
+                } catch (SQLException ex2) {
+                    throw new RuntimeException("Error updating user after reconnect", ex2);
+                }
+            }
             throw new RuntimeException("Error updating user", e);
         }
     }

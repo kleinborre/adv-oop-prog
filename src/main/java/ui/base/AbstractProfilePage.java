@@ -16,32 +16,41 @@ public abstract class AbstractProfilePage extends javax.swing.JFrame {
     protected void initializeProfilePage() {
         try {
             int employeeID = SessionManager.getEmployeeID();
-
-            Employee employee = employeeService.getEmployeeByID(employeeID);
-
-            if (employee == null) {
+            Employee emp = employeeService.getEmployeeByID(employeeID);
+            if (emp == null) {
                 javax.swing.JOptionPane.showMessageDialog(this, "Employee record not found.");
                 return;
             }
 
-            // Map fields
-            getEmployeeIDText().setText(String.valueOf(employee.getEmployeeID()));
-            getPositionText().setText(employee.getPosition());
-            getFirstNameText().setText(employee.getFirstName());
-            getLastNameText().setText(employee.getLastName());
-            getBirthdayText().setText(employee.getBirthDate().toString());
-            getPhoneNumberText().setText(employee.getPhoneNo());
-            getAddressText().setText("<html>" + employee.getFullAddress().trim().replaceAll(",\\s*", "<br>") + "</html>");
-            getSupervisorText().setText(employee.getSupervisorName());
-            getStatusText().setText(employee.getStatusDesc());
-            getSSSNumberText().setText(employee.getSssNo());
-            getPagibigNumberText().setText(employee.getPagibigNo());
-            getPhilhealthNumberText().setText(employee.getPhilhealthNo());
-            getTINNumberText().setText(employee.getTinNo());
+            // map all the simple fields
+            getEmployeeIDText().setText(String.valueOf(emp.getEmployeeID()));
+            getPositionText().setText(emp.getPosition());
+            getFirstNameText().setText(emp.getFirstName());
+            getLastNameText().setText(emp.getLastName());
+            getBirthdayText().setText(emp.getBirthDate().toString());
+            getPhoneNumberText().setText(emp.getPhoneNo());
+            getSupervisorText().setText(emp.getSupervisorName());
+            getStatusText().setText(emp.getStatusDesc());
+            getSSSNumberText().setText(emp.getSssNo());
+            getPagibigNumberText().setText(emp.getPagibigNo());
+            getPhilhealthNumberText().setText(emp.getPhilhealthNo());
+            getTINNumberText().setText(emp.getTinNo());
 
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error loading profile: " + e.getMessage());
-            e.printStackTrace();
+            // now combine address lines
+            StringBuilder addr = new StringBuilder("<html>");
+            addr.append(emp.getHouseNo()).append(" ").append(emp.getStreet()).append("<br>")
+                .append(emp.getBarangay()).append("<br>")
+                .append(emp.getCity()).append("<br>")
+                .append(emp.getProvince());
+            if (emp.getZipCode() != null) {
+                addr.append(" ").append(emp.getZipCode());
+            }
+            addr.append("</html>");
+            getAddressText().setText(addr.toString());
+
+        } catch (Exception ex) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error loading profile: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
 
