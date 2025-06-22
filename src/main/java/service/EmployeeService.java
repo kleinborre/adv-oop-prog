@@ -25,78 +25,77 @@ public class EmployeeService {
     }
 
     public Employee getEmployeeByID(int employeeID) {
-        try {
-            // COMPOSITE QUERY — get position, status, govid, address
-            String query = "SELECT e.*, " +
-                           "p.position, " +
-                           "s.statusType AS statusDesc, " +
-                           "g.sss AS sssNo, " +
-                           "g.pagibig AS pagibigNo, " +
-                           "g.philhealth AS philhealthNo, " +
-                           "g.tin AS tinNo, " +
-                           "CONCAT(a.houseNo, ' ', a.street, ', ', a.barangay, ', ', a.city, ', ', a.province, ', ', a.zipCode) AS fullAddress " +
-                           "FROM employee e " +
-                           "JOIN position p ON e.positionID = p.positionID " +
-                           "JOIN status s ON e.statusID = s.statusID " +
-                           "JOIN govid g ON e.employeeID = g.employeeID " + // <-- FIXED THIS LINE
-                           "JOIN employeeaddress ea ON e.employeeID = ea.employeeID " +
-                           "JOIN address a ON ea.addressID = a.addressID " +
-                           "WHERE e.employeeID = ?";
+        String sql =
+          "SELECT e.*, " +
+          "       p.position, " +
+          "       s.statusType   AS statusDesc, " +
+          "       g.sss          AS sssNo, " +
+          "       g.pagibig      AS pagibigNo, " +
+          "       g.philhealth   AS philhealthNo, " +
+          "       g.tin          AS tinNo, " +
+          "       a.addressID, " +
+          "       a.houseNo, a.street, " +
+          "       a.barangay, a.city, a.province, a.zipCode " +
+          "  FROM employee e " +
+          "  JOIN position p          ON e.positionID   = p.positionID " +
+          "  JOIN status s            ON e.statusID     = s.statusID " +
+          "  JOIN employeegovid eg    ON e.employeeID   = eg.employeeID " +
+          "  JOIN govid g             ON eg.govID       = g.govID " +
+          "  JOIN employeeaddress ea  ON e.employeeID   = ea.employeeID " +
+          "  JOIN address a           ON ea.addressID   = a.addressID " +
+          " WHERE e.employeeID = ?";
 
-            try (Connection conn = DatabaseConnection.getInstance().getConnection();
-                 PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, employeeID);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) return null;
 
-                stmt.setInt(1, employeeID);
+                Employee e = new Employee();
+                e.setEmployeeID(rs.getInt("employeeID"));
+                e.setFirstName (rs.getString("firstName"));
+                e.setLastName  (rs.getString("lastName"));
+                e.setBirthDate (rs.getDate("birthDate"));
+                e.setPhoneNo   (rs.getString("phoneNo"));
+                e.setEmail     (rs.getString("email"));
+                e.setUserID    (rs.getString("userID"));
+                e.setStatusID  (rs.getInt("statusID"));
+                e.setPositionID(rs.getInt("positionID"));
+                e.setDepartmentID(rs.getInt("departmentID"));
+                e.setSupervisorID(rs.getInt("supervisorID"));
 
-                try (ResultSet rs = stmt.executeQuery()) {
-                    if (rs.next()) {
-                        Employee employee = new Employee();
-                        employee.setEmployeeID(rs.getInt("employeeID"));
-                        employee.setFirstName(rs.getString("firstName"));
-                        employee.setLastName(rs.getString("lastName"));
-                        employee.setBirthDate(rs.getDate("birthDate"));
-                        employee.setPhoneNo(rs.getString("phoneNo"));
-                        employee.setEmail(rs.getString("email"));
-                        employee.setUserID(rs.getString("userID"));
-                        employee.setStatusID(rs.getInt("statusID"));
-                        employee.setPositionID(rs.getInt("positionID"));
-                        employee.setDepartmentID(rs.getInt("departmentID"));
-                        employee.setSupervisorID(rs.getInt("supervisorID"));
+                // transient fields
+                e.setPosition      (rs.getString("position"));
+                e.setStatusDesc    (rs.getString("statusDesc"));
+                e.setSssNo         (rs.getString("sssNo"));
+                e.setPagibigNo     (rs.getString("pagibigNo"));
+                e.setPhilhealthNo  (rs.getString("philhealthNo"));
+                e.setTinNo         (rs.getString("tinNo"));
 
-                        // Transient fields
-                        employee.setPosition(rs.getString("position"));
-                        employee.setStatusDesc(rs.getString("statusDesc"));
-                        employee.setSssNo(rs.getString("sssNo"));
-                        employee.setPagibigNo(rs.getString("pagibigNo"));
-                        employee.setPhilhealthNo(rs.getString("philhealthNo"));
-                        employee.setTinNo(rs.getString("tinNo"));
-                        employee.setFullAddress(rs.getString("fullAddress"));
+                // address parts
+                e.setAddressID(rs.getInt("addressID"));
+                e.setHouseNo  (rs.getString("houseNo"));
+                e.setStreet   (rs.getString("street"));
+                e.setBarangay (rs.getString("barangay"));
+                e.setCity     (rs.getString("city"));
+                e.setProvince (rs.getString("province"));
+                e.setZipCode  (rs.getInt("zipCode"));
 
-                        // Now load supervisor name if applicable:
-                        if (employee.getSupervisorID() != 0) {
-                            // Avoid infinite recursion if supervisorID == employeeID
-                            if (employee.getSupervisorID() != employee.getEmployeeID()) {
-                                Employee supervisor = getEmployeeByID(employee.getSupervisorID());
-                                if (supervisor != null) {
-                                    employee.setSupervisorName(supervisor.getLastName() + ", " + supervisor.getFirstName());
-                                } else {
-                                    employee.setSupervisorName("No Supervisor");
-                                }
-                            } else {
-                                employee.setSupervisorName("Self-Supervised");
-                            }
-                        } else {
-                            employee.setSupervisorName("No Supervisor");
-                        }
-
-                        return employee;
-                    } else {
-                        return null;
-                    }
+                // supervisor name
+                int supID = e.getSupervisorID();
+                if (supID != 0 && supID != e.getEmployeeID()) {
+                  Employee sup = getEmployeeByID(supID);
+                  e.setSupervisorName(sup == null
+                      ? "No Supervisor"
+                      : sup.getLastName()+", "+sup.getFirstName());
+                } else {
+                  e.setSupervisorName("No Supervisor");
                 }
+
+                return e;
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving employee by ID", e);
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 
@@ -137,6 +136,47 @@ public class EmployeeService {
             employeeDAO.deleteEmployee(employeeID);
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting employee", e);
+        }
+    }
+    
+    public void updateEmployeeProfile(Employee e) {
+        String updEmp = "UPDATE employee SET phoneNo=? WHERE employeeID=?";
+        String updAddr =
+          "UPDATE address a " +
+          "  JOIN employeeaddress ea ON a.addressID = ea.addressID " +
+          " SET a.houseNo = ?, a.street = ?, a.barangay = ?, " +
+          "     a.city    = ?, a.province = ?, a.zipCode = ? " +
+          "WHERE ea.employeeID = ?";
+
+        try (Connection conn = DatabaseConnection.getInstance().getConnection()) {
+            conn.setAutoCommit(false);
+            try (PreparedStatement p1 = conn.prepareStatement(updEmp);
+                 PreparedStatement p2 = conn.prepareStatement(updAddr)) {
+
+                // 1) update phone
+                p1.setString(1, e.getPhoneNo());
+                p1.setInt   (2, e.getEmployeeID());
+                p1.executeUpdate();
+
+                // 2) update address parts
+                p2.setString(1, e.getHouseNo());
+                p2.setString(2, e.getStreet());
+                p2.setString(3, e.getBarangay());
+                p2.setString(4, e.getCity());
+                p2.setString(5, e.getProvince());
+                p2.setInt   (6, e.getZipCode());
+                p2.setInt   (7, e.getEmployeeID());
+                p2.executeUpdate();
+
+                conn.commit();
+            } catch (SQLException ex) {
+                conn.rollback();
+                throw ex;
+            } finally {
+                conn.setAutoCommit(true);
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
     }
 }
