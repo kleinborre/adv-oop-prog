@@ -14,7 +14,7 @@ public class LoginService {
     public User login(String usernameOrEmailOrUserID, String password) throws SQLException {
 
         String query = "SELECT a.userID, a.passwordHash, ur.role, ur.roleID, e.email, e.positionID, " +
-                       "CONCAT(e.firstName, ' ', e.lastName) AS username " +
+                       "CONCAT(e.firstName, ' ', e.lastName) AS username " + // Modify this
                        "FROM authentication a " +
                        "JOIN userrole ur ON a.roleID = ur.roleID " +
                        "LEFT JOIN employee e ON e.userID = a.userID " +
