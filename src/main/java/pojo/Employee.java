@@ -7,18 +7,17 @@ public class Employee {
     private int employeeID;
     private String firstName;
     private String lastName;
-    private Date birthDate;
+    private Date   birthDate;
     private String phoneNo;
     private String email;
     private String userID;
-    private int statusID;
-    private int positionID;
-    private int departmentID;
-    private int supervisorID;
+    private int    statusID;
+    private int    positionID;
+    private int    departmentID;
+    private int    supervisorID;
 
+    // transient UI/service fields
     private String position;
-
-    // For transient fields:
     private String supervisorName;
     private String statusDesc;
     private String sssNo;
@@ -26,6 +25,13 @@ public class Employee {
     private String philhealthNo;
     private String tinNo;
     private String fullAddress;
+    private int    addressID;
+    private String houseNo;
+    private String street;
+    private String barangay;
+    private String city;
+    private String province;
+    private Integer zipCode;
 
     // Constructors
 
@@ -105,7 +111,32 @@ public class Employee {
 
     public String getTinNo() { return tinNo; }
     public void setTinNo(String tinNo) { this.tinNo = tinNo; }
-
+    
+    // Aware of this redundancy. Will update this later on progress
+    
     public String getFullAddress() { return fullAddress; }
     public void setFullAddress(String fullAddress) { this.fullAddress = fullAddress; }
+
+    public int getAddressID() { return addressID; }
+    public void setAddressID(int addressID) { this.addressID = addressID; }
+    
+    //////////////////////////////////////////////////////////////
+
+    public String getHouseNo() { return houseNo; }
+    public void setHouseNo(String houseNo) { this.houseNo = houseNo; }
+
+    public String getStreet() { return street; }
+    public void setStreet(String street) { this.street = street; }
+
+    public String getBarangay() { return barangay; }
+    public void setBarangay(String barangay) { this.barangay = barangay; }
+
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
+
+    public String getProvince() { return province; }
+    public void setProvince(String province) { this.province = province; }
+
+    public Integer getZipCode() { return zipCode; }
+    public void setZipCode(Integer zipCode) { this.zipCode = zipCode; }
 }
