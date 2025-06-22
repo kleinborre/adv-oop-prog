@@ -1,18 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ui;
 
-/**
- *
- * @author STUDY MODE
- */
 public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PageEmployeeDataUpdateProfile
-     */
     public PageEmployeeDataUpdateProfile() {
         initComponents();
     }
@@ -71,10 +60,20 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
 
         updateButton.setForeground(new java.awt.Color(0, 102, 102));
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, 120, -1));
 
         backButton.setForeground(new java.awt.Color(0, 102, 102));
         backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
         addressHouseNoField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
@@ -235,6 +234,14 @@ public class PageEmployeeDataUpdateProfile extends javax.swing.JFrame {
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments

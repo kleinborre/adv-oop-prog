@@ -1,20 +1,51 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package ui;
 
-/**
- *
- * @author STUDY MODE
- */
-public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
+import javax.swing.JLabel;
+import pojo.Employee;
+import pojo.User;
+import service.EmployeeService;
+import util.SessionManager;
 
-    /**
-     * Creates new form PageEmployeeDataUpdateCredential
-     */
+public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCredentialPage{
+
     public PageEmployeeDataUpdateCredential() {
         initComponents();
+        
+        // wire the password inputs + error label into the abstraction
+        setPasswordFieldsAndErrorLabel(
+            passwordCurrentField,
+            passwordNewField,
+            passwordReEnterField,
+            errorMessageLabel
+        );
+
+        // now load all of the top and sidebar labels
+        initializeUpdateCredentialPage();        
+    }
+
+    @Override
+    protected JLabel getUsernameText() {
+        return usernameText;
+    }
+
+    @Override
+    protected JLabel getEmailText() {
+        return emailText;
+    }
+
+    @Override
+    protected JLabel getEmployeeIDText() {
+        return employeeIDText;
+    }
+
+    @Override
+    protected JLabel getPositionText() {
+        return positionText;
+    }
+
+    @Override
+    protected JLabel getSupervisorText() {
+        return supervisorText;
     }
 
     /**
@@ -26,11 +57,12 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        errorMessageLabel = new javax.swing.JLabel();
+        passwordCurrentField = new javax.swing.JPasswordField();
+        passwordNewField = new javax.swing.JPasswordField();
+        passwordReEnterField = new javax.swing.JPasswordField();
         label18 = new javax.swing.JLabel();
-        passwordNewField = new javax.swing.JTextField();
-        passwordCurrentField = new javax.swing.JTextField();
         label8 = new javax.swing.JLabel();
-        passwordNewReEnterField = new javax.swing.JTextField();
         emailText = new javax.swing.JLabel();
         label9 = new javax.swing.JLabel();
         label15 = new javax.swing.JLabel();
@@ -60,29 +92,47 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        errorMessageLabel.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        errorMessageLabel.setForeground(new java.awt.Color(255, 255, 255));
+        errorMessageLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        errorMessageLabel.setText("Re-Enter Password");
+        getContentPane().add(errorMessageLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 260, -1));
+
+        passwordCurrentField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        passwordCurrentField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordCurrentFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(passwordCurrentField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 280, 260, -1));
+
+        passwordNewField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        passwordNewField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordNewFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(passwordNewField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 310, 260, -1));
+
+        passwordReEnterField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        passwordReEnterField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordReEnterFieldActionPerformed(evt);
+            }
+        });
+        getContentPane().add(passwordReEnterField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 340, 260, -1));
+
         label18.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label18.setForeground(new java.awt.Color(51, 51, 51));
         label18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label18.setText("New Password");
         getContentPane().add(label18, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 310, 140, -1));
 
-        passwordNewField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        passwordNewField.setForeground(new java.awt.Color(0, 102, 102));
-        getContentPane().add(passwordNewField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 310, 260, -1));
-
-        passwordCurrentField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        passwordCurrentField.setForeground(new java.awt.Color(0, 102, 102));
-        getContentPane().add(passwordCurrentField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 280, 260, -1));
-
         label8.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label8.setForeground(new java.awt.Color(51, 51, 51));
         label8.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label8.setText("Re-Enter Password");
         getContentPane().add(label8, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 340, 140, -1));
-
-        passwordNewReEnterField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        passwordNewReEnterField.setForeground(new java.awt.Color(0, 102, 102));
-        getContentPane().add(passwordNewReEnterField, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 340, 260, -1));
 
         emailText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         emailText.setForeground(new java.awt.Color(0, 102, 102));
@@ -188,14 +238,29 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
 
         cancelButton.setForeground(new java.awt.Color(0, 102, 102));
         cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 80, 120, -1));
 
         updateButton.setForeground(new java.awt.Color(0, 102, 102));
         updateButton.setText("Update");
+        updateButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                updateButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(updateButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 80, 120, -1));
 
         backButton.setForeground(new java.awt.Color(0, 102, 102));
         backButton.setText("Back");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ProfileUpdateCredentials.png"))); // NOI18N
@@ -204,6 +269,39 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        handleCancelOrBack(() -> {
+            new PageEmployeeData().setVisible(true);
+            dispose();
+        });
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        handleUpdate();
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        handleCancelOrBack(() -> {
+            new PageEmployeeData().setVisible(true);
+            dispose();
+        });
+    }//GEN-LAST:event_backButtonActionPerformed
+
+    private void passwordCurrentFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordCurrentFieldActionPerformed
+        markDirty();
+        validateFieldsAndShowErrors();
+    }//GEN-LAST:event_passwordCurrentFieldActionPerformed
+
+    private void passwordNewFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordNewFieldActionPerformed
+        markDirty();
+        validateFieldsAndShowErrors();
+    }//GEN-LAST:event_passwordNewFieldActionPerformed
+
+    private void passwordReEnterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordReEnterFieldActionPerformed
+        markDirty();
+        validateFieldsAndShowErrors();
+    }//GEN-LAST:event_passwordReEnterFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -246,6 +344,7 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
     private util.LightButton cancelButton;
     private javax.swing.JLabel emailText;
     private javax.swing.JLabel employeeIDText;
+    private javax.swing.JLabel errorMessageLabel;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label11;
     private javax.swing.JLabel label12;
@@ -260,9 +359,9 @@ public class PageEmployeeDataUpdateCredential extends javax.swing.JFrame {
     private javax.swing.JLabel label7;
     private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
-    private javax.swing.JTextField passwordCurrentField;
-    private javax.swing.JTextField passwordNewField;
-    private javax.swing.JTextField passwordNewReEnterField;
+    private javax.swing.JPasswordField passwordCurrentField;
+    private javax.swing.JPasswordField passwordNewField;
+    private javax.swing.JPasswordField passwordReEnterField;
     private javax.swing.JLabel positionText;
     private javax.swing.JLabel supervisorText;
     private util.BlueButton updateButton;
