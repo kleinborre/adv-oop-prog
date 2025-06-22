@@ -1,17 +1,30 @@
 package ui;
 
+import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 import pojo.Employee;
 import pojo.User;
-import service.EmployeeService;
 import util.SessionManager;
+import util.LightButton;
+import util.BlueButton;
 
 public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCredentialPage{
 
     public PageEmployeeDataUpdateCredential() {
         initComponents();
-        
-        // wire the password inputs + error label into the abstraction
+
+        // ─── 1) Remove all auto‐generated listeners ───
+        for (ActionListener al : updateButton.getActionListeners()) {
+            updateButton.removeActionListener(al);
+        }
+        for (ActionListener al : cancelButton.getActionListeners()) {
+            cancelButton.removeActionListener(al);
+        }
+        for (ActionListener al : backButton.getActionListeners()) {
+            backButton.removeActionListener(al);
+        }
+
+        // ─── 2) Wire in the base‐class behavior ───
         setPasswordFieldsAndErrorLabel(
             passwordCurrentField,
             passwordNewField,
@@ -19,34 +32,30 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
             errorMessageLabel
         );
 
-        // now load all of the top and sidebar labels
-        initializeUpdateCredentialPage();        
+        initializeUpdateCredentialPage();
+
+        setButtons(
+            updateButton,
+            cancelButton,
+            backButton,
+            () -> {
+                new PageEmployeeData().setVisible(true);
+                dispose();
+            }
+        );
+
+        attachDirtyListeners(
+            passwordCurrentField,
+            passwordNewField,
+            passwordReEnterField
+        );
     }
 
-    @Override
-    protected JLabel getUsernameText() {
-        return usernameText;
-    }
-
-    @Override
-    protected JLabel getEmailText() {
-        return emailText;
-    }
-
-    @Override
-    protected JLabel getEmployeeIDText() {
-        return employeeIDText;
-    }
-
-    @Override
-    protected JLabel getPositionText() {
-        return positionText;
-    }
-
-    @Override
-    protected JLabel getSupervisorText() {
-        return supervisorText;
-    }
+    @Override protected JLabel getUsernameText()   { return usernameText;   }
+    @Override protected JLabel getEmailText()      { return emailText;      }
+    @Override protected JLabel getEmployeeIDText() { return employeeIDText; }
+    @Override protected JLabel getPositionText()   { return positionText;   }
+    @Override protected JLabel getSupervisorText() { return supervisorText; }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -271,10 +280,7 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        handleCancelOrBack(() -> {
-            new PageEmployeeData().setVisible(true);
-            dispose();
-        });
+//        confirmCancelOrBack();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
@@ -282,25 +288,19 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        handleCancelOrBack(() -> {
-            new PageEmployeeData().setVisible(true);
-            dispose();
-        });
+//        confirmCancelOrBack();
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void passwordCurrentFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordCurrentFieldActionPerformed
-        markDirty();
-        validateFieldsAndShowErrors();
+
     }//GEN-LAST:event_passwordCurrentFieldActionPerformed
 
     private void passwordNewFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordNewFieldActionPerformed
-        markDirty();
-        validateFieldsAndShowErrors();
+
     }//GEN-LAST:event_passwordNewFieldActionPerformed
 
     private void passwordReEnterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordReEnterFieldActionPerformed
-        markDirty();
-        validateFieldsAndShowErrors();
+
     }//GEN-LAST:event_passwordReEnterFieldActionPerformed
 
     /**
