@@ -2,6 +2,7 @@ package ui;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import util.SessionManager;
 
@@ -10,58 +11,31 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
     public PageEmployeeHome() {
         initComponents();
 
-        // Setup button listeners FIRST
-        clockInButton.addActionListener(e -> performClockIn());
+        clockInButton .addActionListener(e -> performClockIn());
         clockOutButton.addActionListener(e -> performClockOut());
 
-        // Safe fallback: check if SessionManager has user
         if (SessionManager.getUserID() != null && SessionManager.getEmployeeID() != 0) {
-            SwingUtilities.invokeLater(() -> initializeHomePage(
-                SessionManager.getUserID(),
-                SessionManager.getEmployeeID()
-            ));
+            SwingUtilities.invokeLater(() ->
+                initializeHomePage(
+                    SessionManager.getUserID(),
+                    SessionManager.getEmployeeID()
+                )
+            );
         } else {
-            // Optional: you can warn or open login screen instead
-            javax.swing.JOptionPane.showMessageDialog(this, "No active session. Please login first.");
+            JOptionPane.showMessageDialog(this, "No active session. Please login first.");
             new PageLogin().setVisible(true);
-            this.dispose();
+            dispose();
         }
     }
 
-    @Override
-    protected JLabel getFullNameText() {
-        return fullNameText;
-    }
-
-    @Override
-    protected JLabel getPositionText() {
-        return positionText;
-    }
-
-    @Override
-    protected JLabel getDateTimeText() {
-        return dateTimeText;
-    }
-
-    @Override
-    protected JLabel getClockInText() {
-        return clockInText;
-    }
-
-    @Override
-    protected JLabel getClockOutText() {
-        return clockOutText;
-    }
-
-    @Override
-    protected JButton getClockInButton() {
-        return clockInButton;
-    }
-
-    @Override
-    protected JButton getClockOutButton() {
-        return clockOutButton;
-    }  
+    @Override protected JLabel  getFullNameText()        { return fullNameText;       }
+    @Override protected JLabel  getPositionText()        { return positionText;       }
+    @Override protected JLabel  getDateTimeText()        { return dateTimeText;       }
+    @Override protected JLabel  getClockInText()         { return clockInText;        }
+    @Override protected JLabel  getClockOutText()        { return clockOutText;       }
+    @Override protected JButton getClockInButton()       { return clockInButton;      }
+    @Override protected JButton getClockOutButton()      { return clockOutButton;     }
+    @Override protected JLabel  getTotalWorkedHoursText() { return totalWorkedHoursText; }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -128,11 +102,11 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
         dateTimeText.setText("Date & Time Here");
         getContentPane().add(dateTimeText, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, 690, 80));
 
-        totalWorkedHoursText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        totalWorkedHoursText.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         totalWorkedHoursText.setForeground(new java.awt.Color(0, 153, 153));
-        totalWorkedHoursText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalWorkedHoursText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         totalWorkedHoursText.setText("0");
-        getContentPane().add(totalWorkedHoursText, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 110, 80, -1));
+        getContentPane().add(totalWorkedHoursText, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 110, 220, -1));
 
         leavesAvailableText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         leavesAvailableText.setForeground(new java.awt.Color(0, 153, 153));
