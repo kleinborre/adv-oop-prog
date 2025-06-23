@@ -8,6 +8,7 @@ import java.sql.*;
 import java.util.List;
 
 import db.DatabaseConnection;
+import java.math.BigDecimal;
 
 public class AttendanceService {
 
@@ -77,97 +78,120 @@ public class AttendanceService {
         }
     }
 
-    // ==== NEW METHODS → for Clock In / Clock Out ===== //
+    // Clock-in and clock out
 
     public boolean clockIn(int employeeID) throws SQLException {
-        String query = "INSERT INTO attendance (employeeID, date, logIn) VALUES (?, CURRENT_DATE, CURRENT_TIME)";
-
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, employeeID);
-
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+        String sql = 
+            "INSERT INTO attendance (employeeID, date, logIn) " +
+            "VALUES (?, CURRENT_DATE, CURRENT_TIME)";
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+            p.setInt(1, employeeID);
+            return p.executeUpdate() > 0;
         }
     }
 
     public boolean clockOut(int employeeID) throws SQLException {
-        String query = "UPDATE attendance SET logOut = CURRENT_TIME " +
-                       "WHERE employeeID = ? AND date = CURRENT_DATE AND logOut IS NULL";
+        // now also calculate workedHours in decimal hours to 2dp
+        String sql =
+            "UPDATE attendance SET " +
+            "  logOut = CURRENT_TIME, " +
+            "  workedHours = ROUND( TIMESTAMPDIFF(SECOND, logIn, CURRENT_TIME )/3600, 2 ) " +
+            "WHERE employeeID = ? AND date = CURRENT_DATE AND logOut IS NULL";
 
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            stmt.setInt(1, employeeID);
-
-            int affectedRows = stmt.executeUpdate();
-            return affectedRows > 0;
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+            p.setInt(1, employeeID);
+            return p.executeUpdate() > 0;
         }
     }
 
-    // Inner class for AttendanceStatus
+    /** Holds today’s in/out **and** the workedHours field. */
     public static class AttendanceStatus {
-        private boolean clockedIn;
-        private boolean clockedOut;
-        private String logIn;
-        private String logOut;
+        private boolean     clockedIn;
+        private boolean     clockedOut;
+        private String      logIn;
+        private String      logOut;
+        private BigDecimal  workedHours = BigDecimal.ZERO;
 
-        public boolean isClockedIn() { return clockedIn; }
-        public void setClockedIn(boolean clockedIn) { this.clockedIn = clockedIn; }
-
-        public boolean isClockedOut() { return clockedOut; }
-        public void setClockedOut(boolean clockedOut) { this.clockedOut = clockedOut; }
-
-        public String getLogIn() { return logIn; }
-        public void setLogIn(String logIn) { this.logIn = logIn; }
-
-        public String getLogOut() { return logOut; }
-        public void setLogOut(String logOut) { this.logOut = logOut; }
+        public boolean isClockedIn()               { return clockedIn; }
+        public void    setClockedIn(boolean v)     { clockedIn = v; }
+        public boolean isClockedOut()              { return clockedOut; }
+        public void    setClockedOut(boolean v)    { clockedOut = v; }
+        public String  getLogIn()                  { return logIn; }
+        public void    setLogIn(String v)          { logIn = v; }
+        public String  getLogOut()                 { return logOut; }
+        public void    setLogOut(String v)         { logOut = v; }
+        public BigDecimal getWorkedHours()         { return workedHours; }
+        public void       setWorkedHours(BigDecimal w) {
+            workedHours = (w != null ? w : BigDecimal.ZERO);
+        }
     }
 
     public AttendanceStatus getTodayAttendanceStatus(int employeeID) throws SQLException {
         AttendanceStatus status = new AttendanceStatus();
 
-        String query = "SELECT logIn, logOut " +
-                       "FROM attendance " +
-                       "WHERE employeeID = ? AND date = CURRENT_DATE";
+        String sql =
+            "SELECT logIn, logOut, workedHours " +
+            "FROM attendance " +
+            "WHERE employeeID = ? AND date = CURRENT_DATE";
 
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+            p.setInt(1, employeeID);
+            try (ResultSet r = p.executeQuery()) {
+                if (r.next()) {
+                    Time in  = r.getTime("logIn");
+                    Time out = r.getTime("logOut");
 
-            stmt.setInt(1, employeeID);
-
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    Time logIn = rs.getTime("logIn");
-                    Time logOut = rs.getTime("logOut");
-
-                    if (logIn != null) {
+                    if (in != null) {
                         status.setClockedIn(true);
-                        status.setLogIn(logIn.toString());
+                        status.setLogIn(in.toString());
                     } else {
                         status.setClockedIn(false);
                         status.setLogIn("Not Clocked-In");
                     }
 
-                    if (logOut != null) {
+                    if (out != null) {
                         status.setClockedOut(true);
-                        status.setLogOut(logOut.toString());
+                        status.setLogOut(out.toString());
                     } else {
                         status.setClockedOut(false);
                         status.setLogOut("Not Clocked-Out");
                     }
+
+                    status.setWorkedHours(r.getBigDecimal("workedHours"));
                 } else {
-                    // No record today → default
                     status.setClockedIn(false);
                     status.setClockedOut(false);
                     status.setLogIn("Not Clocked-In");
                     status.setLogOut("Not Clocked-Out");
+                    status.setWorkedHours(BigDecimal.ZERO);
                 }
             }
         }
 
         return status;
+    }
+    
+    // For displaying WorkedHours per month in Home Dashboard
+    public BigDecimal getMonthlyWorkedHours(int employeeID, int year, int month) throws SQLException {
+        String sql =
+            "SELECT COALESCE(SUM(workedHours),0) AS total " +
+            "FROM attendance " +
+            "WHERE employeeID = ? AND YEAR(`date`) = ? AND MONTH(`date`) = ?";
+        try ( Connection c = DatabaseConnection.getInstance().getConnection();
+              PreparedStatement p = c.prepareStatement(sql) ) {
+            p.setInt(1, employeeID);
+            p.setInt(2, year);
+            p.setInt(3, month);
+            try ( ResultSet r = p.executeQuery() ) {
+                if (r.next()) {
+                    return r.getBigDecimal("total");
+                } else {
+                    return BigDecimal.ZERO;
+                }
+            }
+        }
     }
 }
