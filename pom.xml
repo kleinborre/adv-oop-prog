@@ -80,6 +80,16 @@
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE240</version>
         </dependency>
+
+        <!-- JUnit Testing -->
+
+        <dependency>
+          <groupId>org.junit.jupiter</groupId>
+          <artifactId>junit-jupiter</artifactId>
+          <version>5.13.1</version>
+          <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <name>MO-IT113-Group-9</name>
