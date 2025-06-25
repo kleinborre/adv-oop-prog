@@ -11,10 +11,15 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
     public PageEmployeeHome() {
         initComponents();
 
+        // wire clock in/out → base methods
         clockInButton .addActionListener(e -> performClockIn());
         clockOutButton.addActionListener(e -> performClockOut());
 
-        if (SessionManager.getUserID() != null && SessionManager.getEmployeeID() != 0) {
+        // wire logout → base helper
+        initLogoutButton(logoutButton);
+
+        // launch
+        if (SessionManager.getUserID()!=null && SessionManager.getEmployeeID()!=0) {
             SwingUtilities.invokeLater(() ->
                 initializeHomePage(
                     SessionManager.getUserID(),
@@ -22,19 +27,22 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
                 )
             );
         } else {
-            JOptionPane.showMessageDialog(this, "No active session. Please login first.");
+            JOptionPane.showMessageDialog(
+                this, "No active session. Please login first."
+            );
             new PageLogin().setVisible(true);
             dispose();
         }
     }
 
-    @Override protected JLabel  getFullNameText()        { return fullNameText;       }
-    @Override protected JLabel  getPositionText()        { return positionText;       }
-    @Override protected JLabel  getDateTimeText()        { return dateTimeText;       }
-    @Override protected JLabel  getClockInText()         { return clockInText;        }
-    @Override protected JLabel  getClockOutText()        { return clockOutText;       }
-    @Override protected JButton getClockInButton()       { return clockInButton;      }
-    @Override protected JButton getClockOutButton()      { return clockOutButton;     }
+    // --- delegate getters to your components ---
+    @Override protected JLabel  getFullNameText()         { return fullNameText;         }
+    @Override protected JLabel  getPositionText()         { return positionText;         }
+    @Override protected JLabel  getDateTimeText()         { return dateTimeText;         }
+    @Override protected JLabel  getClockInText()          { return clockInText;          }
+    @Override protected JLabel  getClockOutText()         { return clockOutText;         }
+    @Override protected JButton getClockInButton()        { return clockInButton;        }
+    @Override protected JButton getClockOutButton()       { return clockOutButton;       }
     @Override protected JLabel  getTotalWorkedHoursText() { return totalWorkedHoursText; }
 
     /**
@@ -194,12 +202,7 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
     }//GEN-LAST:event_clockOutButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        // Clear session
-        SessionManager.clearSession();
-
-        // Return to login page
-        new PageLogin().setVisible(true);
-        this.dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void employeeDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeDataButtonActionPerformed

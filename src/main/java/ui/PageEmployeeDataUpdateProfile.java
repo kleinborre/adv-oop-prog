@@ -129,10 +129,12 @@ public class PageEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfile
 
         addressHouseNoField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressHouseNoField.setForeground(new java.awt.Color(0, 102, 102));
+        addressHouseNoField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(addressHouseNoField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 100, -1));
 
         phoneNumberField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         phoneNumberField.setForeground(new java.awt.Color(0, 102, 102));
+        phoneNumberField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(phoneNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 270, 170, -1));
 
         label17.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
@@ -143,6 +145,7 @@ public class PageEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfile
 
         addressProvinceField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressProvinceField.setForeground(new java.awt.Color(0, 102, 102));
+        addressProvinceField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(addressProvinceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, 180, -1));
 
         label18.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
@@ -153,6 +156,7 @@ public class PageEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfile
 
         addressZipCodeField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressZipCodeField.setForeground(new java.awt.Color(0, 102, 102));
+        addressZipCodeField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(addressZipCodeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 480, 260, -1));
 
         label15.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
@@ -163,10 +167,12 @@ public class PageEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfile
 
         addressBarangayField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressBarangayField.setForeground(new java.awt.Color(0, 102, 102));
+        addressBarangayField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(addressBarangayField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 180, -1));
 
         addressCityField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressCityField.setForeground(new java.awt.Color(0, 102, 102));
+        addressCityField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(addressCityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 420, 260, -1));
 
         label16.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
@@ -183,6 +189,7 @@ public class PageEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfile
 
         addressStreetField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressStreetField.setForeground(new java.awt.Color(0, 102, 102));
+        addressStreetField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(addressStreetField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 360, 340, -1));
 
         label13.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
