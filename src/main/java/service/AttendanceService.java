@@ -9,6 +9,8 @@ import java.util.List;
 
 import db.DatabaseConnection;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 public class AttendanceService {
 
@@ -192,6 +194,31 @@ public class AttendanceService {
                     return BigDecimal.ZERO;
                 }
             }
+        }
+    }
+    
+    /**
+     * If yesterday (or any given date) has no logOut, force
+     * a logOut at `cutoff` and compute workedHours accordingly.
+     */
+    public boolean autoClockOutForDate(int employeeID, LocalDate date, LocalTime cutoff)
+        throws SQLException
+    {
+        String sql =
+          "UPDATE attendance SET "
+        + "  logOut = ?, "
+        + "  workedHours = ROUND( "
+        + "    TIMESTAMPDIFF(SECOND, logIn, ?) / 3600, 2 "
+        + "  ) "
+        + "WHERE employeeID = ? AND `date` = ? AND logOut IS NULL";
+        try ( Connection c = DatabaseConnection.getInstance().getConnection();
+              PreparedStatement ps = c.prepareStatement(sql) )
+        {
+            ps.setTime(1, java.sql.Time.valueOf(cutoff));
+            ps.setTime(2, java.sql.Time.valueOf(cutoff));
+            ps.setInt (3, employeeID);
+            ps.setDate(4, java.sql.Date.valueOf(date));
+            return ps.executeUpdate() > 0;
         }
     }
 }
