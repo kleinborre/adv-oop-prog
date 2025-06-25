@@ -11,10 +11,15 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
     public PageManagerHome() {
         initComponents();
 
+        // wire clock in/out → base methods
         clockInButton .addActionListener(e -> performClockIn());
         clockOutButton.addActionListener(e -> performClockOut());
 
-        if (SessionManager.getUserID() != null && SessionManager.getEmployeeID() != 0) {
+        // wire logout → base helper
+        initLogoutButton(logoutButton);
+
+        // launch
+        if (SessionManager.getUserID()!=null && SessionManager.getEmployeeID()!=0) {
             SwingUtilities.invokeLater(() ->
                 initializeHomePage(
                     SessionManager.getUserID(),
@@ -22,19 +27,22 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
                 )
             );
         } else {
-            JOptionPane.showMessageDialog(this, "No active session. Please login first.");
+            JOptionPane.showMessageDialog(
+                this, "No active session. Please login first."
+            );
             new PageLogin().setVisible(true);
             dispose();
         }
     }
-    
-    @Override protected JLabel  getFullNameText()        { return fullNameText;       }
-    @Override protected JLabel  getPositionText()        { return positionText;       }
-    @Override protected JLabel  getDateTimeText()        { return dateTimeText;       }
-    @Override protected JLabel  getClockInText()         { return clockInText;        }
-    @Override protected JLabel  getClockOutText()        { return clockOutText;       }
-    @Override protected JButton getClockInButton()       { return clockInButton;      }
-    @Override protected JButton getClockOutButton()      { return clockOutButton;     }
+
+    // --- delegate getters to your components ---
+    @Override protected JLabel  getFullNameText()         { return fullNameText;         }
+    @Override protected JLabel  getPositionText()         { return positionText;         }
+    @Override protected JLabel  getDateTimeText()         { return dateTimeText;         }
+    @Override protected JLabel  getClockInText()          { return clockInText;          }
+    @Override protected JLabel  getClockOutText()         { return clockOutText;         }
+    @Override protected JButton getClockInButton()        { return clockInButton;        }
+    @Override protected JButton getClockOutButton()       { return clockOutButton;       }
     @Override protected JLabel  getTotalWorkedHoursText() { return totalWorkedHoursText; }
 
     /**
@@ -46,6 +54,7 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        totalWorkedHoursText = new javax.swing.JLabel();
         fullNameText = new javax.swing.JLabel();
         positionText = new javax.swing.JLabel();
         dateTimeText = new javax.swing.JLabel();
@@ -56,7 +65,6 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
         clockInButton = new util.BlueButton();
         clockOutButton = new util.BlueButton();
         leavesAvailableText = new javax.swing.JLabel();
-        totalWorkedHoursText = new javax.swing.JLabel();
         employeeDataButton = new util.BlueButton();
         attendanceButton = new util.BlueButton();
         payslipButton = new util.BlueButton();
@@ -70,6 +78,12 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
         setMaximumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        totalWorkedHoursText.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        totalWorkedHoursText.setForeground(new java.awt.Color(0, 153, 153));
+        totalWorkedHoursText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        totalWorkedHoursText.setText("0");
+        getContentPane().add(totalWorkedHoursText, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 110, 220, -1));
 
         fullNameText.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         fullNameText.setForeground(new java.awt.Color(0, 102, 102));
@@ -127,12 +141,6 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
         leavesAvailableText.setText("0");
         getContentPane().add(leavesAvailableText, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 80, -1));
 
-        totalWorkedHoursText.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        totalWorkedHoursText.setForeground(new java.awt.Color(0, 153, 153));
-        totalWorkedHoursText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        totalWorkedHoursText.setText("0");
-        getContentPane().add(totalWorkedHoursText, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 110, 80, -1));
-
         employeeDataButton.setForeground(new java.awt.Color(0, 102, 102));
         employeeDataButton.setText("Employee Data");
         employeeDataButton.addActionListener(new java.awt.event.ActionListener() {
@@ -181,12 +189,7 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
     }//GEN-LAST:event_employeeDataButtonActionPerformed
 
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
-        // Clear session
-        SessionManager.clearSession();
-
-        // Return to login page
-        new PageLogin().setVisible(true);
-        this.dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     /**
