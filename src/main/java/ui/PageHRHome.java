@@ -185,7 +185,7 @@ public class PageHRHome extends ui.base.AbstractHomePage {
 
     private void employeeDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeDataButtonActionPerformed
         // Open PageEmployeeData
-        new PageEmployeeData().setVisible(true);
+        new PageHREmployeeData().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_employeeDataButtonActionPerformed
 
