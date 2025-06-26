@@ -291,7 +291,7 @@ public class PageHREmployeeData extends ui.base.AbstractProfilePage {
 
     private void editProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileButtonActionPerformed
         // Open Edit Profile page
-        new PageEmployeeDataUpdateProfile().setVisible(true);
+        new PageHREmployeeDataUpdateProfile().setVisible(true);
         this.dispose(); // Close current page
     }//GEN-LAST:event_editProfileButtonActionPerformed
 
