@@ -130,73 +130,73 @@ public class PageEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfile
         addressHouseNoField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressHouseNoField.setForeground(new java.awt.Color(0, 102, 102));
         addressHouseNoField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        getContentPane().add(addressHouseNoField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 100, -1));
+        getContentPane().add(addressHouseNoField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 370, 100, -1));
 
         phoneNumberField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         phoneNumberField.setForeground(new java.awt.Color(0, 102, 102));
         phoneNumberField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        getContentPane().add(phoneNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 270, 170, -1));
+        getContentPane().add(phoneNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 280, 170, -1));
 
-        label17.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label17.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label17.setForeground(new java.awt.Color(51, 51, 51));
         label17.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label17.setText("Province");
-        getContentPane().add(label17, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 460, 210, -1));
+        getContentPane().add(label17, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 470, 210, -1));
 
         addressProvinceField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressProvinceField.setForeground(new java.awt.Color(0, 102, 102));
         addressProvinceField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        getContentPane().add(addressProvinceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 480, 180, -1));
+        getContentPane().add(addressProvinceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 490, 180, -1));
 
-        label18.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label18.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label18.setForeground(new java.awt.Color(51, 51, 51));
         label18.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label18.setText("Zip Code");
-        getContentPane().add(label18, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 460, 140, -1));
+        getContentPane().add(label18, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 470, 140, -1));
 
         addressZipCodeField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressZipCodeField.setForeground(new java.awt.Color(0, 102, 102));
         addressZipCodeField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        getContentPane().add(addressZipCodeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 480, 260, -1));
+        getContentPane().add(addressZipCodeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 490, 260, -1));
 
-        label15.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label15.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label15.setForeground(new java.awt.Color(51, 51, 51));
         label15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label15.setText("Barangay");
-        getContentPane().add(label15, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 400, 210, -1));
+        getContentPane().add(label15, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 410, 210, -1));
 
         addressBarangayField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressBarangayField.setForeground(new java.awt.Color(0, 102, 102));
         addressBarangayField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        getContentPane().add(addressBarangayField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 420, 180, -1));
+        getContentPane().add(addressBarangayField, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 430, 180, -1));
 
         addressCityField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressCityField.setForeground(new java.awt.Color(0, 102, 102));
         addressCityField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        getContentPane().add(addressCityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 420, 260, -1));
+        getContentPane().add(addressCityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 430, 260, -1));
 
-        label16.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label16.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label16.setForeground(new java.awt.Color(51, 51, 51));
         label16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label16.setText("City / Municipality");
-        getContentPane().add(label16, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 400, 140, -1));
+        getContentPane().add(label16, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 410, 140, -1));
 
-        label14.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label14.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label14.setForeground(new java.awt.Color(51, 51, 51));
         label14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label14.setText("Street");
-        getContentPane().add(label14, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 340, 220, -1));
+        getContentPane().add(label14, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 350, 220, -1));
 
         addressStreetField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         addressStreetField.setForeground(new java.awt.Color(0, 102, 102));
         addressStreetField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        getContentPane().add(addressStreetField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 360, 340, -1));
+        getContentPane().add(addressStreetField, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, 340, -1));
 
-        label13.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        label13.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label13.setForeground(new java.awt.Color(51, 51, 51));
         label13.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label13.setText("House No.");
-        getContentPane().add(label13, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 340, 210, -1));
+        getContentPane().add(label13, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 350, 210, -1));
 
         employeeIDText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         employeeIDText.setForeground(new java.awt.Color(0, 51, 51));
@@ -238,49 +238,49 @@ public class PageEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfile
         label.setForeground(new java.awt.Color(51, 51, 51));
         label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label.setText("Surname");
-        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 180, 210, -1));
+        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, 210, -1));
 
         label9.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label9.setForeground(new java.awt.Color(51, 51, 51));
         label9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label9.setText("First Name");
-        getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 210, -1));
+        getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 220, 210, -1));
 
         label1.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label1.setForeground(new java.awt.Color(51, 51, 51));
         label1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label1.setText("Birthdate");
-        getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 240, 210, -1));
+        getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 250, 210, -1));
 
         lastNameText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         lastNameText.setForeground(new java.awt.Color(0, 102, 102));
         lastNameText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         lastNameText.setText("Last Name");
-        getContentPane().add(lastNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 180, 360, -1));
+        getContentPane().add(lastNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 190, 360, -1));
 
         firstNameText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         firstNameText.setForeground(new java.awt.Color(0, 102, 102));
         firstNameText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         firstNameText.setText("First Name");
-        getContentPane().add(firstNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 210, 360, -1));
+        getContentPane().add(firstNameText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 360, -1));
 
         birthdayText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         birthdayText.setForeground(new java.awt.Color(0, 102, 102));
         birthdayText.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         birthdayText.setText("Birthdate");
-        getContentPane().add(birthdayText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 240, 360, -1));
+        getContentPane().add(birthdayText, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 250, 360, -1));
 
         label2.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label2.setForeground(new java.awt.Color(51, 51, 51));
         label2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label2.setText("Phone Number");
-        getContentPane().add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 270, 210, -1));
+        getContentPane().add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 280, 210, -1));
 
         label3.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label3.setForeground(new java.awt.Color(51, 51, 51));
         label3.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label3.setText("Address");
-        getContentPane().add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 300, 470, 30));
+        getContentPane().add(label3, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 470, 30));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ProfileUpdate.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
