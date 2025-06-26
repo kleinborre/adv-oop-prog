@@ -2,11 +2,6 @@ package ui;
 
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
-import pojo.Employee;
-import pojo.User;
-import util.SessionManager;
-import util.LightButton;
-import util.BlueButton;
 
 public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCredentialPage{
 
@@ -236,7 +231,7 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
         label7.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label7.setForeground(new java.awt.Color(51, 51, 51));
         label7.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label7.setText("Username");
+        label7.setText("Name");
         getContentPane().add(label7, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 250, 130, -1));
 
         label12.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N

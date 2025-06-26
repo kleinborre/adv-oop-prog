@@ -279,7 +279,7 @@ public class PageHREmployeeData extends ui.base.AbstractProfilePage {
 
     private void modifyCredentialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyCredentialsButtonActionPerformed
         // Open Modify Credentials page
-        new PageEmployeeDataUpdateCredential().setVisible(true);
+        new PageHREmployeeDataUpdateCredential().setVisible(true);
         this.dispose(); // Close current page
     }//GEN-LAST:event_modifyCredentialsButtonActionPerformed
 
