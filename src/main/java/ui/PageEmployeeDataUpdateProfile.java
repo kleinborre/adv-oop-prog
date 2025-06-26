@@ -49,7 +49,7 @@ public class PageEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfile
     @Override protected JLabel getFirstNameText()    { return firstNameText;    }
     @Override protected JLabel getBirthdayText()     { return birthdayText;     }
 
-    @Override protected JTextField getPhoneNumberField() { return phoneNumberField;   }
+    @Override protected JTextField getPhoneNumberField() { return phoneNumberField;    }
     @Override protected JTextField getHouseNoField()     { return addressHouseNoField; }
     @Override protected JTextField getStreetField()      { return addressStreetField;  }
     @Override protected JTextField getBarangayField()    { return addressBarangayField;}
