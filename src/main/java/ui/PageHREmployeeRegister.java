@@ -24,7 +24,6 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         setTitle("MotorPH Payroll System");
         setMaximumSize(new java.awt.Dimension(1040, 590));
         setMinimumSize(new java.awt.Dimension(1040, 590));
-        setPreferredSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -105,6 +104,5 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
     private javax.swing.JLabel background;
     private util.LightButton cancelButton;
     private util.BlueButton confirmButton;
-    private util.BlueButton updateButton;
     // End of variables declaration//GEN-END:variables
 }

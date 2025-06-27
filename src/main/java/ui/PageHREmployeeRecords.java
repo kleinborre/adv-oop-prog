@@ -42,17 +42,17 @@ public class PageHREmployeeRecords extends javax.swing.JFrame {
         employeeRecordsTable.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         employeeRecordsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Employee ID", "Account Status", "Employment Status", "Last Name", "First Name", "Birthdate", "Contact Number", "Address", "Position", "Department", "SSS No.", "Philhealth No.", "TIN No.", "Pag-Ibig No."
+                "Employee ID", "Account Status", "Employment Status", "Name", "Birthdate", "Contact Number", "Address", "Position", "Department", "SSS No.", "Philhealth No.", "TIN No.", "Pag-Ibig No."
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
