@@ -7,9 +7,12 @@ import pojo.Employee;
 import db.DatabaseConnection;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeService {
@@ -141,5 +144,98 @@ public class EmployeeService {
         } catch (SQLException e) {
             throw new RuntimeException("Error deleting employee", e);
         }
+    }
+    
+    public String getDepartmentName(int departmentID) {
+        String sql = "SELECT departmentName FROM department WHERE departmentID = ?";
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+          p.setInt(1, departmentID);
+          try (ResultSet r = p.executeQuery()) {
+            if (r.next()) return r.getString("departmentName");
+          }
+        } catch (SQLException e) {
+          throw new RuntimeException("Error fetching department name", e);
+        }
+        return "";
+    }
+
+    /**
+     * Fetches every employee’s full dashboard row—joins authentication,
+     * position, status, govid, address, department, supervisor—all in one go,
+     * optionally filtered by accountStatus (or "All").
+     */
+    public List<Object[]> getAllEmployeeRecords(String filterStatus) {
+        String sql =
+            "SELECT\n" +
+            "  e.employeeID,\n" +
+            "  a.accountStatus,\n" +
+            "  s.statusType      AS employmentStatus,\n" +
+            "  CONCAT(e.lastName, ', ', e.firstName) AS fullName,\n" +
+            "  e.birthDate,\n" +
+            "  e.phoneNo,\n" +
+            "  -- new CONCAT_WS here:\n" +
+            "  CONCAT_WS(\", \",\n" +
+            "     CONCAT_WS(' ', a2.houseNo, a2.street),\n" +
+            "     a2.barangay,\n" +
+            "     a2.city,\n" +
+            "     a2.province,\n" +
+            "     COALESCE(CAST(a2.zipCode AS CHAR), '')\n" +
+            "  ) AS address,\n" +
+            "  p.position,\n" +
+            "  d.departmentName,\n" +
+            "  COALESCE(CONCAT(sup.lastName, ', ', sup.firstName),'No Supervisor') AS supervisorName,\n" +
+            "  g.sss       AS sssNo,\n" +
+            "  g.philhealth AS philhealthNo,\n" +
+            "  g.tin       AS tinNo,\n" +
+            "  g.pagibig   AS pagibigNo\n" +
+            "FROM employee e\n" +
+            "  JOIN authentication a    ON e.userID       = a.userID\n" +
+            "  JOIN status s            ON e.statusID    = s.statusID\n" +
+            "  JOIN position p          ON e.positionID  = p.positionID\n" +
+            "  JOIN govid g             ON e.employeeID  = g.employeeID\n" +
+            "  JOIN employeeaddress ea  ON e.employeeID  = ea.employeeID\n" +
+            "  JOIN address a2          ON ea.addressID   = a2.addressID\n" +
+            "  JOIN department d        ON e.departmentID= d.departmentID\n" +
+            "  LEFT JOIN employee sup   ON e.supervisorID= sup.employeeID\n" +
+            "WHERE (? = 'All' OR a.accountStatus = ?)";
+
+        List<Object[]> rows = new ArrayList<>();
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+
+            // bind filterStatus twice
+            p.setString(1, filterStatus);
+            p.setString(2, filterStatus);
+
+            try (ResultSet r = p.executeQuery()) {
+                while (r.next()) {
+                    Date bd = r.getDate("birthDate");
+                    String bdText = bd!=null ? bd.toLocalDate().format(df) : "";
+                    rows.add(new Object[]{
+                        r.getInt("employeeID"),
+                        r.getString("accountStatus"),
+                        r.getString("employmentStatus"),
+                        r.getString("fullName"),
+                        bdText,
+                        r.getString("phoneNo"),
+                        r.getString("address"),    // ← now never NULL
+                        r.getString("position"),
+                        r.getString("departmentName"),
+                        r.getString("supervisorName"),
+                        r.getString("sssNo"),
+                        r.getString("philhealthNo"),
+                        r.getString("tinNo"),
+                        r.getString("pagibigNo")
+                    });
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException("Error retrieving employee records", ex);
+        }
+
+        return rows;
     }
 }

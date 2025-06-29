@@ -296,7 +296,8 @@ public class PageHREmployeeData extends ui.base.AbstractProfilePage {
     }//GEN-LAST:event_editProfileButtonActionPerformed
 
     private void employeeRecordsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeRecordsButtonActionPerformed
-        // TODO add your handling code here:
+        new PageHREmployeeRecords().setVisible(true);
+        this.dispose(); // Close current page
     }//GEN-LAST:event_employeeRecordsButtonActionPerformed
 
     /**

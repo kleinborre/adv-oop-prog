@@ -13,11 +13,7 @@ public class UserService {
     private UserDAO userDAO;
 
     public UserService() {
-        try {
-            userDAO = new UserDAOImpl();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error initializing UserDAO", e);
-        }
+        userDAO = new UserDAOImpl();
     }
 
     public User getUserByUserID(String userID) {
