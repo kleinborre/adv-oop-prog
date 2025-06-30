@@ -118,6 +118,7 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         getContentPane().add(label2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, 90, -1));
 
         employmentStatusComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        employmentStatusComboBox.setForeground(new java.awt.Color(0, 102, 102));
         employmentStatusComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Probationary", "Regular" }));
         getContentPane().add(employmentStatusComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 190, -1));
 
@@ -272,14 +273,17 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         getContentPane().add(lastNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, 190, -1));
 
         supervisorComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        supervisorComboBox.setForeground(new java.awt.Color(0, 102, 102));
         supervisorComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Garcia, Manuel III", "Lim, Antonio", "Aquino, Bianca Sofia", "Reyes, Isabella", "Villanueva, Andrea Mae", "San Jose, Brad", "Romualdez, Alice", "Alvaro, Roderick", "Salcedo, Anthony", "Mata, Christian", "De Leon, Selena" }));
         getContentPane().add(supervisorComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 320, 190, -1));
 
         departmentComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        departmentComboBox.setForeground(new java.awt.Color(0, 102, 102));
         departmentComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer Service", "Supply Chain & Logistics", "Sales & Marketing", "Payroll", "Accounting", "HR", "IT", "Executive" }));
         getContentPane().add(departmentComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 380, 190, -1));
 
         positionComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        positionComboBox.setForeground(new java.awt.Color(0, 102, 102));
         positionComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Customer Service and Relations", "Supply Chain and Logistics", "Sales & Marketing", "Account Rank and File", "Account Team Leader", "Account Manager", "Payroll Rank and File", "Payroll Team Leader", "Payroll Manager", "Accounting Head", "HR Rank and File", "HR Team Leader", "HR Manager", "IT Operations and Systems", "Chief Marketing Officer", "Chief Finance Officer", "Chief Operating Officer", "Chief Executive Officer" }));
         getContentPane().add(positionComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 260, 190, -1));
 
@@ -290,6 +294,7 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         getContentPane().add(label25, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, 90, -1));
 
         phoneAllowanceComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        phoneAllowanceComboBox.setForeground(new java.awt.Color(0, 102, 102));
         phoneAllowanceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "₱500", "₱800", "₱1000", "₱2000" }));
         getContentPane().add(phoneAllowanceComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 440, 190, -1));
 
@@ -313,15 +318,18 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
 
         riceAllowanceField.setEditable(false);
         riceAllowanceField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        riceAllowanceField.setForeground(new java.awt.Color(0, 102, 102));
         riceAllowanceField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         riceAllowanceField.setText("₱1,500");
         getContentPane().add(riceAllowanceField, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 500, 190, -1));
 
         basicSalaryComboBox1.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        basicSalaryComboBox1.setForeground(new java.awt.Color(0, 102, 102));
         basicSalaryComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "₱22,500", "₱23,250", "₱24,000", "₱24,750", "₱38,475", "₱41,850", "₱42,975 ", "₱50,825", "₱52,670", "₱53,500", "₱60,000", "₱90,000" }));
         getContentPane().add(basicSalaryComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 440, 190, -1));
 
         clothingAllowanceComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        clothingAllowanceComboBox.setForeground(new java.awt.Color(0, 102, 102));
         clothingAllowanceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "₱500", "₱800", "₱1000" }));
         getContentPane().add(clothingAllowanceComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 500, 190, -1));
 

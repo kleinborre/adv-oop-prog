@@ -87,7 +87,7 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
         cancelButton = new util.LightButton();
         updateButton = new util.BlueButton();
         backButton = new util.LightButton();
-        Background = new javax.swing.JLabel();
+        background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MotorPH Payroll System");
@@ -267,15 +267,15 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
-        Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ProfileUpdateCredentials.png"))); // NOI18N
-        getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ProfileUpdateCredentials.png"))); // NOI18N
+        getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-//        confirmCancelOrBack();
+        // TODO add your handling code here:
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
@@ -283,19 +283,19 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-//        confirmCancelOrBack();
+        // TODO add your handling code here:
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void passwordCurrentFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordCurrentFieldActionPerformed
-
+        // TODO add your handling code here:
     }//GEN-LAST:event_passwordCurrentFieldActionPerformed
 
     private void passwordNewFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordNewFieldActionPerformed
-
+        // TODO add your handling code here:
     }//GEN-LAST:event_passwordNewFieldActionPerformed
 
     private void passwordReEnterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordReEnterFieldActionPerformed
-
+        // TODO add your handling code here:
     }//GEN-LAST:event_passwordReEnterFieldActionPerformed
 
     /**
@@ -334,8 +334,8 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Background;
     private util.LightButton backButton;
+    private javax.swing.JLabel background;
     private util.LightButton cancelButton;
     private javax.swing.JLabel emailText;
     private javax.swing.JLabel employeeIDText;
