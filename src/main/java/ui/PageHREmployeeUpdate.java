@@ -1,8 +1,19 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ */
 package ui;
 
-public class PageHREmployeeRegister extends javax.swing.JFrame {
+/**
+ *
+ * @author STUDY MODE
+ */
+public class PageHREmployeeUpdate extends javax.swing.JFrame {
 
-    public PageHREmployeeRegister() {
+    /**
+     * Creates new form PageHREmployeeUpdate
+     */
+    public PageHREmployeeUpdate() {
         initComponents();
     }
 
@@ -19,8 +30,8 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         confirmButton = new util.BlueButton();
         backButton = new util.LightButton();
         label1 = new javax.swing.JLabel();
-        label = new javax.swing.JLabel();
         label9 = new javax.swing.JLabel();
+        label = new javax.swing.JLabel();
         label2 = new javax.swing.JLabel();
         employmentStatusComboBox = new javax.swing.JComboBox<>();
         label15 = new javax.swing.JLabel();
@@ -43,13 +54,13 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         label11 = new javax.swing.JLabel();
         provinceField = new javax.swing.JTextField();
         label12 = new javax.swing.JLabel();
-        cityMunicipalityField = new javax.swing.JTextField();
         dateOfBirthCalendar = new com.toedter.calendar.JCalendar();
+        cityMunicipalityField = new javax.swing.JTextField();
         label23 = new javax.swing.JLabel();
         houseNumberField = new javax.swing.JTextField();
         label24 = new javax.swing.JLabel();
-        zipCodeField = new javax.swing.JTextField();
         firstNameField = new javax.swing.JTextField();
+        zipCodeField = new javax.swing.JTextField();
         lastNameField = new javax.swing.JTextField();
         supervisorComboBox = new javax.swing.JComboBox<>();
         departmentComboBox = new javax.swing.JComboBox<>();
@@ -99,17 +110,17 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         label1.setText("Last Name");
         getContentPane().add(label1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 90, -1));
 
-        label.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        label.setForeground(new java.awt.Color(51, 51, 51));
-        label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label.setText("Employment Status");
-        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 140, -1));
-
         label9.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label9.setForeground(new java.awt.Color(51, 51, 51));
         label9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label9.setText("First Name");
         getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 90, -1));
+
+        label.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        label.setForeground(new java.awt.Color(51, 51, 51));
+        label.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label.setText("Employment Status");
+        getContentPane().add(label, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 140, -1));
 
         label2.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label2.setForeground(new java.awt.Color(51, 51, 51));
@@ -232,12 +243,12 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         label12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label12.setText("City / Municipality");
         getContentPane().add(label12, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, 190, -1));
+        getContentPane().add(dateOfBirthCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
 
         cityMunicipalityField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         cityMunicipalityField.setForeground(new java.awt.Color(0, 102, 102));
         cityMunicipalityField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(cityMunicipalityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 190, -1));
-        getContentPane().add(dateOfBirthCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
 
         label23.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label23.setForeground(new java.awt.Color(51, 51, 51));
@@ -256,15 +267,15 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         label24.setText("Zip Code");
         getContentPane().add(label24, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 480, 90, -1));
 
-        zipCodeField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        zipCodeField.setForeground(new java.awt.Color(0, 102, 102));
-        zipCodeField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        getContentPane().add(zipCodeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 500, 190, -1));
-
         firstNameField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         firstNameField.setForeground(new java.awt.Color(0, 102, 102));
         firstNameField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(firstNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 320, 190, -1));
+
+        zipCodeField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        zipCodeField.setForeground(new java.awt.Color(0, 102, 102));
+        zipCodeField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        getContentPane().add(zipCodeField, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 500, 190, -1));
 
         lastNameField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         lastNameField.setForeground(new java.awt.Color(0, 102, 102));
@@ -325,7 +336,7 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
         clothingAllowanceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "₱500", "₱800", "₱1000" }));
         getContentPane().add(clothingAllowanceComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 500, 190, -1));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/HRCreateEmployee.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/HRUpdateEmployee.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -357,20 +368,20 @@ public class PageHREmployeeRegister extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageHREmployeeUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageHREmployeeUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageHREmployeeUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageHREmployeeUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PageHREmployeeRegister().setVisible(true);
+                new PageHREmployeeUpdate().setVisible(true);
             }
         });
     }
