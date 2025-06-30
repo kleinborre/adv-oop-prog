@@ -8,19 +8,21 @@ public class User {
     private String password;           // authentication.passwordHash
     private String userRole;           // userrole.role
     private int positionID;            // employee.positionID
+    private String accountStatus;   
 
     // Constructors
 
     public User() {
     }
 
-    public User(String userID, String username, String email, String password, String userRole, int positionID) {
+    public User(String userID, String username, String email, String password, String userRole, int positionID, String accountStatus) {
         this.userID = userID;
         this.username = username;
         this.email = email;
         this.password = password;
         this.userRole = userRole;
         this.positionID = positionID;
+        this.accountStatus = accountStatus;
     }
 
     // Getters and Setters
@@ -71,5 +73,13 @@ public class User {
 
     public void setPositionID(int positionID) {
         this.positionID = positionID;
+    }
+    
+    public String getAccountStatus() {
+        return accountStatus;
+    }
+    
+    public void setAccountStatus(String accountStatus) {
+        this.accountStatus = accountStatus;
     }
 }

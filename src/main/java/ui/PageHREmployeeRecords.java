@@ -1,10 +1,36 @@
 package ui;
 
-public class PageHREmployeeRecords extends javax.swing.JFrame {
+public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
 
     public PageHREmployeeRecords() {
         initComponents();
-    }
+
+        setupRecordsPage(
+          employeeRecordsTable,
+          statusFilter,
+          ownRecordButton,
+          newEmployeeButton,
+          backButton,
+
+          // 1) View Own Record
+          () -> {
+            new PageHREmployeeData().setVisible(true);
+            dispose();
+          },
+
+          // 2) New Employee
+          () -> {
+            new PageHREmployeeRegister().setVisible(true);
+            dispose();
+          },
+
+          // 3) Back to HR Home
+          () -> {
+            new PageHRHome().setVisible(true);
+            dispose();
+          }
+        );
+      }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -16,17 +42,16 @@ public class PageHREmployeeRecords extends javax.swing.JFrame {
     private void initComponents() {
 
         label9 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        employeeRecordsTable = new javax.swing.JTable();
         ownRecordButton = new util.LightButton();
         newEmployeeButton = new util.LightButton();
         backButton = new util.LightButton();
         statusFilter = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        employeeRecordsTable = new javax.swing.JTable();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MotorPH Payroll System");
-        setMaximumSize(new java.awt.Dimension(1040, 590));
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -36,38 +61,6 @@ public class PageHREmployeeRecords extends javax.swing.JFrame {
         label9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label9.setText("Filter by Status:");
         getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, 110, -1));
-
-        jScrollPane1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-
-        employeeRecordsTable.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        employeeRecordsTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Employee ID", "Account Status", "Employment Status", "Name", "Birthdate", "Contact Number", "Address", "Position", "Department", "SSS No.", "Philhealth No.", "TIN No.", "Pag-Ibig No."
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false, false, false, false
-            };
-
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
-            }
-        });
-        employeeRecordsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        employeeRecordsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        employeeRecordsTable.setMaximumSize(new java.awt.Dimension(3000, 80));
-        employeeRecordsTable.setMinimumSize(new java.awt.Dimension(3000, 80));
-        employeeRecordsTable.setPreferredSize(new java.awt.Dimension(3000, 80));
-        employeeRecordsTable.getTableHeader().setReorderingAllowed(false);
-        jScrollPane1.setViewportView(employeeRecordsTable);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 940, 400));
 
         ownRecordButton.setForeground(new java.awt.Color(0, 102, 102));
         ownRecordButton.setText("View Own Record");
@@ -95,6 +88,22 @@ public class PageHREmployeeRecords extends javax.swing.JFrame {
         statusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Pending", "Deactivated" }));
         getContentPane().add(statusFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 84, 140, 30));
 
+        employeeRecordsTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        employeeRecordsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        jScrollPane1.setViewportView(employeeRecordsTable);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 940, 400));
+
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/HREmployeeRecords.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -107,9 +116,7 @@ public class PageHREmployeeRecords extends javax.swing.JFrame {
     }//GEN-LAST:event_ownRecordButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // Back to Employee Home
-        new PageHRHome().setVisible(true);
-        this.dispose(); // Close current page
+        // TODO add your handling code here:
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
