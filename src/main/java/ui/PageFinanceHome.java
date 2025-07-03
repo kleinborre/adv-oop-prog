@@ -19,7 +19,8 @@ public class PageFinanceHome extends ui.base.AbstractHomePage {
         initLogoutButton(logoutButton);
 
         // launch
-        if (SessionManager.getUserID()!=null && SessionManager.getEmployeeID()!=0) {
+        if (SessionManager.getUserID() != null
+         && SessionManager.getEmployeeID() != 0) {
             SwingUtilities.invokeLater(() ->
                 initializeHomePage(
                     SessionManager.getUserID(),
@@ -33,6 +34,13 @@ public class PageFinanceHome extends ui.base.AbstractHomePage {
             new PageLogin().setVisible(true);
             dispose();
         }
+    }
+
+    // --- implement the abstract click action ---
+    @Override
+    protected void onProfileLabelClick() {
+        new PageEmployeeData().setVisible(true);
+        dispose();
     }
 
     // --- delegate getters to your components ---
@@ -144,7 +152,7 @@ public class PageFinanceHome extends ui.base.AbstractHomePage {
         getContentPane().add(leavesAvailableText, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 80, -1));
 
         employeeDataButton.setForeground(new java.awt.Color(0, 102, 102));
-        employeeDataButton.setText("Employee Data");
+        employeeDataButton.setText("My Profile");
         employeeDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 employeeDataButtonActionPerformed(evt);

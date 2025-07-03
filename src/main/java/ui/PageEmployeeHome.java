@@ -19,7 +19,8 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
         initLogoutButton(logoutButton);
 
         // launch
-        if (SessionManager.getUserID()!=null && SessionManager.getEmployeeID()!=0) {
+        if (SessionManager.getUserID() != null
+         && SessionManager.getEmployeeID() != 0) {
             SwingUtilities.invokeLater(() ->
                 initializeHomePage(
                     SessionManager.getUserID(),
@@ -33,6 +34,13 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
             new PageLogin().setVisible(true);
             dispose();
         }
+    }
+
+    // --- implement the abstract click action ---
+    @Override
+    protected void onProfileLabelClick() {
+        new PageEmployeeData().setVisible(true);
+        dispose();
     }
 
     // --- delegate getters to your components ---
@@ -154,28 +162,28 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
 
         overtimeButton.setForeground(new java.awt.Color(0, 102, 102));
         overtimeButton.setText("Overtime");
-        getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 180, -1));
+        getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, 180, -1));
 
         leaveButton.setForeground(new java.awt.Color(0, 102, 102));
         leaveButton.setText("Leave");
-        getContentPane().add(leaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 180, -1));
+        getContentPane().add(leaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 180, -1));
 
         payslipButton.setForeground(new java.awt.Color(0, 102, 102));
         payslipButton.setText("Payslip");
-        getContentPane().add(payslipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 180, -1));
+        getContentPane().add(payslipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 180, -1));
 
         attendanceButton.setForeground(new java.awt.Color(0, 102, 102));
         attendanceButton.setText("Attendance");
-        getContentPane().add(attendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 180, -1));
+        getContentPane().add(attendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 180, -1));
 
         employeeDataButton.setForeground(new java.awt.Color(0, 102, 102));
-        employeeDataButton.setText("Employee Data");
+        employeeDataButton.setText("My Profile");
         employeeDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 employeeDataButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(employeeDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 180, -1));
+        getContentPane().add(employeeDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 180, -1));
 
         logoutButton.setForeground(new java.awt.Color(0, 102, 102));
         logoutButton.setText("Logout");

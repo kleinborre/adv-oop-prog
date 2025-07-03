@@ -7,13 +7,16 @@ import util.SessionManager;
 import ui.PageLogin;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.awt.event.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.sql.SQLException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.YearMonth;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class AbstractHomePage extends JFrame {
 
@@ -26,12 +29,23 @@ public abstract class AbstractHomePage extends JFrame {
     public boolean isClockedInToday  = false;
     public boolean isClockedOutToday = false;
 
+    // Track today’s clock‐in/out instants
+    private LocalDateTime clockInDateTime  = null;
+    private LocalDateTime clockOutDateTime = null;
+
     protected AttendanceService attendanceService = new AttendanceService();
 
+    /**
+     * Call once you have userID & employeeID.
+     */
     protected void initializeHomePage(String userID, int employeeID) {
         this.userID     = userID;
         this.employeeID = employeeID;
         loadEmployeeInfo();
+
+        installProfileClick(getFullNameText());
+        installProfileClick(getPositionText());
+
         startClock();
         refreshClockInOutStatus();
     }
@@ -48,41 +62,75 @@ public abstract class AbstractHomePage extends JFrame {
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-                "Error loading employee info: " + ex.getMessage());
+                "Error loading employee info: " + ex.getMessage(),
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
             ex.printStackTrace();
         }
     }
 
-    protected void startClock() {
-        clockTimer = new Timer(1000, new ActionListener() {
-            @Override public void actionPerformed(ActionEvent evt) {
-                LocalDateTime now = LocalDateTime.now();
-
-                // date + big time
-                String datePart = now.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"));
-                String timePart = now.format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
-                String html =
-                  "<html><div align='center'>"
-                +   "<font size='6'>" + datePart + "</font><br>"
-                +   "<font size='8'>" + timePart + "</font>"
-                + "</div></html>";
-                getDateTimeText().setText(html);
-
-                // auto–clock-out at 6:50am once/day
-                if (now.getHour()==6 && now.getMinute()==50) {
-                    LocalDate today = now.toLocalDate();
-                    if (!today.equals(lastAutoDate)) {
-                        try {
-                            autoClockOutYesterday();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        lastAutoDate = today;
-                        refreshClockInOutStatus();
-                    }
-                }
+    private void installProfileClick(JLabel lbl) {
+        lbl.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        Color normal = lbl.getForeground();
+        Color hover  = new Color(0, 102, 204);
+        lbl.addMouseListener(new MouseAdapter() {
+            @Override public void mouseEntered(MouseEvent e) {
+                String txt = lbl.getText();
+                lbl.setText("<html><u>" + txt + "</u></html>");
+                lbl.setForeground(hover);
+            }
+            @Override public void mouseExited(MouseEvent e) {
+                String txt = lbl.getText().replaceAll("\\<.*?\\>", "");
+                lbl.setText(txt);
+                lbl.setForeground(normal);
+            }
+            @Override public void mouseClicked(MouseEvent e) {
+                onProfileLabelClick();
             }
         });
+    }
+
+    /** Subclasses implement to open their profile/details page */
+    protected abstract void onProfileLabelClick();
+
+    protected void startClock() {
+        clockTimer = new Timer(1000, evt -> {
+            LocalDateTime now = LocalDateTime.now();
+
+            // update date/time display
+            String datePart = now.format(DateTimeFormatter.ofPattern("MMMM dd, yyyy"));
+            String timePart = now.format(DateTimeFormatter.ofPattern("hh:mm:ss a"));
+            String html =
+              "<html><div align='center'>"
+            +   "<font size='6'>" + datePart + "</font><br>"
+            +   "<font size='8'>" + timePart + "</font>"
+            + "</div></html>";
+            getDateTimeText().setText(html);
+
+            // auto–clock‐out at 6:50 once/day
+            if (now.getHour()==6 && now.getMinute()==50) {
+                LocalDate today = now.toLocalDate();
+                if (!today.equals(lastAutoDate)) {
+                    try { autoClockOutYesterday(); }
+                    catch (Exception e) { e.printStackTrace(); }
+                    lastAutoDate = today;
+                    refreshClockInOutStatus();
+                }
+            }
+
+            // update Clock‐In button state
+            updateClockInButtonAvailability();
+
+            // update hours display
+            try {
+                updateWorkedHoursDisplay(now);
+            } catch (SQLException ex) {
+                Logger.getLogger(AbstractHomePage.class.getName())
+                      .log(Level.SEVERE, null, ex);
+            }
+        });
+        clockTimer.setInitialDelay(0);
         clockTimer.start();
     }
 
@@ -92,37 +140,51 @@ public abstract class AbstractHomePage extends JFrame {
         attendanceService.autoClockOutForDate(employeeID, yesterday, cutoff);
     }
 
+    private void updateClockInButtonAvailability() {
+        boolean shouldEnable;
+        if (isClockedInToday) {
+            shouldEnable = false;
+        } else {
+            LocalDate today = LocalDate.now();
+            DayOfWeek dow   = today.getDayOfWeek();
+            LocalTime now   = LocalTime.now();
+            boolean weekend = (dow==DayOfWeek.SATURDAY || dow==DayOfWeek.SUNDAY);
+            boolean tooEarly= now.isBefore(LocalTime.of(6,50));
+            boolean tooLate = now.isAfter(LocalTime.of(16,0));
+            shouldEnable = !weekend && !tooEarly && !tooLate;
+        }
+        getClockInButton().setEnabled(shouldEnable);
+    }
+
     public void performClockIn() {
         try {
-            if (isWeekend()) {
-                JOptionPane.showMessageDialog(this,
-                  "Cannot Clock-In during day-off (Saturday or Sunday).");
-                return;
-            }
-            if (isOutsideWorkingHours()) {
-                JOptionPane.showMessageDialog(this,
-                  "Cannot Clock-In outside 6:50 AM–4:00 PM.");
-                return;
-            }
             if (isClockedInToday) {
-                JOptionPane.showMessageDialog(this, "Already Clocked-In today.");
+                JOptionPane.showMessageDialog(this,
+                  "You have already clocked in today.");
                 return;
             }
-
             boolean ok = attendanceService.clockIn(employeeID);
             if (ok) {
+                clockInDateTime = LocalDateTime.now();
+                clockOutDateTime = null;
                 isClockedInToday = true;
                 getClockInText().setText(getCurrentTime());
-                getClockInButton().setEnabled(false);
                 getClockOutButton().setEnabled(true);
-                JOptionPane.showMessageDialog(this, "Clock-In successful!");
+                JOptionPane.showMessageDialog(this,
+                  "Clock-In successful!", "Success",
+                  JOptionPane.INFORMATION_MESSAGE
+                );
                 refreshClockInOutStatus();
             } else {
-                JOptionPane.showMessageDialog(this, "Already Clocked-In today.");
+                JOptionPane.showMessageDialog(this,
+                  "Unable to clock in.", "Error",
+                  JOptionPane.ERROR_MESSAGE
+                );
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-              "Error during Clock-In: " + ex.getMessage());
+              "Error during Clock-In: " + ex.getMessage(),
+              "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }
@@ -130,70 +192,70 @@ public abstract class AbstractHomePage extends JFrame {
     public void performClockOut() {
         try {
             if (!isClockedInToday) {
-                JOptionPane.showMessageDialog(this, "You must Clock-In first.");
+                JOptionPane.showMessageDialog(this,
+                  "You must clock in first.");
                 return;
             }
             if (isClockedOutToday) {
-                JOptionPane.showMessageDialog(this, "Already Clocked-Out today.");
+                JOptionPane.showMessageDialog(this,
+                  "You have already clocked out today.");
                 return;
             }
-
             boolean ok = attendanceService.clockOut(employeeID);
             if (ok) {
+                clockOutDateTime = LocalDateTime.now();
                 isClockedOutToday = true;
                 getClockOutText().setText(getCurrentTime());
                 getClockInButton().setEnabled(false);
                 getClockOutButton().setEnabled(false);
-                JOptionPane.showMessageDialog(this, "Clock-Out successful!");
+                JOptionPane.showMessageDialog(this,
+                  "Clock-Out successful!", "Success",
+                  JOptionPane.INFORMATION_MESSAGE
+                );
                 refreshClockInOutStatus();
             } else {
-                JOptionPane.showMessageDialog(this, "Clock-Out failed.");
+                JOptionPane.showMessageDialog(this,
+                  "Unable to clock out.", "Error",
+                  JOptionPane.ERROR_MESSAGE
+                );
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
-              "Error during Clock-Out: " + ex.getMessage());
+              "Error during Clock-Out: " + ex.getMessage(),
+              "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }
     }
 
     public void refreshClockInOutStatus() {
         try {
-            AttendanceService.AttendanceStatus s =
-              attendanceService.getTodayAttendanceStatus(employeeID);
+            var s = attendanceService.getTodayAttendanceStatus(employeeID);
 
-            // in/out UI logic
             if (s.isClockedIn()) {
                 isClockedInToday = true;
-                getClockInText().setText(s.getLogIn());
-                getClockInButton().setEnabled(false);
+                String inStr = s.getLogIn();
+                getClockInText().setText(inStr);
+                clockInDateTime = parsePossiblyTimeOnly(inStr);
                 getClockOutButton().setEnabled(!s.isClockedOut());
             } else {
                 isClockedInToday = false;
+                clockInDateTime = null;
                 getClockInText().setText("Not Clocked-In");
-                getClockInButton().setEnabled(true);
                 getClockOutButton().setEnabled(false);
             }
             if (s.isClockedOut()) {
                 isClockedOutToday = true;
-                getClockOutText().setText(s.getLogOut());
-                getClockInButton().setEnabled(false);
-                getClockOutButton().setEnabled(false);
+                String outStr = s.getLogOut();
+                getClockOutText().setText(outStr);
+                clockOutDateTime = parsePossiblyTimeOnly(outStr);
             } else {
                 isClockedOutToday = false;
+                clockOutDateTime = null;
                 getClockOutText().setText("Not Clocked-Out");
             }
 
-            // monthly total “X hrs, Y min”
-            YearMonth ym = YearMonth.now();
-            BigDecimal decHrs = attendanceService.getMonthlyWorkedHours(
-                employeeID, ym.getYear(), ym.getMonthValue()
-            );
-            BigDecimal totalMin = decHrs.multiply(BigDecimal.valueOf(60));
-            long mins = totalMin.setScale(0, RoundingMode.HALF_UP).longValue();
-            long hrs  = mins / 60;
-            long rem  = mins % 60;
-            getTotalWorkedHoursText().setText(String.format("%d hrs, %d min", hrs, rem));
-
+            updateClockInButtonAvailability();
+            updateWorkedHoursDisplay(LocalDateTime.now());
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
               "Error refreshing attendance status: " + ex.getMessage(),
@@ -202,7 +264,60 @@ public abstract class AbstractHomePage extends JFrame {
         }
     }
 
-    /** Wire the logout button with a confirm–dialog. */
+    /**
+     * If the string is only HH:mm:ss, prepend today’s date;
+     * otherwise parse as full yyyy-MM-dd HH:mm:ss.
+     */
+    private LocalDateTime parsePossiblyTimeOnly(String txt) {
+      try {
+        if (txt.length() <= 8 && txt.matches("\\d{2}:\\d{2}:\\d{2}")) {
+          LocalTime t = LocalTime.parse(txt, DateTimeFormatter.ISO_TIME);
+          return LocalDate.now().atTime(t);
+        }
+        return LocalDateTime.parse(
+          txt,
+          DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+        );
+      } catch (Exception ex) {
+        return LocalDateTime.now();
+      }
+    }
+
+    /**
+     * Updates the “month total” and the “today” stopwatch.
+     * Today’s elapsed time now shown as “X hrs, Y min, Z sec”.
+     */
+    private void updateWorkedHoursDisplay(LocalDateTime now) throws SQLException {
+        // monthly total
+        YearMonth ym = YearMonth.now();
+        BigDecimal decHrs = attendanceService
+          .getMonthlyWorkedHours(employeeID, ym.getYear(), ym.getMonthValue());
+        long totalMin = decHrs.multiply(BigDecimal.valueOf(60))
+                              .setScale(0, RoundingMode.HALF_UP)
+                              .longValue();
+        long mH = totalMin / 60, mM = totalMin % 60;
+        String monthPart = String.format("%d hrs, %d min", mH, mM);
+
+        // today’s stopwatch
+        String dailyPart = null;
+        if (clockInDateTime != null && clockInDateTime.toLocalDate().equals(now.toLocalDate())) {
+            LocalDateTime end = (clockOutDateTime!=null ? clockOutDateTime : now);
+            Duration d = Duration.between(clockInDateTime, end);
+            long seconds = d.getSeconds();
+            long h = seconds / 3600;
+            long rem = seconds % 3600;
+            long mi = rem / 60;
+            long s = rem % 60;
+            dailyPart = String.format("%d hrs, %d min, %d sec", h, mi, s);
+        }
+
+        String text = (dailyPart!=null)
+          ? String.format("<html>%s<br><font size='4'>(today: %s)</font></html>", monthPart, dailyPart)
+          : monthPart;
+
+        getTotalWorkedHoursText().setText(text);
+    }
+
     protected void initLogoutButton(JButton logoutButton) {
         logoutButton.addActionListener(e -> {
             int ans = JOptionPane.showConfirmDialog(
@@ -212,29 +327,20 @@ public abstract class AbstractHomePage extends JFrame {
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE
             );
-            if (ans == JOptionPane.YES_OPTION) {
+            if (ans==JOptionPane.YES_OPTION) {
                 SessionManager.clearSession();
                 new PageLogin().setVisible(true);
                 dispose();
             }
-            // NO or CLOSED → do nothing
         });
     }
 
-    private boolean isWeekend() {
-        DayOfWeek d = LocalDate.now().getDayOfWeek();
-        return d==DayOfWeek.SATURDAY || d==DayOfWeek.SUNDAY;
-    }
-    private boolean isOutsideWorkingHours() {
-        LocalTime t = LocalTime.now();
-        return t.isBefore(LocalTime.of(6,50)) || t.isAfter(LocalTime.of(16,0));
-    }
     private String getCurrentTime() {
         return LocalDateTime.now()
             .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
-    // --- Subclasses supply these getters:
+    // --- Subclasses supply these getters and the click hook ---
     protected abstract JLabel  getFullNameText();
     protected abstract JLabel  getPositionText();
     protected abstract JLabel  getDateTimeText();
