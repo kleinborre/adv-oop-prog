@@ -3,11 +3,9 @@ package service;
 import dao.EmployeeDAO;
 import daoimpl.EmployeeDAOImpl;
 import pojo.Employee;
-
 import db.DatabaseConnection;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -61,7 +59,6 @@ public class EmployeeService {
                 emp.setDepartmentID( rs.getInt("departmentID"));
                 emp.setSupervisorID( rs.getInt("supervisorID"));
 
-                // transient/profile fields
                 emp.setPosition(     rs.getString("position"));
                 emp.setStatusDesc(   rs.getString("statusDesc"));
                 emp.setSssNo(        rs.getString("sssNo"));
@@ -69,7 +66,6 @@ public class EmployeeService {
                 emp.setPhilhealthNo( rs.getString("philhealthNo"));
                 emp.setTinNo(        rs.getString("tinNo"));
 
-                // address parts
                 emp.setHouseNo(  rs.getString("houseNo"));
                 emp.setStreet(   rs.getString("street"));
                 emp.setBarangay( rs.getString("barangay"));
@@ -78,7 +74,6 @@ public class EmployeeService {
                 int z = rs.getInt("zipCode");
                 emp.setZipCode(rs.wasNull() ? null : z);
 
-                // supervisor name lookup
                 int supId = emp.getSupervisorID();
                 if (supId > 0) {
                     String supSql = "SELECT lastName, firstName FROM employee WHERE employeeID = ?";
@@ -87,7 +82,7 @@ public class EmployeeService {
                         try (ResultSet srs = supStmt.executeQuery()) {
                             if (srs.next()) {
                                 emp.setSupervisorName(
-                                    srs.getString("lastName") + ", " + srs.getString("firstName")
+                                  srs.getString("lastName") + ", " + srs.getString("firstName")
                                 );
                             } else {
                                 emp.setSupervisorName("No Supervisor");
@@ -160,11 +155,6 @@ public class EmployeeService {
         return "";
     }
 
-    /**
-     * Fetches every employee’s full dashboard row—joins authentication,
-     * position, status, govid, address, department, supervisor—all in one go,
-     * optionally filtered by accountStatus (or "All").
-     */
     public List<Object[]> getAllEmployeeRecords(String filterStatus) {
         String sql =
             "SELECT\n" +
@@ -174,7 +164,6 @@ public class EmployeeService {
             "  CONCAT(e.lastName, ', ', e.firstName) AS fullName,\n" +
             "  e.birthDate,\n" +
             "  e.phoneNo,\n" +
-            "  -- new CONCAT_WS here:\n" +
             "  CONCAT_WS(\", \",\n" +
             "     CONCAT_WS(' ', a2.houseNo, a2.street),\n" +
             "     a2.barangay,\n" +
@@ -206,14 +195,14 @@ public class EmployeeService {
         try (Connection c = DatabaseConnection.getInstance().getConnection();
              PreparedStatement p = c.prepareStatement(sql)) {
 
-            // bind filterStatus twice
             p.setString(1, filterStatus);
             p.setString(2, filterStatus);
 
             try (ResultSet r = p.executeQuery()) {
                 while (r.next()) {
-                    Date bd = r.getDate("birthDate");
-                    String bdText = bd!=null ? bd.toLocalDate().format(df) : "";
+                    String bdText = r.getDate("birthDate")
+                                     .toLocalDate()
+                                     .format(df);
                     rows.add(new Object[]{
                         r.getInt("employeeID"),
                         r.getString("accountStatus"),
@@ -221,7 +210,7 @@ public class EmployeeService {
                         r.getString("fullName"),
                         bdText,
                         r.getString("phoneNo"),
-                        r.getString("address"),    // ← now never NULL
+                        r.getString("address"),
                         r.getString("position"),
                         r.getString("departmentName"),
                         r.getString("supervisorName"),
@@ -238,4 +227,111 @@ public class EmployeeService {
 
         return rows;
     }
+
+    public List<Integer> getAllStatusIDs() {
+        List<Integer> ids = new ArrayList<>();
+        String sql = "SELECT statusID FROM status ORDER BY statusID";
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql);
+             ResultSet r = p.executeQuery()) {
+            while (r.next()) {
+                ids.add(r.getInt("statusID"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching status IDs", e);
+        }
+        return ids;
+    }
+
+    public List<String> getAllStatusTypes() {
+        List<String> names = new ArrayList<>();
+        String sql = "SELECT statusType FROM status ORDER BY statusID";
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql);
+             ResultSet r = p.executeQuery()) {
+            while (r.next()) {
+                names.add(r.getString("statusType"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching status types", e);
+        }
+        return names;
+    }
+
+    public List<Integer> getAllPositionIDs() {
+        List<Integer> ids = new ArrayList<>();
+        String sql = "SELECT positionID FROM position ORDER BY positionID";
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql);
+             ResultSet r = p.executeQuery()) {
+            while (r.next()) {
+                ids.add(r.getInt("positionID"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching position IDs", e);
+        }
+        return ids;
+    }
+
+    public List<String> getAllPositionNames() {
+        List<String> names = new ArrayList<>();
+        String sql = "SELECT position FROM position ORDER BY positionID";
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql);
+             ResultSet r = p.executeQuery()) {
+            while (r.next()) {
+                names.add(r.getString("position"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching position names", e);
+        }
+        return names;
+    }
+
+    // fetch all department IDs in order
+    public List<Integer> getAllDepartmentIDs() {
+        List<Integer> ids = new ArrayList<>();
+        String sql = "SELECT departmentID FROM department ORDER BY departmentID";
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql);
+             ResultSet r = p.executeQuery()) {
+            while (r.next()) {
+                ids.add(r.getInt("departmentID"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching department IDs", e);
+        }
+        return ids;
+    }
+
+    // fetch all department names in the same order
+    public List<String> getAllDepartmentNames() {
+        List<String> names = new ArrayList<>();
+        String sql = "SELECT departmentName FROM department ORDER BY departmentID";
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql);
+             ResultSet r = p.executeQuery()) {
+            while (r.next()) {
+                names.add(r.getString("departmentName"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching department names", e);
+        }
+        return names;
+    }
+
+    public int getDepartmentIDForPosition(int positionID) {
+        String sql = "SELECT departmentID FROM position WHERE positionID = ?";
+        try (Connection c = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement p = c.prepareStatement(sql)) {
+            p.setInt(1, positionID);
+            try (ResultSet r = p.executeQuery()) {
+                if (r.next()) return r.getInt("departmentID");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error fetching departmentID for position", e);
+        }
+        return -1;
+    }
+
 }

@@ -87,8 +87,8 @@ public abstract class AbstractUpdateProfilePage extends JFrame {
         if (dirty) {
             int res = JOptionPane.showConfirmDialog(
                 this,
-                "You have unsaved changes. Discard and go back?",
-                "Confirm Discard",
+                "You have unsaved changes. Discard?",
+                "Confirm",
                 JOptionPane.YES_NO_OPTION
             );
             if (res == JOptionPane.YES_OPTION) {
