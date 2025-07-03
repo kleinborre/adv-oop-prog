@@ -19,7 +19,8 @@ public class PageITHome extends ui.base.AbstractHomePage {
         initLogoutButton(logoutButton);
 
         // launch
-        if (SessionManager.getUserID()!=null && SessionManager.getEmployeeID()!=0) {
+        if (SessionManager.getUserID() != null
+         && SessionManager.getEmployeeID() != 0) {
             SwingUtilities.invokeLater(() ->
                 initializeHomePage(
                     SessionManager.getUserID(),
@@ -33,6 +34,13 @@ public class PageITHome extends ui.base.AbstractHomePage {
             new PageLogin().setVisible(true);
             dispose();
         }
+    }
+
+    // --- implement the abstract click action ---
+    @Override
+    protected void onProfileLabelClick() {
+        new PageITEmployeeData().setVisible(true);
+        dispose();
     }
 
     // --- delegate getters to your components ---
@@ -144,7 +152,7 @@ public class PageITHome extends ui.base.AbstractHomePage {
         getContentPane().add(leavesAvailableText, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 110, 80, -1));
 
         employeeDataButton.setForeground(new java.awt.Color(0, 102, 102));
-        employeeDataButton.setText("Employee Data");
+        employeeDataButton.setText("User Accounts");
         employeeDataButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 employeeDataButtonActionPerformed(evt);
@@ -169,7 +177,7 @@ public class PageITHome extends ui.base.AbstractHomePage {
         getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 180, -1));
 
         sessionManagementButton.setForeground(new java.awt.Color(0, 102, 102));
-        sessionManagementButton.setText("Session");
+        sessionManagementButton.setText("User Sessions");
         getContentPane().add(sessionManagementButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 180, -1));
 
         logoutButton.setForeground(new java.awt.Color(0, 102, 102));
@@ -190,7 +198,7 @@ public class PageITHome extends ui.base.AbstractHomePage {
 
     private void employeeDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeDataButtonActionPerformed
         // Open PageEmployeeData
-        new PageEmployeeData().setVisible(true); // For Testing only
+        new PageITEmployeeData().setVisible(true); // For Testing only
         this.dispose();
     }//GEN-LAST:event_employeeDataButtonActionPerformed
 
