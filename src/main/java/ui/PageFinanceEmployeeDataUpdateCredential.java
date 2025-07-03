@@ -3,9 +3,9 @@ package ui;
 import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 
-public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCredentialPage{
+public class PageFinanceEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCredentialPage {
 
-    public PageEmployeeDataUpdateCredential() {
+    public PageFinanceEmployeeDataUpdateCredential() {
         initComponents();
 
         // ─── 1) Remove all auto‐generated listeners ───
@@ -34,7 +34,7 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
             cancelButton,
             backButton,
             () -> {
-                new PageEmployeeData().setVisible(true);
+                new PageFinanceEmployeeData().setVisible(true);
                 dispose();
             }
         );
@@ -69,8 +69,8 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
         label8 = new javax.swing.JLabel();
         emailText = new javax.swing.JLabel();
         label9 = new javax.swing.JLabel();
-        label15 = new javax.swing.JLabel();
         label16 = new javax.swing.JLabel();
+        label15 = new javax.swing.JLabel();
         label17 = new javax.swing.JLabel();
         label13 = new javax.swing.JLabel();
         label14 = new javax.swing.JLabel();
@@ -79,8 +79,8 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
         label6 = new javax.swing.JLabel();
         employeeIDText = new javax.swing.JLabel();
         label10 = new javax.swing.JLabel();
-        positionText = new javax.swing.JLabel();
         label11 = new javax.swing.JLabel();
+        positionText = new javax.swing.JLabel();
         supervisorText = new javax.swing.JLabel();
         label7 = new javax.swing.JLabel();
         label12 = new javax.swing.JLabel();
@@ -91,6 +91,7 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MotorPH Payroll System");
+        setMaximumSize(new java.awt.Dimension(1040, 590));
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -149,17 +150,17 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
         label9.setText("Password Requirements:");
         getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 390, 220, -1));
 
-        label15.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        label15.setForeground(new java.awt.Color(51, 51, 51));
-        label15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label15.setText("* Must contain at least 1 lowercase letter (a-z)  ");
-        getContentPane().add(label15, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 430, -1));
-
         label16.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         label16.setForeground(new java.awt.Color(51, 51, 51));
         label16.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label16.setText("* Must include at least 1 number (0-9)  ");
         getContentPane().add(label16, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 470, 430, -1));
+
+        label15.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        label15.setForeground(new java.awt.Color(51, 51, 51));
+        label15.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label15.setText("* Must contain at least 1 lowercase letter (a-z)  ");
+        getContentPane().add(label15, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 430, -1));
 
         label17.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         label17.setForeground(new java.awt.Color(51, 51, 51));
@@ -209,17 +210,17 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
         label10.setText("Employee ID");
         getContentPane().add(label10, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 410, 210, -1));
 
-        positionText.setFont(new java.awt.Font("Inter", 1, 16)); // NOI18N
-        positionText.setForeground(new java.awt.Color(0, 51, 51));
-        positionText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        positionText.setText("Position");
-        getContentPane().add(positionText, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 210, -1));
-
         label11.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
         label11.setForeground(new java.awt.Color(0, 102, 102));
         label11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         label11.setText("Position");
         getContentPane().add(label11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 210, -1));
+
+        positionText.setFont(new java.awt.Font("Inter", 1, 16)); // NOI18N
+        positionText.setForeground(new java.awt.Color(0, 51, 51));
+        positionText.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        positionText.setText("Position");
+        getContentPane().add(positionText, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 440, 210, -1));
 
         supervisorText.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         supervisorText.setForeground(new java.awt.Color(0, 51, 51));
@@ -273,18 +274,6 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cancelButtonActionPerformed
-
-    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        handleUpdate();
-    }//GEN-LAST:event_updateButtonActionPerformed
-
-    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_backButtonActionPerformed
-
     private void passwordCurrentFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordCurrentFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordCurrentFieldActionPerformed
@@ -296,6 +285,18 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
     private void passwordReEnterFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordReEnterFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordReEnterFieldActionPerformed
+
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cancelButtonActionPerformed
+
+    private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
+        handleUpdate();
+    }//GEN-LAST:event_updateButtonActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -314,20 +315,20 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PageEmployeeDataUpdateCredential.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageFinanceEmployeeDataUpdateCredential.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PageEmployeeDataUpdateCredential.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageFinanceEmployeeDataUpdateCredential.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PageEmployeeDataUpdateCredential.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageFinanceEmployeeDataUpdateCredential.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PageEmployeeDataUpdateCredential.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageFinanceEmployeeDataUpdateCredential.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PageEmployeeDataUpdateCredential().setVisible(true);
+                new PageFinanceEmployeeDataUpdateCredential().setVisible(true);
             }
         });
     }

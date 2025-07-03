@@ -39,7 +39,7 @@ public class PageFinanceHome extends ui.base.AbstractHomePage {
     // --- implement the abstract click action ---
     @Override
     protected void onProfileLabelClick() {
-        new PageEmployeeData().setVisible(true);
+        new PageFinanceEmployeeData().setVisible(true);
         dispose();
     }
 
@@ -198,7 +198,7 @@ public class PageFinanceHome extends ui.base.AbstractHomePage {
 
     private void employeeDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeDataButtonActionPerformed
         // Open PageEmployeeData
-        new PageEmployeeData().setVisible(true);
+        new PageFinanceEmployeeData().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_employeeDataButtonActionPerformed
 
