@@ -1,111 +1,10 @@
 package ui;
 
-import service.LoginService;
-import pojo.User;
-import util.SessionManager;
+public class PageLogin extends ui.base.AbstractLoginPage {
 
-public class PageLogin extends javax.swing.JFrame {
-
-    /**
-     * Creates new form PageLogin
-     */
     public PageLogin() {
         initComponents();
-    }
-    
-    private void performLogin() {
-        String usernameOrEmailOrUserID = usernameField.getText().trim();
-        String password = new String(passwordField.getPassword()).trim();
-
-        // First validate empty fields
-        if (usernameOrEmailOrUserID.isEmpty() && password.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Both Username/UserID/Email and Password fields are empty.");
-            return;
-        }
-
-        if (usernameOrEmailOrUserID.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Username/UserID/Email field is empty.");
-            return;
-        }
-
-        if (password.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Password field is empty.");
-            return;
-        }
-
-        // Now try login
-        try {
-            LoginService loginService = new LoginService();
-            User user = loginService.login(usernameOrEmailOrUserID, password);
-
-            if (user != null) {
-                int employeeID = loginService.getEmployeeIDByUserID(user.getUserID());
-
-                // Set session!
-                SessionManager.setSession(user.getUserID(), employeeID);
-
-                String welcomeMessage = String.format("Welcome, %s %s!", 
-                    user.getUserRole(), 
-                    user.getUsername());
-                javax.swing.JOptionPane.showMessageDialog(this, welcomeMessage);
-
-                // Route to correct Home Page based on role
-                switch (user.getUserRole()) {
-                    case "Employee":
-                        new PageEmployeeHome().setVisible(true); // No need to pass userID, employeeID anymore!
-                        break;
-                    case "Finance":
-                        new PageFinanceHome().setVisible(true);
-                        break;
-                    case "HR":
-                        new PageHRHome().setVisible(true);
-                        break;
-                    case "IT":
-                        new PageITHome().setVisible(true);
-                        break;
-                    case "Immediate Supervisor":
-                        new PageManagerHome().setVisible(true);
-                        break;
-                    default:
-                        javax.swing.JOptionPane.showMessageDialog(this, "Unknown role: " + user.getUserRole());
-                        return;
-                }
-
-                this.dispose();
-        } else {
-                // Check which input is wrong (advanced logic):
-
-                boolean userExists = false;
-
-                // Check if username/email/userID exists
-                try {
-                    userExists = loginService.doesUserExist(usernameOrEmailOrUserID);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    javax.swing.JOptionPane.showMessageDialog(this, "Error checking user existence.");
-                    return;
-                }
-
-                if (!userExists) {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Invalid Username/UserID/Email.");
-                    clearFields(); // Clear fields and focus on username
-                } else {
-                    javax.swing.JOptionPane.showMessageDialog(this, "Incorrect password.");
-                    clearFields(); // Clear fields and focus on username
-                }
-            }
-
-        } catch (Exception e) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Error during login: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
-
-    // Helper method to clear username and password fields
-    private void clearFields() {
-        usernameField.setText("");
-        passwordField.setText("");
-        usernameField.requestFocus();
+        setupLoginPage(usernameField, passwordField, loginButton);
     }
 
     /**
@@ -168,7 +67,7 @@ public class PageLogin extends javax.swing.JFrame {
     }//GEN-LAST:event_usernameFieldActionPerformed
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        performLogin();
+        // TODO add your handling code here:
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
