@@ -1,9 +1,20 @@
 package ui;
 
-public class PageHREmployeeUpdate extends javax.swing.JFrame {
+public class PageHREmployeeUpdate extends ui.base.AbstractEmployeeUpdatePage {
 
     public PageHREmployeeUpdate() {
         initComponents();
+        setupUpdatePage(
+          lastNameField, firstNameField, dateOfBirthCalendar,
+          provinceField, cityMunicipalityField, barangayField,
+          streetField, houseNumberField, zipCodeField,
+          phoneNumberField, sssNumberField, philhealthNumberField,
+          tinNumberField, pagibigNumberField,
+          employeeRoleComboBox, employmentStatusComboBox,
+          positionComboBox, departmentComboBox,
+          supervisorComboBox, basicSalaryComboBox,
+          backButton, cancelButton, confirmButton
+        );
     }
 
     /**
@@ -51,13 +62,13 @@ public class PageHREmployeeUpdate extends javax.swing.JFrame {
         departmentComboBox = new javax.swing.JComboBox<>();
         positionComboBox = new javax.swing.JComboBox<>();
         label25 = new javax.swing.JLabel();
-        basicSalaryComboBox1 = new javax.swing.JComboBox<>();
+        basicSalaryComboBox = new javax.swing.JComboBox<>();
         label3 = new javax.swing.JLabel();
         employeeRoleComboBox = new javax.swing.JComboBox<>();
         label = new javax.swing.JLabel();
         employmentStatusComboBox = new javax.swing.JComboBox<>();
         label15 = new javax.swing.JLabel();
-        lastNameField3 = new javax.swing.JTextField();
+        phoneNumberField = new javax.swing.JTextField();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -267,10 +278,10 @@ public class PageHREmployeeUpdate extends javax.swing.JFrame {
         label25.setText("Basic Salary");
         getContentPane().add(label25, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 420, 90, -1));
 
-        basicSalaryComboBox1.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        basicSalaryComboBox1.setForeground(new java.awt.Color(0, 102, 102));
-        basicSalaryComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "₱22,500", "₱23,250", "₱24,000", "₱24,750", "₱38,475", "₱41,850", "₱42,975 ", "₱50,825", "₱52,670", "₱53,500", "₱60,000", "₱90,000" }));
-        getContentPane().add(basicSalaryComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 440, 190, -1));
+        basicSalaryComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        basicSalaryComboBox.setForeground(new java.awt.Color(0, 102, 102));
+        basicSalaryComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "₱22,500", "₱23,250", "₱24,000", "₱24,750", "₱38,475", "₱41,850", "₱42,975 ", "₱50,825", "₱52,670", "₱53,500", "₱60,000", "₱90,000" }));
+        getContentPane().add(basicSalaryComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 440, 190, -1));
 
         label3.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label3.setForeground(new java.awt.Color(51, 51, 51));
@@ -300,10 +311,10 @@ public class PageHREmployeeUpdate extends javax.swing.JFrame {
         label15.setText("Phone Number");
         getContentPane().add(label15, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 420, 190, -1));
 
-        lastNameField3.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        lastNameField3.setForeground(new java.awt.Color(0, 102, 102));
-        lastNameField3.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        getContentPane().add(lastNameField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 440, 190, -1));
+        phoneNumberField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        phoneNumberField.setForeground(new java.awt.Color(0, 102, 102));
+        phoneNumberField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
+        getContentPane().add(phoneNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 440, 190, -1));
 
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/HRUpdateEmployee.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -359,7 +370,7 @@ public class PageHREmployeeUpdate extends javax.swing.JFrame {
     private util.LightButton backButton;
     private javax.swing.JLabel background;
     private javax.swing.JTextField barangayField;
-    private javax.swing.JComboBox<String> basicSalaryComboBox1;
+    private javax.swing.JComboBox<String> basicSalaryComboBox;
     private util.LightButton cancelButton;
     private javax.swing.JTextField cityMunicipalityField;
     private util.BlueButton confirmButton;
@@ -390,9 +401,9 @@ public class PageHREmployeeUpdate extends javax.swing.JFrame {
     private javax.swing.JLabel label3;
     private javax.swing.JLabel label9;
     private javax.swing.JTextField lastNameField;
-    private javax.swing.JTextField lastNameField3;
     private javax.swing.JTextField pagibigNumberField;
     private javax.swing.JTextField philhealthNumberField;
+    private javax.swing.JTextField phoneNumberField;
     private javax.swing.JComboBox<String> positionComboBox;
     private javax.swing.JTextField provinceField;
     private javax.swing.JTextField sssNumberField;

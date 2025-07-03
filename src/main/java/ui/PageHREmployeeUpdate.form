@@ -669,7 +669,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JComboBox" name="basicSalaryComboBox1">
+    <Component class="javax.swing.JComboBox" name="basicSalaryComboBox">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Inter" size="14" style="1"/>
@@ -805,7 +805,7 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JTextField" name="lastNameField3">
+    <Component class="javax.swing.JTextField" name="phoneNumberField">
       <Properties>
         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
           <Font name="Inter" size="14" style="1"/>

@@ -1,11 +1,13 @@
 package ui.base;
 
 import util.LightButton;
+import util.SessionManager;
 import service.EmployeeService;
 
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.util.List;
 
 public abstract class AbstractEmployeeRecordsPage extends JFrame {
@@ -37,7 +39,7 @@ public abstract class AbstractEmployeeRecordsPage extends JFrame {
     table.setModel(model);
     table.createDefaultColumnsFromModel();
 
-    // re-attach header (NetBeans cleared it by default):
+    // re-attach header if needed
     Container vp = table.getParent();
     if (vp instanceof JViewport) {
       Container sp = vp.getParent();
@@ -46,10 +48,10 @@ public abstract class AbstractEmployeeRecordsPage extends JFrame {
       }
     }
 
-    // 2) Always allow horizontal scrolling:
+    // 2) horizontal scrolling
     table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
-    // 3) Center everything:
+    // 3) center everything
     DefaultTableCellRenderer center = new DefaultTableCellRenderer();
     center.setHorizontalAlignment(SwingConstants.CENTER);
     table.setDefaultRenderer(Object.class, center);
@@ -57,21 +59,41 @@ public abstract class AbstractEmployeeRecordsPage extends JFrame {
     ((DefaultTableCellRenderer)hdr.getDefaultRenderer())
       .setHorizontalAlignment(SwingConstants.CENTER);
 
-    // 4) Wire filter & buttons:
+    // 4) wire filter & buttons
     statusFilter.addActionListener(e ->
       reloadTableAsync(table, String.valueOf(statusFilter.getSelectedItem()))
     );
-    ownRecordButton   .addActionListener(e -> onOwnRecord.run());
-    newEmployeeButton .addActionListener(e -> onNewEmployee.run());
-    backButton        .addActionListener(e -> onBack.run());
+    ownRecordButton  .addActionListener(e -> onOwnRecord.run());
+    newEmployeeButton.addActionListener(e -> onNewEmployee.run());
+    backButton       .addActionListener(e -> onBack.run());
 
-    // 5) First load:
+    // 5) initial load
     reloadTableAsync(table, String.valueOf(statusFilter.getSelectedItem()));
+
+    // 6) double-click -> update flow
+    table.addMouseListener(new MouseAdapter() {
+      @Override public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2 && table.getSelectedRow() != -1) {
+          int row = table.getSelectedRow();
+          // column 0 is employeeID
+          int empID = (Integer)table.getModel().getValueAt(row, 0);
+
+          int choice = JOptionPane.showConfirmDialog(
+            AbstractEmployeeRecordsPage.this,
+            "Do you want to update this employee?",
+            "Update Employee",
+            JOptionPane.YES_NO_OPTION
+          );
+          if (choice == JOptionPane.YES_OPTION) {
+            SessionManager.setSelectedEmployeeID(empID);
+            new ui.PageHREmployeeUpdate().setVisible(true);
+            dispose();
+          }
+        }
+      }
+    });
   }
 
-  /**
-   * Fetches in background so UI stays responsive, then repopulates & auto-resizes cols.
-   */
   private void reloadTableAsync(JTable table, String filterStatus) {
     new SwingWorker<List<Object[]>,Void>() {
       @Override protected List<Object[]> doInBackground() {
@@ -79,13 +101,10 @@ public abstract class AbstractEmployeeRecordsPage extends JFrame {
       }
       @Override protected void done() {
         try {
-          List<Object[]> rows = get();
-          DefaultTableModel m = (DefaultTableModel)table.getModel();
+          var rows = get();
+          var m = (DefaultTableModel)table.getModel();
           m.setRowCount(0);
-          for (Object[] row : rows) {
-            m.addRow(row);
-          }
-          // **NEW**: adjust each column to fit its widest cell/header
+          for (var row : rows) m.addRow(row);
           adjustColumnWidths(table);
         } catch (Exception ex) {
           ex.printStackTrace();
@@ -94,35 +113,23 @@ public abstract class AbstractEmployeeRecordsPage extends JFrame {
     }.execute();
   }
 
-  /**
-   * Scans each column’s header + all its cells, then sets that column’s preferred width
-   * to the maximum preferred width found.  Adds a small padding.
-   */
   private void adjustColumnWidths(JTable table) {
-    TableColumnModel colModel = table.getColumnModel();
+    TableColumnModel cm = table.getColumnModel();
     JTableHeader hdr = table.getTableHeader();
-    TableCellRenderer hdrRend = hdr.getDefaultRenderer();
+    TableCellRenderer hdrR = hdr.getDefaultRenderer();
 
     for (int col = 0; col < table.getColumnCount(); col++) {
-      int maxW = 50;  // a reasonable minimum
-      // check header
-      Component hComp = hdrRend.getTableCellRendererComponent(
-        table,
-        colModel.getColumn(col).getHeaderValue(),
-        false, false,
-        -1, col
+      int maxW = 50;
+      Component hc = hdrR.getTableCellRendererComponent(
+        table, cm.getColumn(col).getHeaderValue(), false, false, -1, col
       );
-      maxW = Math.max(maxW, hComp.getPreferredSize().width);
-
-      // check each row
+      maxW = Math.max(maxW, hc.getPreferredSize().width);
       for (int row = 0; row < table.getRowCount(); row++) {
-        TableCellRenderer cellRend = table.getCellRenderer(row, col);
-        Component c = table.prepareRenderer(cellRend, row, col);
+        TableCellRenderer cr = table.getCellRenderer(row, col);
+        Component c = table.prepareRenderer(cr, row, col);
         maxW = Math.max(maxW, c.getPreferredSize().width);
       }
-
-      // set with a bit of padding
-      colModel.getColumn(col).setPreferredWidth(maxW + 10);
+      cm.getColumn(col).setPreferredWidth(maxW + 10);
     }
   }
 }
