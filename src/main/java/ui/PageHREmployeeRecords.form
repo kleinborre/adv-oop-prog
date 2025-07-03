@@ -103,7 +103,7 @@
             <StringItem index="1" value="Active"/>
             <StringItem index="2" value="Pending"/>
             <StringItem index="3" value="Deactivated"/>
-            <StringItem index="4" value="Cancelled"/>
+            <StringItem index="4" value="Rejected"/>
           </StringArray>
         </Property>
       </Properties>

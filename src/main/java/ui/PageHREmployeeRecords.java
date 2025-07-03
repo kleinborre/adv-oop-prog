@@ -85,7 +85,7 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
         statusFilter.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        statusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Pending", "Deactivated", "Cancelled" }));
+        statusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Pending", "Deactivated", "Rejected" }));
         getContentPane().add(statusFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 84, 140, 30));
 
         employeeRecordsTable.setModel(new javax.swing.table.DefaultTableModel(
