@@ -1,10 +1,56 @@
 package ui;
 
-public class PageITEmployeeDataUpdateCredential extends javax.swing.JFrame {
+import java.awt.event.ActionListener;
+import javax.swing.JLabel;
+
+public class PageITEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCredentialPage {
 
     public PageITEmployeeDataUpdateCredential() {
         initComponents();
+
+        // ─── 1) Remove all auto‐generated listeners ───
+        for (ActionListener al : updateButton.getActionListeners()) {
+            updateButton.removeActionListener(al);
+        }
+        for (ActionListener al : cancelButton.getActionListeners()) {
+            cancelButton.removeActionListener(al);
+        }
+        for (ActionListener al : backButton.getActionListeners()) {
+            backButton.removeActionListener(al);
+        }
+
+        // ─── 2) Wire in the base‐class behavior ───
+        setPasswordFieldsAndErrorLabel(
+            passwordCurrentField,
+            passwordNewField,
+            passwordReEnterField,
+            errorMessageLabel
+        );
+
+        initializeUpdateCredentialPage();
+
+        setButtons(
+            updateButton,
+            cancelButton,
+            backButton,
+            () -> {
+                new PageITEmployeeData().setVisible(true);
+                dispose();
+            }
+        );
+
+        attachDirtyListeners(
+            passwordCurrentField,
+            passwordNewField,
+            passwordReEnterField
+        );
     }
+
+    @Override protected JLabel getUsernameText()   { return usernameText;   }
+    @Override protected JLabel getEmailText()      { return emailText;      }
+    @Override protected JLabel getEmployeeIDText() { return employeeIDText; }
+    @Override protected JLabel getPositionText()   { return positionText;   }
+    @Override protected JLabel getSupervisorText() { return supervisorText; }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -241,7 +287,7 @@ public class PageITEmployeeDataUpdateCredential extends javax.swing.JFrame {
     }//GEN-LAST:event_passwordNewFieldActionPerformed
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        //handleUpdate();
+        handleUpdate();
     }//GEN-LAST:event_updateButtonActionPerformed
 
     private void passwordCurrentFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordCurrentFieldActionPerformed

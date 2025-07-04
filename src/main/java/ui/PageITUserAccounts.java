@@ -1,8 +1,8 @@
 package ui;
 
-public class PageITUserRecords extends javax.swing.JFrame {
+public class PageITUserAccounts extends javax.swing.JFrame {
 
-    public PageITUserRecords() {
+    public PageITUserAccounts() {
         initComponents();
     }
 
@@ -21,7 +21,7 @@ public class PageITUserRecords extends javax.swing.JFrame {
         statusFilter = new javax.swing.JComboBox<>();
         backButton = new util.LightButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        userRecordsTable = new javax.swing.JTable();
+        userAccountsTable = new javax.swing.JTable();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -51,7 +51,7 @@ public class PageITUserRecords extends javax.swing.JFrame {
         getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, 110, -1));
 
         statusFilter.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        statusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Pending", "Deactivated" }));
+        statusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Pending", "Deactivated", "Rejected" }));
         getContentPane().add(statusFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 84, 140, 30));
 
         backButton.setForeground(new java.awt.Color(0, 102, 102));
@@ -63,7 +63,7 @@ public class PageITUserRecords extends javax.swing.JFrame {
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
-        userRecordsTable.setModel(new javax.swing.table.DefaultTableModel(
+        userAccountsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -74,11 +74,11 @@ public class PageITUserRecords extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(userRecordsTable);
+        jScrollPane1.setViewportView(userAccountsTable);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 940, 400));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ITUserRecords.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ITUserAccounts.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -110,20 +110,20 @@ public class PageITUserRecords extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PageITUserRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITUserAccounts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PageITUserRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITUserAccounts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PageITUserRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITUserAccounts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PageITUserRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITUserAccounts.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PageITUserRecords().setVisible(true);
+                new PageITUserAccounts().setVisible(true);
             }
         });
     }
@@ -136,6 +136,6 @@ public class PageITUserRecords extends javax.swing.JFrame {
     private util.LightButton newEmployeeButton;
     private util.LightButton ownRecordButton;
     private javax.swing.JComboBox<String> statusFilter;
-    private javax.swing.JTable userRecordsTable;
+    private javax.swing.JTable userAccountsTable;
     // End of variables declaration//GEN-END:variables
 }

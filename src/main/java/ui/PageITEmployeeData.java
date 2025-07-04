@@ -1,10 +1,30 @@
 package ui;
 
-public class PageITEmployeeData extends javax.swing.JFrame {
+import javax.swing.JLabel;
+
+public class PageITEmployeeData extends ui.base.AbstractProfilePage {
 
     public PageITEmployeeData() {
         initComponents();
+
+        // Initialize profile page
+        initializeProfilePage();
     }
+
+    // Implement all required methods:
+    @Override protected JLabel getEmployeeIDText()       { return employeeIDText;       }
+    @Override protected JLabel getPositionText()         { return positionText;         }
+    @Override protected JLabel getFirstNameText()        { return firstNameText;        }
+    @Override protected JLabel getLastNameText()         { return lastNameText;         }
+    @Override protected JLabel getBirthdayText()         { return birthdayText;         }
+    @Override protected JLabel getPhoneNumberText()      { return phoneNumberText;      }
+    @Override protected JLabel getAddressText()          { return addressText;          }
+    @Override protected JLabel getSupervisorText()       { return supervisorText;       }
+    @Override protected JLabel getStatusText()           { return statusText;           }
+    @Override protected JLabel getSSSNumberText()        { return sssNumberText;        }
+    @Override protected JLabel getPagibigNumberText()    { return pagibigNumberText;    }
+    @Override protected JLabel getPhilhealthNumberText() { return philhealthNumberText; }
+    @Override protected JLabel getTINNumberText()        { return tinNumberText;        }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -44,6 +64,7 @@ public class PageITEmployeeData extends javax.swing.JFrame {
         modifyCredentialsButton = new util.LightButton();
         editProfileButton = new util.LightButton();
         backButton = new util.LightButton();
+        userAccountsButton = new util.LightButton();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -240,6 +261,15 @@ public class PageITEmployeeData extends javax.swing.JFrame {
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
+        userAccountsButton.setForeground(new java.awt.Color(0, 102, 102));
+        userAccountsButton.setText("View User Accounts");
+        userAccountsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userAccountsButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(userAccountsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
+
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/Profile.png"))); // NOI18N
         getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -248,16 +278,27 @@ public class PageITEmployeeData extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void modifyCredentialsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modifyCredentialsButtonActionPerformed
-
+        // Open Modify Credentials page
+        new PageITEmployeeDataUpdateCredential().setVisible(true);
+        this.dispose(); // Close current page
     }//GEN-LAST:event_modifyCredentialsButtonActionPerformed
 
     private void editProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileButtonActionPerformed
-
+        // Open Edit Profile page
+        new PageITEmployeeDataUpdateProfile().setVisible(true);
+        this.dispose(); // Close current page
     }//GEN-LAST:event_editProfileButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-
+        // Back to Employee Home
+        new PageITHome().setVisible(true);
+        this.dispose(); // Close current page
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void userAccountsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userAccountsButtonActionPerformed
+        new PageITUserAccounts().setVisible(true);
+        this.dispose(); // Close current page
+    }//GEN-LAST:event_userAccountsButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -325,5 +366,6 @@ public class PageITEmployeeData extends javax.swing.JFrame {
     private javax.swing.JLabel statusText;
     private javax.swing.JLabel supervisorText;
     private javax.swing.JLabel tinNumberText;
+    private util.LightButton userAccountsButton;
     // End of variables declaration//GEN-END:variables
 }
