@@ -198,7 +198,7 @@ public class PageITHome extends ui.base.AbstractHomePage {
 
     private void employeeDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeDataButtonActionPerformed
         // Open PageEmployeeData
-        new PageITEmployeeData().setVisible(true); // For Testing only
+        new PageITUserAccounts().setVisible(true); // For Testing only
         this.dispose();
     }//GEN-LAST:event_employeeDataButtonActionPerformed
 

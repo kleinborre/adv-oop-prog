@@ -1,9 +1,16 @@
 package ui;
 
-public class PageITUserAccounts extends javax.swing.JFrame {
+public class PageITUserAccounts extends ui.base.AbstractITUserAccountsPage {
 
     public PageITUserAccounts() {
         initComponents();
+        setupUserAccountsPage(
+            userAccountsTable,
+            statusFilter,
+            ownAccountButton,
+            newUserButton,
+            backButton
+        );
     }
 
     /**
@@ -15,8 +22,8 @@ public class PageITUserAccounts extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        ownRecordButton = new util.LightButton();
-        newEmployeeButton = new util.LightButton();
+        ownAccountButton = new util.LightButton();
+        newUserButton = new util.LightButton();
         label9 = new javax.swing.JLabel();
         statusFilter = new javax.swing.JComboBox<>();
         backButton = new util.LightButton();
@@ -31,18 +38,18 @@ public class PageITUserAccounts extends javax.swing.JFrame {
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        ownRecordButton.setForeground(new java.awt.Color(0, 102, 102));
-        ownRecordButton.setText("View Own Record");
-        ownRecordButton.addActionListener(new java.awt.event.ActionListener() {
+        ownAccountButton.setForeground(new java.awt.Color(0, 102, 102));
+        ownAccountButton.setText("View Own Account");
+        ownAccountButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ownRecordButtonActionPerformed(evt);
+                ownAccountButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(ownRecordButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 210, -1));
+        getContentPane().add(ownAccountButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 210, -1));
 
-        newEmployeeButton.setForeground(new java.awt.Color(0, 102, 102));
-        newEmployeeButton.setText("New Employee");
-        getContentPane().add(newEmployeeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 150, -1));
+        newUserButton.setForeground(new java.awt.Color(0, 102, 102));
+        newUserButton.setText("New Employee");
+        getContentPane().add(newUserButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 150, -1));
 
         label9.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         label9.setForeground(new java.awt.Color(51, 51, 51));
@@ -63,6 +70,7 @@ public class PageITUserAccounts extends javax.swing.JFrame {
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
+        userAccountsTable.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         userAccountsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -85,9 +93,9 @@ public class PageITUserAccounts extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ownRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ownRecordButtonActionPerformed
+    private void ownAccountButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ownAccountButtonActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ownRecordButtonActionPerformed
+    }//GEN-LAST:event_ownAccountButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
@@ -133,8 +141,8 @@ public class PageITUserAccounts extends javax.swing.JFrame {
     private javax.swing.JLabel background;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label9;
-    private util.LightButton newEmployeeButton;
-    private util.LightButton ownRecordButton;
+    private util.LightButton newUserButton;
+    private util.LightButton ownAccountButton;
     private javax.swing.JComboBox<String> statusFilter;
     private javax.swing.JTable userAccountsTable;
     // End of variables declaration//GEN-END:variables

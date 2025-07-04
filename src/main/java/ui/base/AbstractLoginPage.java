@@ -85,7 +85,7 @@ public abstract class AbstractLoginPage extends JFrame {
           usernameField.setBackground(Color.PINK);
           JOptionPane.showMessageDialog(
             this,
-            "The UserID or Email you entered does not exist.",
+            "The account you entered does not exist.",
             "Login Failed",
             JOptionPane.WARNING_MESSAGE
           );
@@ -137,9 +137,9 @@ public abstract class AbstractLoginPage extends JFrame {
         );
         case "rejected" -> JOptionPane.showMessageDialog(
           this,
-          "Your account has been rejected and does not exist in the system.",
-          "Account Rejected",
-          JOptionPane.ERROR_MESSAGE
+          "The account you entered does not exist.",
+          "Login Failed",
+          JOptionPane.INFORMATION_MESSAGE
         );
         case "deactivated" -> JOptionPane.showMessageDialog(
           this,

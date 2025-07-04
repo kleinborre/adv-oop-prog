@@ -268,7 +268,7 @@ public class PageITEmployeeData extends ui.base.AbstractProfilePage {
                 userAccountsButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(userAccountsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, -1, -1));
+        getContentPane().add(userAccountsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 210, -1));
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/Profile.png"))); // NOI18N
         getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));

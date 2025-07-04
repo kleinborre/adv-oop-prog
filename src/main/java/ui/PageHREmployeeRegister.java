@@ -29,12 +29,8 @@ public class PageHREmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
     }
 
     @Override
-    protected void onRegisterSuccess() {
-        // HR: return to employee records
-        new PageHREmployeeRecords().setVisible(true);
-        dispose();
-    }
-
+    protected void onRegisterSuccess() { new PageHREmployeeRecords().setVisible(true); dispose(); }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
