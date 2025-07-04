@@ -2,34 +2,58 @@ package ui;
 
 import javax.swing.JOptionPane;
 
-public class PageITEmployeeRegister extends ui.base.AbstractEmployeeRegisterPage  {
+public class PageITEmployeeUpdate extends ui.base.AbstractEmployeeUpdatePage {
 
-    public PageITEmployeeRegister() {
+    public PageITEmployeeUpdate() {
         initComponents();
-        setupRegisterPage(
-          lastNameField, firstNameField, dateOfBirthCalendar,
-          provinceField, cityMunicipalityField, barangayField,
-          streetField, houseNumberField, zipCodeField,
-          phoneNumberField, sssNumberField, philhealthNumberField,
-          tinNumberField, pagibigNumberField,
-          employeeRoleComboBox, employmentStatusComboBox,
-          positionComboBox, departmentComboBox, supervisorComboBox,
-          basicSalaryComboBox,
-          backButton, cancelButton, confirmButton
+        setupUpdatePage(
+            lastNameField,           // JTextField
+            firstNameField,          // JTextField
+            dateOfBirthCalendar,     // JCalendar
+            provinceField,           // JTextField
+            cityMunicipalityField,   // JTextField
+            barangayField,           // JTextField
+            streetField,             // JTextField
+            houseNumberField,        // JTextField
+            zipCodeField,            // JTextField
+            phoneNumberField,        // JTextField
+            sssNumberField,          // JTextField
+            philhealthNumberField,   // JTextField
+            tinNumberField,          // JTextField
+            pagibigNumberField,      // JTextField
+            employeeRoleComboBox,    // JComboBox<String>
+            employmentStatusComboBox,// JComboBox<String>
+            positionComboBox,        // JComboBox<String>
+            departmentComboBox,      // JComboBox<String>
+            supervisorComboBox,      // JComboBox<String>
+            basicSalaryComboBox,     // JComboBox<String>
+            backButton,              // LightButton
+            cancelButton,            // LightButton
+            confirmButton            // BlueButton
         );
 
+        // --- Back/Cancel logic: Only ask about unsaved changes if real edits detected
         backButton.addActionListener(evt -> {
-            if (isDirty() && JOptionPane.showConfirmDialog(
-                    this, "You have unsaved changes. Discard?", "Confirm", JOptionPane.YES_NO_OPTION
-            ) != JOptionPane.YES_OPTION) return;
+            if (isDirty()) {
+                int opt = JOptionPane.showConfirmDialog(
+                    this,
+                    "You have unsaved changes. Discard?",
+                    "Confirm",
+                    JOptionPane.YES_NO_OPTION
+                );
+                if (opt != JOptionPane.YES_OPTION) return;
+            }
             new PageITUserAccounts().setVisible(true);
             dispose();
         });
+        // Cancel is same as back in this context
         cancelButton.addActionListener(backButton.getActionListeners()[0]);
     }
 
-    @Override
-    protected void onRegisterSuccess() { new PageITUserAccounts().setVisible(true); dispose(); }
+    // AbstractEmployeeUpdatePage requires this: what to do after successful update
+    @Override protected void onUpdateSuccess() { new PageITUserAccounts().setVisible(true); dispose();}
+    @Override protected void onRegisterSuccess() {}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -329,7 +353,7 @@ public class PageITEmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
         employeeRoleComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee", "HR", "IT", "Finance", "Manager" }));
         getContentPane().add(employeeRoleComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 190, -1));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ITCreateUser.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ITUpdateUser.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -361,20 +385,20 @@ public class PageITEmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PageITEmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITEmployeeUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PageITEmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITEmployeeUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PageITEmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITEmployeeUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PageITEmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITEmployeeUpdate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PageITEmployeeRegister().setVisible(true);
+                new PageITEmployeeUpdate().setVisible(true);
             }
         });
     }
