@@ -1,3 +1,5 @@
+// File: ui/base/AbstractEmployeeRegisterPage.java
+
 package ui.base;
 
 import com.toedter.calendar.JCalendar;
@@ -5,14 +7,12 @@ import service.EmployeeService;
 import service.UserService;
 import util.LightButton;
 import util.BlueButton;
-import ui.PageHREmployeeRecords;
+import util.SessionManager;
 import db.DatabaseConnection;
-import pojo.Employee;
 
 import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
-import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.math.BigDecimal;
@@ -24,11 +24,11 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public abstract class AbstractEmployeeRegisterPage extends JFrame {
-  // — UI components — (protected so subclasses can access)
+  // UI components (protected for subclass access)
   protected JTextField lastNameField, firstNameField;
   protected JCalendar  dobCal;
   protected JTextField provinceField, cityField, barangayField,
-                         streetField, houseNoField, zipField;
+                       streetField, houseNoField, zipField;
   protected JTextField phoneField, sssField, philField, tinField, pagibigField;
   protected JComboBox<String> roleCombo, statusCombo,
                               positionCombo, departmentCombo,
@@ -36,7 +36,7 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
   protected LightButton backButton, cancelButton;
   protected BlueButton  confirmButton;
 
-  // for mapping dropdown selections back to IDs
+  // Data for dropdowns (protected for subclass access)
   protected List<Integer> statusIds, positionIds, departmentIds, supervisorIds;
   private static final String[] ROLE_NAMES = {
     "Employee", "HR", "IT", "Finance", "Manager"
@@ -48,7 +48,8 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
   private boolean dirty = false;
 
   /**
-   * Call once, right after initComponents() in your subclass.
+   * Subclass calls this after initComponents().
+   * Subclass is responsible for wiring up navigation.
    */
   protected void setupRegisterPage(
     JTextField ln, JTextField fn, JCalendar dc,
@@ -61,7 +62,6 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     JComboBox<String> supC, JComboBox<String> salC,
     LightButton backB, LightButton cancelB, BlueButton confirmB
   ) {
-    // store references
     this.lastNameField   = ln;
     this.firstNameField  = fn;
     this.dobCal          = dc;
@@ -86,20 +86,24 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     this.cancelButton    = cancelB;
     this.confirmButton   = confirmB;
 
-    // ── Populate combos ── //
+    // Populate combos
     roleC.setModel(new DefaultComboBoxModel<>(ROLE_NAMES));
+
     statusIds = empSvc.getAllStatusIDs();
     statusC.setModel(new DefaultComboBoxModel<>(
       empSvc.getAllStatusTypes().toArray(new String[0])
     ));
+
     positionIds = empSvc.getAllPositionIDs();
     posC.setModel(new DefaultComboBoxModel<>(
       empSvc.getAllPositionNames().toArray(new String[0])
     ));
+
     departmentIds = empSvc.getAllDepartmentIDs();
     deptC.setModel(new DefaultComboBoxModel<>(
       empSvc.getAllDepartmentNames().toArray(new String[0])
     ));
+
     var emps = empSvc.getAllEmployees();
     supervisorIds = new ArrayList<>();
     var supNames = new Vector<String>();
@@ -108,23 +112,25 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
       supNames.add(e.getLastName() + ", " + e.getFirstName());
     }
     supC.setModel(new DefaultComboBoxModel<>(supNames));
-    // sync dept when pos changes
+
+    // Auto-sync department when position changes
     posC.addActionListener(e -> {
-      dirty = true; confirmButton.setEnabled(true);
       int idx = posC.getSelectedIndex();
       if (idx < 0) return;
-      int deptId = empSvc.getDepartmentIDForPosition(positionIds.get(idx));
+      int posID = positionIds.get(idx);
+      int dept  = empSvc.getDepartmentIDForPosition(posID);
       for (int i = 0; i < deptC.getItemCount(); i++) {
-        if (departmentIds.get(i) == deptId) {
+        if (departmentIds.get(i) == dept) {
           deptC.setSelectedIndex(i);
           break;
         }
       }
     });
 
-    // ── Filters & max lengths ── //
+    // Filters & max lengths
     Pattern alpha    = Pattern.compile("[a-zA-Z ]*");
     Pattern alphanum = Pattern.compile("[a-zA-Z0-9 .,#\\-]*");
+
     installFilter(ln,     alpha,    25);
     installFilter(fn,     alpha,    35);
     installFilter(prov,   alpha,    25);
@@ -133,13 +139,14 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     installFilter(street, alphanum, 25);
     installFilter(house,  alphanum, 25);
     installFilter(zip,    Pattern.compile("\\d{0,4}"), 4);
+
     installFilter(phone,  Pattern.compile("[0-9\\-]*"), 11);
     installFilter(sss,    Pattern.compile("[0-9\\-]*"), 12);
     installFilter(phil,   Pattern.compile("\\d*"),      12);
     installFilter(tin,    Pattern.compile("[0-9\\-]*"), 15);
     installFilter(pagibig,Pattern.compile("\\d*"),      12);
 
-    // ── Min‐length highlights ── //
+    // Min-length highlights
     installMinValidator(ln,    2);
     installMinValidator(fn,    2);
     installMinValidator(prov,  4);
@@ -148,55 +155,41 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     installMinValidator(street,4);
     installMinValidator(zip,   4);
 
-    // ── Digit‐count highlights ── //
+    // Digit-count highlights
     installDigitHighlighter(sss, 10);
     installDigitHighlighter(tin,  9);
     installPhoneHighlighter(phone);
+    installDigitHighlighter(phil, 12);   // PhilHealth needs 12 digits
+    installDigitHighlighter(pagibig, 12); // Pag-IBIG needs 12 digits
 
-    // ── Auto‐formatters ── //
+
+    // Auto-formatters
     installFormatter(sss,   this::formatSSS);
     installFormatter(tin,   this::formatTIN);
     installFormatter(phone, this::formatPhone);
 
-    // ── Dirty tracking ── //
+    // Dirty tracking
     allFields.addAll(List.of(
       ln, fn, prov, city, brgy, street, house, zip,
       phone, sss, phil, tin, pagibig
     ));
-    DocumentListener docListener = new DocumentListener() {
-      public void insertUpdate(DocumentEvent e){ dirty = true; confirmButton.setEnabled(true); }
-      public void removeUpdate(DocumentEvent e){ dirty = true; confirmButton.setEnabled(true); }
-      public void changedUpdate(DocumentEvent e){ dirty = true; confirmButton.setEnabled(true); }
+    DocumentListener dl = new DocumentListener() {
+      public void insertUpdate(DocumentEvent e){fieldBecameDirty();}
+      public void removeUpdate(DocumentEvent e){fieldBecameDirty();}
+      public void changedUpdate(DocumentEvent e){fieldBecameDirty();}
     };
     allFields.forEach(f ->
-      ((AbstractDocument)f.getDocument()).addDocumentListener(docListener)
+      ((AbstractDocument)f.getDocument()).addDocumentListener(dl)
     );
-    ActionListener markDirty = ev -> {
-      dirty = true;
-      confirmButton.setEnabled(true);
-    };
-    for (var c : List.of(roleC, statusC, posC, deptC, supC, salC))
+    ActionListener markDirty = ev->fieldBecameDirty();
+    for (var c : List.of(roleC,statusC,posC,deptC,supC,salC))
       c.addActionListener(markDirty);
-    dc.addPropertyChangeListener("calendar", e -> { dirty = true; confirmButton.setEnabled(true); });
+    dc.addPropertyChangeListener("calendar", e->fieldBecameDirty());
 
-    // ── Back / Cancel ── //
-    ActionListener goBack = ev -> {
-      if (dirty
-       && JOptionPane.showConfirmDialog(
-            this,
-            "You have unsaved changes. Discard?",
-            "Confirm",
-            JOptionPane.YES_NO_OPTION
-          ) != JOptionPane.YES_NO_OPTION) return;
-      new PageHREmployeeRecords().setVisible(true);
-      dispose();
-    };
-    backButton .addActionListener(goBack);
-    cancelButton.addActionListener(goBack);
-
-    // ── Confirm ── //
-    // start disabled
+    // Confirm button starts locked until something is modified
     confirmButton.setEnabled(false);
+
+    // Confirm action: still handled here so validation & DB logic stays modular.
     confirmButton.addActionListener(ev -> {
       List<String> errors = validateAll();
       if (!errors.isEmpty()) {
@@ -216,16 +209,150 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
          ) != JOptionPane.YES_OPTION) return;
       doRegister();
     });
+
+    // Navigation for back/cancel is now responsibility of the UI class!
+    // (No setVisible or dispose here)
   }
 
+  /** Called whenever any field changes: unlocks confirmButton. */
+  private void fieldBecameDirty() {
+    dirty = true;
+    if (confirmButton != null && !confirmButton.isEnabled())
+      confirmButton.setEnabled(true);
+  }
+
+  /** Subclass can call this to ask if unsaved changes are present. */
+  protected boolean isDirty() {
+    return dirty;
+  }
+
+  /**
+   * Registers new employee into all necessary tables.
+   * This handles only data/DB logic.
+   * UI subclass decides navigation.
+   */
   private void doRegister() {
     try (Connection c = DatabaseConnection.getInstance().getConnection()) {
       c.setAutoCommit(false);
-      // … your existing create‐employee logic …
+
+      // 0) Next empID for userID/etc.
+      int nextEmpId = fetchNextEmployeeAutoIncrement(c);
+
+      // 1) accountStatus based on creator role
+      String creatorUser = SessionManager.getUserID();
+      int creatorRoleID = -1;
+      try (PreparedStatement r = c.prepareStatement(
+             "SELECT roleID FROM authentication WHERE userID=?"
+           )) {
+        r.setString(1, creatorUser);
+        try (ResultSet rr = r.executeQuery()) {
+          if (rr.next()) creatorRoleID = rr.getInt("roleID");
+        }
+      }
+      String acctStatus = (creatorRoleID == 3)
+                         ? "Activate"
+                         : "Pending";
+
+      // 2) authentication
+      String email        = makeEmail(firstNameField.getText(), lastNameField.getText());
+      String userID       = "U" + nextEmpId;
+      String passwordHash = capitalize(lastNameField.getText()) + "@" + nextEmpId;
+      int    roleID       = roleCombo.getSelectedIndex() + 1;
+      try (PreparedStatement p = c.prepareStatement(
+             "INSERT INTO authentication(userID,passwordHash,accountStatus,roleID) VALUES(?,?,?,?)"
+           )) {
+        p.setString(1, userID);
+        p.setString(2, passwordHash);
+        p.setString(3, acctStatus);
+        p.setInt   (4, roleID);
+        p.executeUpdate();
+      }
+
+      // 3) compensation
+      BigDecimal basic = parseMoney(salaryCombo.getSelectedItem().toString());
+      BigDecimal semi  = basic.divide(BigDecimal.valueOf(2));
+      BigDecimal hour  = basic.divide(BigDecimal.valueOf(21*8), 2, BigDecimal.ROUND_HALF_UP);
+      int compID;
+      try (PreparedStatement p = c.prepareStatement(
+             "INSERT INTO compensation(basicSalary, semiMonthlySalary, hourlyRate) VALUES(?,?,?)",
+             PreparedStatement.RETURN_GENERATED_KEYS
+           )) {
+        p.setBigDecimal(1, basic);
+        p.setBigDecimal(2, semi);
+        p.setBigDecimal(3, hour);
+        p.executeUpdate();
+        try (ResultSet rs = p.getGeneratedKeys()) {
+          if (!rs.next()) throw new SQLException("Failed to retrieve compensationID");
+          compID = rs.getInt(1);
+        }
+      }
+
+      // 4) employee
+      String phoneFormatted = phoneField.getText();
+      int statusID     = statusIds.get(statusCombo.getSelectedIndex());
+      int positionID   = positionIds.get(positionCombo.getSelectedIndex());
+      int departmentID = departmentIds.get(departmentCombo.getSelectedIndex());
+      int supervisorID = supervisorIds.get(supervisorCombo.getSelectedIndex());
+      try (PreparedStatement p = c.prepareStatement(
+             "INSERT INTO employee(" +
+             " firstName,lastName,birthDate,phoneNo,email,userID," +
+             " statusID,positionID,departmentID,compensationID,supervisorID" +
+             ") VALUES(?,?,?,?,?,?,?,?,?,?,?)"
+           )) {
+        p.setString(1, firstNameField.getText());
+        p.setString(2, lastNameField.getText());
+        p.setDate  (3, new java.sql.Date(
+                       dobCal.getCalendar().getTimeInMillis()
+                     ));
+        p.setString(4, phoneFormatted);
+        p.setString(5, email);
+        p.setString(6, userID);
+        p.setInt   (7, statusID);
+        p.setInt   (8, positionID);
+        p.setInt   (9, departmentID);
+        p.setInt   (10, compID);
+        p.setInt   (11, supervisorID);
+        p.executeUpdate();
+      }
+
+      // 5) address → employeeaddress
+      int addressID;
+      try (PreparedStatement p = c.prepareStatement(
+             "INSERT INTO address(houseNo,street,barangay,city,province,zipCode) VALUES(?,?,?,?,?,?)",
+             PreparedStatement.RETURN_GENERATED_KEYS
+           )) {
+        p.setString(1, houseNoField.getText());
+        p.setString(2, streetField.getText());
+        p.setString(3, barangayField.getText());
+        p.setString(4, cityField.getText());
+        p.setString(5, provinceField.getText());
+        p.setInt   (6, Integer.parseInt(zipField.getText()));
+        p.executeUpdate();
+        try (ResultSet rs = p.getGeneratedKeys()) { rs.next(); addressID = rs.getInt(1); }
+      }
+      try (PreparedStatement p = c.prepareStatement(
+             "INSERT INTO employeeaddress(employeeID,addressID) VALUES(?,?)"
+           )) {
+        p.setInt(1, nextEmpId);
+        p.setInt(2, addressID);
+        p.executeUpdate();
+      }
+
+      // 6) govid
+      try (PreparedStatement p = c.prepareStatement(
+             "INSERT INTO govid(sss,philhealth,tin,pagibig,employeeID) VALUES(?,?,?,?,?)"
+           )) {
+        p.setString(1, sssField.getText());
+        p.setString(2, philField.getText());
+        p.setString(3, tinField.getText());
+        p.setString(4, pagibigField.getText());
+        p.setInt   (5, nextEmpId);
+        p.executeUpdate();
+      }
+
       c.commit();
       JOptionPane.showMessageDialog(this, "Employee created successfully!");
-      new PageHREmployeeRecords().setVisible(true);
-      dispose();
+      onRegisterSuccess(); // Let subclass handle navigation after successful register
     }
     catch (Exception ex) {
       ex.printStackTrace();
@@ -238,7 +365,24 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     }
   }
 
-  /** Gathers all validation errors in plain language. */
+  // Subclass must define what to do on success (e.g., navigate page)
+  protected abstract void onRegisterSuccess();
+
+  private int fetchNextEmployeeAutoIncrement(Connection c) throws SQLException {
+    String sql =
+      "SELECT AUTO_INCREMENT " +
+      " FROM information_schema.TABLES " +
+      " WHERE TABLE_SCHEMA = DATABASE() " +
+      "   AND TABLE_NAME   = 'employee'";
+    try (PreparedStatement ps = c.prepareStatement(sql);
+         ResultSet rs = ps.executeQuery()) {
+      if (rs.next()) {
+        return rs.getInt("AUTO_INCREMENT");
+      }
+      throw new SQLException("Could not fetch employee AUTO_INCREMENT");
+    }
+  }
+
   protected List<String> validateAll() {
     var errs = new ArrayList<String>();
     if (lastNameField.getText().trim().length()<2)
@@ -257,16 +401,21 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
       errs.add("Please enter a house number.");
     if (zipField.getText().trim().length()!=4)
       errs.add("Please enter a 4-digit ZIP code.");
+
     if (!phoneField.getText().matches("\\d{3}-\\d{3}-\\d{3}"))
       errs.add("Please enter a phone number in format XXX-XXX-XXX.");
+
     if (!sssField.getText().matches("\\d{2}-\\d{7}-\\d"))
       errs.add("Please enter an SSS number in format XX-XXXXXXX-X.");
+
     if (philField.getText().replaceAll("\\D","").length()!=12)
       errs.add("Please enter a 12-digit PhilHealth number.");
     if (pagibigField.getText().replaceAll("\\D","").length()!=12)
       errs.add("Please enter a 12-digit Pag-IBIG number.");
+
     if (!tinField.getText().matches("\\d{3}-\\d{3}-\\d{3}-000"))
       errs.add("Please enter a TIN in format XXX-XXX-XXX-000.");
+
     if (roleCombo.getSelectedIndex()<0)
       errs.add("Please select an employee role.");
     if (statusCombo.getSelectedIndex()<0)
@@ -279,6 +428,7 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
       errs.add("Please select a supervisor.");
     if (salaryCombo.getSelectedIndex()<0)
       errs.add("Please select a salary.");
+
     var cal = dobCal.getCalendar();
     LocalDate dob = LocalDate.of(
       cal.get(Calendar.YEAR),
@@ -287,10 +437,11 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     );
     if (Period.between(dob, LocalDate.now()).getYears() < 18)
       errs.add("Employee must be at least 18 years old.");
+
     return errs;
   }
 
-  // ───────── Helpers ───────── //
+  // Helpers for input, filter, and formatting
   private void installFilter(JTextField fld, Pattern p, int maxLen) {
     ((AbstractDocument)fld.getDocument())
       .setDocumentFilter(new PatternFilter(p, maxLen));
@@ -322,10 +473,10 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
   private void installPhoneHighlighter(JTextField fld) {
     fld.getDocument().addDocumentListener(new DocumentListener(){
       private void upd(){
-        fld.setBackground(
-          fld.getText().matches("\\d{3}-\\d{3}-\\d{3}")
-            ? Color.WHITE : Color.PINK
-        );
+        String txt = fld.getText();
+        fld.setBackground(txt.matches("\\d{3}-\\d{3}-\\d{3}") 
+                          ? Color.WHITE 
+                          : Color.PINK);
       }
       public void insertUpdate(DocumentEvent e){upd();}
       public void removeUpdate(DocumentEvent e){upd();}
@@ -369,37 +520,40 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
       public void removeUpdate(DocumentEvent e){upd();}
       public void changedUpdate(DocumentEvent e){upd();}
     });
-  }
-  private String formatSSS(String d) {
-    if (d.length()>10) d=d.substring(0,10);
-    if (d.length()<3) return d;
-    if (d.length()<=9) return d.substring(0,2)+"-"+d.substring(2);
-    return d.substring(0,2)+"-"+d.substring(2,9)+"-"+d.substring(9);
-  }
-  private String formatTIN(String d) {
-    if (d.length()>9) d=d.substring(0,9);
-    if (d.length()<3) return d;
-    var sb = new StringBuilder();
-    if (d.length()<=3) sb.append(d);
-    else if (d.length()<=6) sb.append(d,0,3).append("-").append(d.substring(3));
-    else sb.append(d,0,3).append("-").append(d,3,6).append("-").append(d.substring(6));
-    if (d.length()==9) sb.append("-000");
-    return sb.toString();
-  }
-  private String formatPhone(String d) {
-    if (d.length()>9) d=d.substring(d.length()-9);
-    if (d.length()<=3) return d;
-    if (d.length()<=6) return d.substring(0,3)+"-"+d.substring(3);
-    return d.substring(0,3)+"-"+d.substring(3,6)+"-"+d.substring(6);
-  }
-  private String capitalize(String s) {
-    if (s.isEmpty()) return s;
-    return Character.toUpperCase(s.charAt(0))+s.substring(1).toLowerCase();
-  }
-  private String makeEmail(String fn, String ln) {
-    return (fn.charAt(0)+ln).toLowerCase()+"@motor.ph";
-  }
-  private BigDecimal parseMoney(String s) {
-    return new BigDecimal(s.replaceAll("[₱, ]",""));
-  }
+    }
+    private String formatSSS(String d) {
+      if (d.length()>10) d=d.substring(0,10);
+      if (d.length()<3) return d;
+      if (d.length()<=9) return d.substring(0,2) + "-" + d.substring(2);
+      return d.substring(0,2) + "-" + d.substring(2,9) + "-" + d.substring(9);
+    }
+    
+    private String formatTIN(String d) {
+        // Remove any non-digit characters
+        d = d.replaceAll("\\D", "");
+        // Only format what is entered (no zero padding here)
+        if (d.length() == 0) return "";
+        if (d.length() <= 3) return d;
+        if (d.length() <= 6) return d.substring(0,3) + "-" + d.substring(3);
+        if (d.length() <= 9) return d.substring(0,3) + "-" + d.substring(3,6) + "-" + d.substring(6);
+        return d.substring(0,3) + "-" + d.substring(3,6) + "-" + d.substring(6,9) + "-" + d.substring(9, Math.min(12, d.length()));
+    }
+
+    private String formatPhone(String d) {
+      if (d.length()>9) d=d.substring(d.length()-9);
+      if (d.length()<=3) return d;
+      if (d.length()<=6) return d.substring(0,3)+"-"+d.substring(3);
+      return d.substring(0,3)+"-"+d.substring(3,6)+"-"+d.substring(6);
+    }
+    private String capitalize(String s) {
+      if (s.isEmpty()) return s;
+      return Character.toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase();
+    }
+    private String makeEmail(String fn, String ln) {
+      return (fn.charAt(0)+ln).toLowerCase()+"@motor.ph";
+    }
+    private BigDecimal parseMoney(String s) {
+      String clean = s.replaceAll("[₱, ]","");
+      return new BigDecimal(clean);
+    }
 }

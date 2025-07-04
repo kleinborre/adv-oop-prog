@@ -2,9 +2,9 @@ package ui;
 
 import javax.swing.JOptionPane;
 
-public class PageHREmployeeRegister extends ui.base.AbstractEmployeeRegisterPage {
+public class PageITEmployeeRegister extends ui.base.AbstractEmployeeRegisterPage  {
 
-    public PageHREmployeeRegister() {
+    public PageITEmployeeRegister() {
         initComponents();
         setupRegisterPage(
           lastNameField, firstNameField, dateOfBirthCalendar,
@@ -22,7 +22,7 @@ public class PageHREmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
             if (isDirty() && JOptionPane.showConfirmDialog(
                     this, "You have unsaved changes. Discard?", "Confirm", JOptionPane.YES_NO_OPTION
             ) != JOptionPane.YES_OPTION) return;
-            new PageHREmployeeRecords().setVisible(true);
+            new PageITUserAccounts().setVisible(true);
             dispose();
         });
         cancelButton.addActionListener(backButton.getActionListeners()[0]);
@@ -30,11 +30,10 @@ public class PageHREmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
 
     @Override
     protected void onRegisterSuccess() {
-        // HR: return to employee records
-        new PageHREmployeeRecords().setVisible(true);
+        // IT: return to employee records
+        new PageITUserAccounts().setVisible(true);
         dispose();
     }
-
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -366,20 +365,20 @@ public class PageHREmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITEmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITEmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITEmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageITEmployeeRegister.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PageHREmployeeRegister().setVisible(true);
+                new PageITEmployeeRegister().setVisible(true);
             }
         });
     }

@@ -1,21 +1,58 @@
 package ui;
 
+import javax.swing.JOptionPane;
+
 public class PageHREmployeeUpdate extends ui.base.AbstractEmployeeUpdatePage {
 
     public PageHREmployeeUpdate() {
         initComponents();
         setupUpdatePage(
-          lastNameField, firstNameField, dateOfBirthCalendar,
-          provinceField, cityMunicipalityField, barangayField,
-          streetField, houseNumberField, zipCodeField,
-          phoneNumberField, sssNumberField, philhealthNumberField,
-          tinNumberField, pagibigNumberField,
-          employeeRoleComboBox, employmentStatusComboBox,
-          positionComboBox, departmentComboBox,
-          supervisorComboBox, basicSalaryComboBox,
-          backButton, cancelButton, confirmButton
+            lastNameField,           // JTextField
+            firstNameField,          // JTextField
+            dateOfBirthCalendar,     // JCalendar
+            provinceField,           // JTextField
+            cityMunicipalityField,   // JTextField
+            barangayField,           // JTextField
+            streetField,             // JTextField
+            houseNumberField,        // JTextField
+            zipCodeField,            // JTextField
+            phoneNumberField,        // JTextField
+            sssNumberField,          // JTextField
+            philhealthNumberField,   // JTextField
+            tinNumberField,          // JTextField
+            pagibigNumberField,      // JTextField
+            employeeRoleComboBox,    // JComboBox<String>
+            employmentStatusComboBox,// JComboBox<String>
+            positionComboBox,        // JComboBox<String>
+            departmentComboBox,      // JComboBox<String>
+            supervisorComboBox,      // JComboBox<String>
+            basicSalaryComboBox,     // JComboBox<String>
+            backButton,              // LightButton
+            cancelButton,            // LightButton
+            confirmButton            // BlueButton
         );
+
+        // --- Back/Cancel logic: Only ask about unsaved changes if real edits detected
+        backButton.addActionListener(evt -> {
+            if (isDirty()) {
+                int opt = JOptionPane.showConfirmDialog(
+                    this,
+                    "You have unsaved changes. Discard?",
+                    "Confirm",
+                    JOptionPane.YES_NO_OPTION
+                );
+                if (opt != JOptionPane.YES_OPTION) return;
+            }
+            new PageHREmployeeRecords().setVisible(true);
+            dispose();
+        });
+        // Cancel is same as back in this context
+        cancelButton.addActionListener(backButton.getActionListeners()[0]);
     }
+
+    // AbstractEmployeeUpdatePage requires this: what to do after successful update
+    @Override protected void onUpdateSuccess() { new PageHREmployeeRecords().setVisible(true); dispose();}
+    @Override protected void onRegisterSuccess() {}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -412,4 +449,5 @@ public class PageHREmployeeUpdate extends ui.base.AbstractEmployeeUpdatePage {
     private javax.swing.JTextField tinNumberField;
     private javax.swing.JTextField zipCodeField;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -1,10 +1,60 @@
 package ui;
 
-public class PageITEmployeeDataUpdateProfile extends javax.swing.JFrame {
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+public class PageITEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfilePage {
 
     public PageITEmployeeDataUpdateProfile() {
         initComponents();
+
+        // 1) wire our three buttons + navigation callback
+        setButtons(
+            updateButton,
+            cancelButton,
+            backButton,
+            () -> {
+                new PageITEmployeeData().setVisible(true);
+                dispose();
+            }
+        );
+
+        // 2) populate all fields from session
+        initializeProfileUpdatePage();
+
+        // 3) attach field-by-field validation
+        attachValidationListeners();
+
+        // 4) attach our formatters exactly once each
+        attachPhoneFormatter(getPhoneNumberField());
+        attachZipFormatter(getZipCodeField());
+
+        // 5) track edits to unlock the Update button
+        attachDirtyListeners(
+            getPhoneNumberField(),
+            getHouseNoField(),
+            getStreetField(),
+            getBarangayField(),
+            getCityField(),
+            getProvinceField(),
+            getZipCodeField()
+        );
     }
+
+    @Override protected JLabel getEmployeeIDText()   { return employeeIDText;   }
+    @Override protected JLabel getPositionText()     { return positionText;     }
+    @Override protected JLabel getSupervisorText()   { return supervisorText;   }
+    @Override protected JLabel getLastNameText()     { return lastNameText;     }
+    @Override protected JLabel getFirstNameText()    { return firstNameText;    }
+    @Override protected JLabel getBirthdayText()     { return birthdayText;     }
+
+    @Override protected JTextField getPhoneNumberField() { return phoneNumberField;    }
+    @Override protected JTextField getHouseNoField()     { return addressHouseNoField; }
+    @Override protected JTextField getStreetField()      { return addressStreetField;  }
+    @Override protected JTextField getBarangayField()    { return addressBarangayField;}
+    @Override protected JTextField getCityField()        { return addressCityField;    }
+    @Override protected JTextField getProvinceField()    { return addressProvinceField;}
+    @Override protected JTextField getZipCodeField()     { return addressZipCodeField; }
 
     /**
      * This method is called from within the constructor to initialize the form.
