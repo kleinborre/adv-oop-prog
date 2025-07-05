@@ -162,6 +162,11 @@ public class PageFinanceHome extends ui.base.AbstractHomePage {
 
         attendanceButton.setForeground(new java.awt.Color(0, 102, 102));
         attendanceButton.setText("Attendance");
+        attendanceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attendanceButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(attendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 180, -1));
 
         payslipButton.setForeground(new java.awt.Color(0, 102, 102));
@@ -205,6 +210,11 @@ public class PageFinanceHome extends ui.base.AbstractHomePage {
     private void logoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_logoutButtonActionPerformed
+
+    private void attendanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendanceButtonActionPerformed
+        new PageFinanceAttendanceRecords().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_attendanceButtonActionPerformed
 
     /**
      * @param args the command line arguments

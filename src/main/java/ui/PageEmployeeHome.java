@@ -174,6 +174,11 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
 
         attendanceButton.setForeground(new java.awt.Color(0, 102, 102));
         attendanceButton.setText("Attendance");
+        attendanceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                attendanceButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(attendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 180, -1));
 
         employeeDataButton.setForeground(new java.awt.Color(0, 102, 102));
@@ -218,6 +223,11 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
         new PageEmployeeData().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_employeeDataButtonActionPerformed
+
+    private void attendanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendanceButtonActionPerformed
+        new PageEmployeeAttendance().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_attendanceButtonActionPerformed
 
     /**
      * @param args the command line arguments
