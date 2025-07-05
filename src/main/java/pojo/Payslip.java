@@ -1,147 +1,106 @@
 package pojo;
 
+import java.sql.Date;
+
 public class Payslip {
 
+    private String payslipNo;
     private int employeeID;
     private String employeeName;
-    private int payPeriodID;
-    private String payPeriodName;
-    private double grossPay;
-    private double totalDeductions;
-    private double withholdingTax;
-    private double netPay;
-    private double totalHoursWorked;
-    private double hourPayAmount;
-    private double totalLeaveDays;
+    private Date periodStartDate;
+    private Date periodEndDate;
+    private String employeePositionDepartment;
+    private double monthlyRate;
+    private double dailyRate;
+    private double daysWorked;
     private double overtimeHours;
-    private double overtimePay;
+    private double grossIncome;
+    private double riceSubsidy;
+    private double phoneAllowance;
+    private double clothingAllowance;
+    private double totalBenefits;
+    private double sss;
+    private double philhealth;
+    private double pagibig;
+    private double withholdingTax;
+    private double totalDeductions;
+    private double grossIncomeDup; // "Gross Income" (duplicate for view, mapped for JasperReport)
+    private double benefits;
+    private double deductions;
+    private double takeHomePay;
 
-    // Constructors
+    public Payslip() {}
 
-    public Payslip() {
-    }
+    // Getters and setters
+    public String getPayslipNo() { return payslipNo; }
+    public void setPayslipNo(String payslipNo) { this.payslipNo = payslipNo; }
 
-    public Payslip(int employeeID, String employeeName, int payPeriodID, String payPeriodName, double grossPay,
-                   double totalDeductions, double withholdingTax, double netPay, double totalHoursWorked,
-                   double hourPayAmount, double totalLeaveDays, double overtimeHours, double overtimePay) {
-        this.employeeID = employeeID;
-        this.employeeName = employeeName;
-        this.payPeriodID = payPeriodID;
-        this.payPeriodName = payPeriodName;
-        this.grossPay = grossPay;
-        this.totalDeductions = totalDeductions;
-        this.withholdingTax = withholdingTax;
-        this.netPay = netPay;
-        this.totalHoursWorked = totalHoursWorked;
-        this.hourPayAmount = hourPayAmount;
-        this.totalLeaveDays = totalLeaveDays;
-        this.overtimeHours = overtimeHours;
-        this.overtimePay = overtimePay;
-    }
+    public int getEmployeeID() { return employeeID; }
+    public void setEmployeeID(int employeeID) { this.employeeID = employeeID; }
 
-    // Getters and Setters
+    public String getEmployeeName() { return employeeName; }
+    public void setEmployeeName(String employeeName) { this.employeeName = employeeName; }
 
-    public int getEmployeeID() {
-        return employeeID;
-    }
+    public Date getPeriodStartDate() { return periodStartDate; }
+    public void setPeriodStartDate(Date periodStartDate) { this.periodStartDate = periodStartDate; }
 
-    public void setEmployeeID(int employeeID) {
-        this.employeeID = employeeID;
-    }
+    public Date getPeriodEndDate() { return periodEndDate; }
+    public void setPeriodEndDate(Date periodEndDate) { this.periodEndDate = periodEndDate; }
 
-    public String getEmployeeName() {
-        return employeeName;
-    }
+    public String getEmployeePositionDepartment() { return employeePositionDepartment; }
+    public void setEmployeePositionDepartment(String employeePositionDepartment) { this.employeePositionDepartment = employeePositionDepartment; }
 
-    public void setEmployeeName(String employeeName) {
-        this.employeeName = employeeName;
-    }
+    public double getMonthlyRate() { return monthlyRate; }
+    public void setMonthlyRate(double monthlyRate) { this.monthlyRate = monthlyRate; }
 
-    public int getPayPeriodID() {
-        return payPeriodID;
-    }
+    public double getDailyRate() { return dailyRate; }
+    public void setDailyRate(double dailyRate) { this.dailyRate = dailyRate; }
 
-    public void setPayPeriodID(int payPeriodID) {
-        this.payPeriodID = payPeriodID;
-    }
+    public double getDaysWorked() { return daysWorked; }
+    public void setDaysWorked(double daysWorked) { this.daysWorked = daysWorked; }
 
-    public String getPayPeriodName() {
-        return payPeriodName;
-    }
+    public double getOvertimeHours() { return overtimeHours; }
+    public void setOvertimeHours(double overtimeHours) { this.overtimeHours = overtimeHours; }
 
-    public void setPayPeriodName(String payPeriodName) {
-        this.payPeriodName = payPeriodName;
-    }
+    public double getGrossIncome() { return grossIncome; }
+    public void setGrossIncome(double grossIncome) { this.grossIncome = grossIncome; }
 
-    public double getGrossPay() {
-        return grossPay;
-    }
+    public double getRiceSubsidy() { return riceSubsidy; }
+    public void setRiceSubsidy(double riceSubsidy) { this.riceSubsidy = riceSubsidy; }
 
-    public void setGrossPay(double grossPay) {
-        this.grossPay = grossPay;
-    }
+    public double getPhoneAllowance() { return phoneAllowance; }
+    public void setPhoneAllowance(double phoneAllowance) { this.phoneAllowance = phoneAllowance; }
 
-    public double getTotalDeductions() {
-        return totalDeductions;
-    }
+    public double getClothingAllowance() { return clothingAllowance; }
+    public void setClothingAllowance(double clothingAllowance) { this.clothingAllowance = clothingAllowance; }
 
-    public void setTotalDeductions(double totalDeductions) {
-        this.totalDeductions = totalDeductions;
-    }
+    public double getTotalBenefits() { return totalBenefits; }
+    public void setTotalBenefits(double totalBenefits) { this.totalBenefits = totalBenefits; }
 
-    public double getWithholdingTax() {
-        return withholdingTax;
-    }
+    public double getSss() { return sss; }
+    public void setSss(double sss) { this.sss = sss; }
 
-    public void setWithholdingTax(double withholdingTax) {
-        this.withholdingTax = withholdingTax;
-    }
+    public double getPhilhealth() { return philhealth; }
+    public void setPhilhealth(double philhealth) { this.philhealth = philhealth; }
 
-    public double getNetPay() {
-        return netPay;
-    }
+    public double getPagibig() { return pagibig; }
+    public void setPagibig(double pagibig) { this.pagibig = pagibig; }
 
-    public void setNetPay(double netPay) {
-        this.netPay = netPay;
-    }
+    public double getWithholdingTax() { return withholdingTax; }
+    public void setWithholdingTax(double withholdingTax) { this.withholdingTax = withholdingTax; }
 
-    public double getTotalHoursWorked() {
-        return totalHoursWorked;
-    }
+    public double getTotalDeductions() { return totalDeductions; }
+    public void setTotalDeductions(double totalDeductions) { this.totalDeductions = totalDeductions; }
 
-    public void setTotalHoursWorked(double totalHoursWorked) {
-        this.totalHoursWorked = totalHoursWorked;
-    }
+    public double getGrossIncomeDup() { return grossIncomeDup; }
+    public void setGrossIncomeDup(double grossIncomeDup) { this.grossIncomeDup = grossIncomeDup; }
 
-    public double getHourPayAmount() {
-        return hourPayAmount;
-    }
+    public double getBenefits() { return benefits; }
+    public void setBenefits(double benefits) { this.benefits = benefits; }
 
-    public void setHourPayAmount(double hourPayAmount) {
-        this.hourPayAmount = hourPayAmount;
-    }
+    public double getDeductions() { return deductions; }
+    public void setDeductions(double deductions) { this.deductions = deductions; }
 
-    public double getTotalLeaveDays() {
-        return totalLeaveDays;
-    }
-
-    public void setTotalLeaveDays(double totalLeaveDays) {
-        this.totalLeaveDays = totalLeaveDays;
-    }
-
-    public double getOvertimeHours() {
-        return overtimeHours;
-    }
-
-    public void setOvertimeHours(double overtimeHours) {
-        this.overtimeHours = overtimeHours;
-    }
-
-    public double getOvertimePay() {
-        return overtimePay;
-    }
-
-    public void setOvertimePay(double overtimePay) {
-        this.overtimePay = overtimePay;
-    }
+    public double getTakeHomePay() { return takeHomePay; }
+    public void setTakeHomePay(double takeHomePay) { this.takeHomePay = takeHomePay; }
 }
