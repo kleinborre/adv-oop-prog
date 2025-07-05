@@ -12,19 +12,19 @@ public class PageEmployeeData extends ui.base.AbstractProfilePage {
     }
 
     // Implement all required methods:
-    @Override protected JLabel getEmployeeIDText()       { return employeeIDText;       }
-    @Override protected JLabel getPositionText()         { return positionText;         }
-    @Override protected JLabel getFirstNameText()        { return firstNameText;        }
-    @Override protected JLabel getLastNameText()         { return lastNameText;         }
-    @Override protected JLabel getBirthdayText()         { return birthdayText;         }
-    @Override protected JLabel getPhoneNumberText()      { return phoneNumberText;      }
-    @Override protected JLabel getAddressText()          { return addressText;          }
-    @Override protected JLabel getSupervisorText()       { return supervisorText;       }
-    @Override protected JLabel getStatusText()           { return statusText;           }
-    @Override protected JLabel getSSSNumberText()        { return sssNumberText;        }
-    @Override protected JLabel getPagibigNumberText()    { return pagibigNumberText;    }
-    @Override protected JLabel getPhilhealthNumberText() { return philhealthNumberText; }
-    @Override protected JLabel getTINNumberText()        { return tinNumberText;        }
+    @Override public JLabel getEmployeeIDText()       { return employeeIDText;       }
+    @Override public JLabel getPositionText()         { return positionText;         }
+    @Override public JLabel getFirstNameText()        { return firstNameText;        }
+    @Override public JLabel getLastNameText()         { return lastNameText;         }
+    @Override public JLabel getBirthdayText()         { return birthdayText;         }
+    @Override public JLabel getPhoneNumberText()      { return phoneNumberText;      }
+    @Override public JLabel getAddressText()          { return addressText;          }
+    @Override public JLabel getSupervisorText()       { return supervisorText;       }
+    @Override public JLabel getStatusText()           { return statusText;           }
+    @Override public JLabel getSSSNumberText()        { return sssNumberText;        }
+    @Override public JLabel getPagibigNumberText()    { return pagibigNumberText;    }
+    @Override public JLabel getPhilhealthNumberText() { return philhealthNumberText; }
+    @Override public JLabel getTINNumberText()        { return tinNumberText;        }
     
     /**
      * This method is called from within the constructor to initialize the form.
