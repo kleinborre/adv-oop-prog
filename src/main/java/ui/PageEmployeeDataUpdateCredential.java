@@ -46,11 +46,11 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
         );
     }
 
-    @Override protected JLabel getUsernameText()   { return usernameText;   }
-    @Override protected JLabel getEmailText()      { return emailText;      }
-    @Override protected JLabel getEmployeeIDText() { return employeeIDText; }
-    @Override protected JLabel getPositionText()   { return positionText;   }
-    @Override protected JLabel getSupervisorText() { return supervisorText; }
+    @Override public JLabel getUsernameText()   { return usernameText;   }
+    @Override public JLabel getEmailText()      { return emailText;      }
+    @Override public JLabel getEmployeeIDText() { return employeeIDText; }
+    @Override public JLabel getPositionText()   { return positionText;   }
+    @Override public JLabel getSupervisorText() { return supervisorText; }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -338,7 +338,7 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
     private util.LightButton cancelButton;
     private javax.swing.JLabel emailText;
     private javax.swing.JLabel employeeIDText;
-    private javax.swing.JLabel errorMessageLabel;
+    public javax.swing.JLabel errorMessageLabel;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label11;
     private javax.swing.JLabel label12;
@@ -353,9 +353,9 @@ public class PageEmployeeDataUpdateCredential extends ui.base.AbstractUpdateCred
     private javax.swing.JLabel label7;
     private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
-    private javax.swing.JPasswordField passwordCurrentField;
-    private javax.swing.JPasswordField passwordNewField;
-    private javax.swing.JPasswordField passwordReEnterField;
+    public javax.swing.JPasswordField passwordCurrentField;
+    public javax.swing.JPasswordField passwordNewField;
+    public javax.swing.JPasswordField passwordReEnterField;
     private javax.swing.JLabel positionText;
     private javax.swing.JLabel supervisorText;
     private util.BlueButton updateButton;
