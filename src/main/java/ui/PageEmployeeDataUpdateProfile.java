@@ -42,20 +42,20 @@ public class PageEmployeeDataUpdateProfile extends ui.base.AbstractUpdateProfile
         );
     }
 
-    @Override protected JLabel getEmployeeIDText()   { return employeeIDText;   }
-    @Override protected JLabel getPositionText()     { return positionText;     }
-    @Override protected JLabel getSupervisorText()   { return supervisorText;   }
-    @Override protected JLabel getLastNameText()     { return lastNameText;     }
-    @Override protected JLabel getFirstNameText()    { return firstNameText;    }
-    @Override protected JLabel getBirthdayText()     { return birthdayText;     }
+    @Override public JLabel getEmployeeIDText()   { return employeeIDText;   }
+    @Override public JLabel getPositionText()     { return positionText;     }
+    @Override public JLabel getSupervisorText()   { return supervisorText;   }
+    @Override public JLabel getLastNameText()     { return lastNameText;     }
+    @Override public JLabel getFirstNameText()    { return firstNameText;    }
+    @Override public JLabel getBirthdayText()     { return birthdayText;     }
 
-    @Override protected JTextField getPhoneNumberField() { return phoneNumberField;    }
-    @Override protected JTextField getHouseNoField()     { return addressHouseNoField; }
-    @Override protected JTextField getStreetField()      { return addressStreetField;  }
-    @Override protected JTextField getBarangayField()    { return addressBarangayField;}
-    @Override protected JTextField getCityField()        { return addressCityField;    }
-    @Override protected JTextField getProvinceField()    { return addressProvinceField;}
-    @Override protected JTextField getZipCodeField()     { return addressZipCodeField; }
+    @Override public JTextField getPhoneNumberField() { return phoneNumberField;    }
+    @Override public JTextField getHouseNoField()     { return addressHouseNoField; }
+    @Override public JTextField getStreetField()      { return addressStreetField;  }
+    @Override public JTextField getBarangayField()    { return addressBarangayField;}
+    @Override public JTextField getCityField()        { return addressCityField;    }
+    @Override public JTextField getProvinceField()    { return addressProvinceField;}
+    @Override public JTextField getZipCodeField()     { return addressZipCodeField; }
 
     /**
      * This method is called from within the constructor to initialize the form.
