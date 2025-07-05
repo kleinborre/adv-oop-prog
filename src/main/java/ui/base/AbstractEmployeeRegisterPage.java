@@ -250,7 +250,7 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
         }
       }
       String acctStatus = (creatorRoleID == 3)
-                         ? "Activate"
+                         ? "Active"
                          : "Pending";
 
       // 2) authentication

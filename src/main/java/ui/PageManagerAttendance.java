@@ -1,36 +1,17 @@
 package ui;
 
-public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
+import util.SessionManager;
 
-    public PageHREmployeeRecords() {
+public class PageManagerAttendance extends ui.base.AbstractAttendancePage {
+
+    public PageManagerAttendance() {
         initComponents();
-
-        setupRecordsPage(
-          employeeRecordsTable,
-          statusFilter,
-          ownRecordButton,
-          newEmployeeButton,
-          backButton,
-
-          // 1) View Own Record
-          () -> {
-            new PageHREmployeeData().setVisible(true);
-            dispose();
-          },
-
-          // 2) New Employee
-          () -> {
-            new PageHREmployeeRegister().setVisible(true);
-            dispose();
-          },
-
-          // 3) Back to HR Home
-          () -> {
-            new PageHRHome().setVisible(true);
-            dispose();
-          }
-        );
-      }
+        setupAttendancePage(attendanceTable, JDateChooser, totalWorkedHoursField, printAttendanceButton, SessionManager.getEmployeeID());
+        backButton.addActionListener(e -> {
+            new PageManagerHome().setVisible(true);
+            this.dispose();
+        });
+    }    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -42,27 +23,37 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
     private void initComponents() {
 
         label10 = new javax.swing.JLabel();
-        totalWorkedHoursField = new javax.swing.JTextField();
+        JDateChooser = new com.toedter.calendar.JDateChooser();
         label9 = new javax.swing.JLabel();
-        ownRecordButton = new util.LightButton();
-        newEmployeeButton = new util.LightButton();
+        totalWorkedHoursField = new javax.swing.JTextField();
         backButton = new util.LightButton();
-        statusFilter = new javax.swing.JComboBox<>();
+        viewAttendanceRecordsButton = new util.LightButton();
+        printAttendanceButton = new util.LightButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        employeeRecordsTable = new javax.swing.JTable();
+        attendanceTable = new javax.swing.JTable();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MotorPH Payroll System");
-        setMinimumSize(new java.awt.Dimension(1040, 590));
+        setMaximumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         label10.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         label10.setForeground(new java.awt.Color(51, 51, 51));
         label10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label10.setText("Total Hours:");
-        getContentPane().add(label10, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, 100, 30));
+        label10.setText("Filter by Date:");
+        getContentPane().add(label10, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 80, 110, 30));
+
+        JDateChooser.setForeground(new java.awt.Color(0, 102, 102));
+        JDateChooser.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        getContentPane().add(JDateChooser, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 80, 130, 30));
+
+        label9.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        label9.setForeground(new java.awt.Color(51, 51, 51));
+        label9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label9.setText("Total Hours:");
+        getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, 100, 30));
 
         totalWorkedHoursField.setEditable(false);
         totalWorkedHoursField.setBackground(new java.awt.Color(204, 204, 204));
@@ -71,25 +62,6 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
         totalWorkedHoursField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         totalWorkedHoursField.setText("00 hrs, 00 min");
         getContentPane().add(totalWorkedHoursField, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 120, 130, 30));
-
-        label9.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
-        label9.setForeground(new java.awt.Color(51, 51, 51));
-        label9.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label9.setText("Filter by Status:");
-        getContentPane().add(label9, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 90, 110, -1));
-
-        ownRecordButton.setForeground(new java.awt.Color(0, 102, 102));
-        ownRecordButton.setText("View Own Record");
-        ownRecordButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ownRecordButtonActionPerformed(evt);
-            }
-        });
-        getContentPane().add(ownRecordButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 210, -1));
-
-        newEmployeeButton.setForeground(new java.awt.Color(0, 102, 102));
-        newEmployeeButton.setText("New Employee");
-        getContentPane().add(newEmployeeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 80, 150, -1));
 
         backButton.setForeground(new java.awt.Color(0, 102, 102));
         backButton.setText("Back");
@@ -100,11 +72,26 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
         });
         getContentPane().add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
 
-        statusFilter.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        statusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Pending", "Deactivated", "Rejected" }));
-        getContentPane().add(statusFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 84, 140, 30));
+        viewAttendanceRecordsButton.setForeground(new java.awt.Color(0, 102, 102));
+        viewAttendanceRecordsButton.setText("View Attendance Records");
+        viewAttendanceRecordsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAttendanceRecordsButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(viewAttendanceRecordsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 220, -1));
 
-        employeeRecordsTable.setModel(new javax.swing.table.DefaultTableModel(
+        printAttendanceButton.setForeground(new java.awt.Color(0, 102, 102));
+        printAttendanceButton.setText("Print Attendance");
+        printAttendanceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                printAttendanceButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(printAttendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 160, -1));
+
+        attendanceTable.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        attendanceTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -115,25 +102,29 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        employeeRecordsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
-        jScrollPane1.setViewportView(employeeRecordsTable);
+        jScrollPane1.setViewportView(attendanceTable);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 940, 400));
 
-        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/HREmployeeRecords.png"))); // NOI18N
+        background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/AttendanceSummary.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ownRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ownRecordButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ownRecordButtonActionPerformed
-
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_backButtonActionPerformed
+
+    private void viewAttendanceRecordsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAttendanceRecordsButtonActionPerformed
+        new PageManagerAttendanceRecords().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_viewAttendanceRecordsButtonActionPerformed
+
+    private void printAttendanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printAttendanceButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_printAttendanceButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,34 +143,34 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageManagerAttendance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageManagerAttendance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageManagerAttendance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PageHREmployeeRecords.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(PageManagerAttendance.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new PageHREmployeeRecords().setVisible(true);
+                new PageManagerAttendance().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private com.toedter.calendar.JDateChooser JDateChooser;
+    private javax.swing.JTable attendanceTable;
     private util.LightButton backButton;
     private javax.swing.JLabel background;
-    private javax.swing.JTable employeeRecordsTable;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label9;
-    private util.LightButton newEmployeeButton;
-    private util.LightButton ownRecordButton;
-    private javax.swing.JComboBox<String> statusFilter;
+    private util.LightButton printAttendanceButton;
     private javax.swing.JTextField totalWorkedHoursField;
+    private util.LightButton viewAttendanceRecordsButton;
     // End of variables declaration//GEN-END:variables
 }
