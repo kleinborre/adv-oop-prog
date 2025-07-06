@@ -22,14 +22,15 @@ public class PageHRAttendance extends ui.base.AbstractAttendancePage {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        attendanceTable = new javax.swing.JTable();
+        viewAttendanceRecordsButton = new util.LightButton();
         label10 = new javax.swing.JLabel();
         JDateChooser = new com.toedter.calendar.JDateChooser();
         label9 = new javax.swing.JLabel();
         totalWorkedHoursField = new javax.swing.JTextField();
         backButton = new util.LightButton();
         printAttendanceButton = new util.LightButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        attendanceTable = new javax.swing.JTable();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -38,6 +39,31 @@ public class PageHRAttendance extends ui.base.AbstractAttendancePage {
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        attendanceTable.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
+        attendanceTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(attendanceTable);
+
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 940, 400));
+
+        viewAttendanceRecordsButton.setForeground(new java.awt.Color(0, 102, 102));
+        viewAttendanceRecordsButton.setText("View Attendance Records");
+        viewAttendanceRecordsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                viewAttendanceRecordsButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(viewAttendanceRecordsButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 80, 220, -1));
 
         label10.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         label10.setForeground(new java.awt.Color(51, 51, 51));
@@ -81,22 +107,6 @@ public class PageHRAttendance extends ui.base.AbstractAttendancePage {
         });
         getContentPane().add(printAttendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 160, -1));
 
-        attendanceTable.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
-        attendanceTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(attendanceTable);
-
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 940, 400));
-
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/AttendanceSummary.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -111,6 +121,11 @@ public class PageHRAttendance extends ui.base.AbstractAttendancePage {
     private void printAttendanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_printAttendanceButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_printAttendanceButtonActionPerformed
+
+    private void viewAttendanceRecordsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewAttendanceRecordsButtonActionPerformed
+        new PageHRAttendanceRecords().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_viewAttendanceRecordsButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,5 +172,6 @@ public class PageHRAttendance extends ui.base.AbstractAttendancePage {
     private javax.swing.JLabel label9;
     private util.LightButton printAttendanceButton;
     private javax.swing.JTextField totalWorkedHoursField;
+    private util.LightButton viewAttendanceRecordsButton;
     // End of variables declaration//GEN-END:variables
 }

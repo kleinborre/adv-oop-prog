@@ -179,10 +179,20 @@ public class PageHRHome extends ui.base.AbstractHomePage {
 
         leaveButton.setForeground(new java.awt.Color(0, 102, 102));
         leaveButton.setText("Leave");
+        leaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaveButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(leaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 180, -1));
 
         overtimeButton.setForeground(new java.awt.Color(0, 102, 102));
         overtimeButton.setText("Overtime");
+        overtimeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                overtimeButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, 180, -1));
 
         logoutButton.setForeground(new java.awt.Color(0, 102, 102));
@@ -212,7 +222,7 @@ public class PageHRHome extends ui.base.AbstractHomePage {
     }//GEN-LAST:event_logoutButtonActionPerformed
 
     private void attendanceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_attendanceButtonActionPerformed
-        new PageHRAttendance().setVisible(true);
+        new PageHRAttendanceRecords().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_attendanceButtonActionPerformed
 
@@ -220,6 +230,16 @@ public class PageHRHome extends ui.base.AbstractHomePage {
         new PageHRPayslip().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_payslipButtonActionPerformed
+
+    private void leaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveButtonActionPerformed
+        new PageHRLeave().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_leaveButtonActionPerformed
+
+    private void overtimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_overtimeButtonActionPerformed
+        new PageHROvertime().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_overtimeButtonActionPerformed
 
     /**
      * @param args the command line arguments

@@ -180,14 +180,29 @@ public class PageFinanceHome extends ui.base.AbstractHomePage {
 
         leaveButton.setForeground(new java.awt.Color(0, 102, 102));
         leaveButton.setText("Leave");
+        leaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaveButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(leaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 180, -1));
 
         overtimeButton.setForeground(new java.awt.Color(0, 102, 102));
         overtimeButton.setText("Overtime");
+        overtimeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                overtimeButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 180, -1));
 
         payrollButton.setForeground(new java.awt.Color(0, 102, 102));
         payrollButton.setText("Payroll");
+        payrollButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payrollButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(payrollButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 180, -1));
 
         logoutButton.setForeground(new java.awt.Color(0, 102, 102));
@@ -224,6 +239,21 @@ public class PageFinanceHome extends ui.base.AbstractHomePage {
         new PageFinancePayslip().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_payslipButtonActionPerformed
+
+    private void leaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveButtonActionPerformed
+        new PageFinanceLeave().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_leaveButtonActionPerformed
+
+    private void overtimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_overtimeButtonActionPerformed
+        new PageFinanceOvertime().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_overtimeButtonActionPerformed
+
+    private void payrollButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payrollButtonActionPerformed
+        new PageFinancePayroll().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_payrollButtonActionPerformed
 
     /**
      * @param args the command line arguments
