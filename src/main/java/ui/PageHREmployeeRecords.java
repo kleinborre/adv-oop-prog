@@ -171,15 +171,15 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private util.LightButton backButton;
+    public util.LightButton backButton;
     private javax.swing.JLabel background;
-    private javax.swing.JTable employeeRecordsTable;
-    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JTable employeeRecordsTable;
+    public javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label9;
-    private util.LightButton newEmployeeButton;
-    private util.LightButton ownRecordButton;
-    private javax.swing.JComboBox<String> statusFilter;
+    public util.LightButton newEmployeeButton;
+    public util.LightButton ownRecordButton;
+    public javax.swing.JComboBox<String> statusFilter;
     private javax.swing.JTextField totalWorkedHoursField;
     // End of variables declaration//GEN-END:variables
 }
