@@ -78,7 +78,6 @@ public class PageITHome extends ui.base.AbstractHomePage {
         payslipButton = new util.BlueButton();
         leaveButton = new util.BlueButton();
         overtimeButton = new util.BlueButton();
-        sessionManagementButton = new util.BlueButton();
         logoutButton = new util.LightButton();
         Background = new javax.swing.JLabel();
 
@@ -158,7 +157,7 @@ public class PageITHome extends ui.base.AbstractHomePage {
                 employeeDataButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(employeeDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 180, -1));
+        getContentPane().add(employeeDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 180, -1));
 
         attendanceButton.setForeground(new java.awt.Color(0, 102, 102));
         attendanceButton.setText("Attendance");
@@ -167,7 +166,7 @@ public class PageITHome extends ui.base.AbstractHomePage {
                 attendanceButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(attendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 180, -1));
+        getContentPane().add(attendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 180, -1));
 
         payslipButton.setForeground(new java.awt.Color(0, 102, 102));
         payslipButton.setText("Payslip");
@@ -176,19 +175,25 @@ public class PageITHome extends ui.base.AbstractHomePage {
                 payslipButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(payslipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 180, -1));
+        getContentPane().add(payslipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 180, -1));
 
         leaveButton.setForeground(new java.awt.Color(0, 102, 102));
         leaveButton.setText("Leave");
-        getContentPane().add(leaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 180, -1));
+        leaveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                leaveButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(leaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 180, -1));
 
         overtimeButton.setForeground(new java.awt.Color(0, 102, 102));
         overtimeButton.setText("Overtime");
-        getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 180, -1));
-
-        sessionManagementButton.setForeground(new java.awt.Color(0, 102, 102));
-        sessionManagementButton.setText("User Sessions");
-        getContentPane().add(sessionManagementButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 180, -1));
+        overtimeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                overtimeButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, 180, -1));
 
         logoutButton.setForeground(new java.awt.Color(0, 102, 102));
         logoutButton.setText("Logout");
@@ -224,6 +229,16 @@ public class PageITHome extends ui.base.AbstractHomePage {
         new PageITPayslip().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_payslipButtonActionPerformed
+
+    private void leaveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveButtonActionPerformed
+        new PageITLeave().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_leaveButtonActionPerformed
+
+    private void overtimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_overtimeButtonActionPerformed
+        new PageITOvertime().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_overtimeButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,7 +293,6 @@ public class PageITHome extends ui.base.AbstractHomePage {
     private util.BlueButton overtimeButton;
     private util.BlueButton payslipButton;
     private javax.swing.JLabel positionText;
-    private util.BlueButton sessionManagementButton;
     private javax.swing.JLabel totalWorkedHoursText;
     // End of variables declaration//GEN-END:variables
 }
