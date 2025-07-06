@@ -137,13 +137,13 @@ public class PageITUserAccounts extends ui.base.AbstractITUserAccountsPage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private util.LightButton backButton;
+    public util.LightButton backButton;
     private javax.swing.JLabel background;
-    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label9;
-    private util.LightButton newUserButton;
-    private util.LightButton ownAccountButton;
-    private javax.swing.JComboBox<String> statusFilter;
-    private javax.swing.JTable userAccountsTable;
+    public util.LightButton newUserButton;
+    public util.LightButton ownAccountButton;
+    public javax.swing.JComboBox<String> statusFilter;
+    public javax.swing.JTable userAccountsTable;
     // End of variables declaration//GEN-END:variables
 }
