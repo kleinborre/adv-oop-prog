@@ -384,19 +384,19 @@ public class PageHREmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private util.LightButton backButton;
+    public util.LightButton backButton;
     private javax.swing.JLabel background;
-    private javax.swing.JTextField barangayField;
-    private javax.swing.JComboBox<String> basicSalaryComboBox;
-    private util.LightButton cancelButton;
-    private javax.swing.JTextField cityMunicipalityField;
-    private util.BlueButton confirmButton;
-    private com.toedter.calendar.JDateChooser dateOfBirthCalendar;
-    private javax.swing.JComboBox<String> departmentComboBox;
-    private javax.swing.JComboBox<String> employeeRoleComboBox;
-    private javax.swing.JComboBox<String> employmentStatusComboBox;
-    private javax.swing.JTextField firstNameField;
-    private javax.swing.JTextField houseNumberField;
+    public javax.swing.JTextField barangayField;
+    public javax.swing.JComboBox<String> basicSalaryComboBox;
+    public util.LightButton cancelButton;
+    public javax.swing.JTextField cityMunicipalityField;
+    public util.BlueButton confirmButton;
+    public com.toedter.calendar.JDateChooser dateOfBirthCalendar;
+    public javax.swing.JComboBox<String> departmentComboBox;
+    public javax.swing.JComboBox<String> employeeRoleComboBox;
+    public javax.swing.JComboBox<String> employmentStatusComboBox;
+    public javax.swing.JTextField firstNameField;
+    public javax.swing.JTextField houseNumberField;
     private javax.swing.JLabel label;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label11;
@@ -417,16 +417,16 @@ public class PageHREmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
     private javax.swing.JLabel label25;
     private javax.swing.JLabel label3;
     private javax.swing.JLabel label9;
-    private javax.swing.JTextField lastNameField;
-    private javax.swing.JTextField pagibigNumberField;
-    private javax.swing.JTextField philhealthNumberField;
-    private javax.swing.JTextField phoneNumberField;
-    private javax.swing.JComboBox<String> positionComboBox;
-    private javax.swing.JTextField provinceField;
-    private javax.swing.JTextField sssNumberField;
-    private javax.swing.JTextField streetField;
-    private javax.swing.JComboBox<String> supervisorComboBox;
-    private javax.swing.JTextField tinNumberField;
-    private javax.swing.JTextField zipCodeField;
+    public javax.swing.JTextField lastNameField;
+    public javax.swing.JTextField pagibigNumberField;
+    public javax.swing.JTextField philhealthNumberField;
+    public javax.swing.JTextField phoneNumberField;
+    public javax.swing.JComboBox<String> positionComboBox;
+    public javax.swing.JTextField provinceField;
+    public javax.swing.JTextField sssNumberField;
+    public javax.swing.JTextField streetField;
+    public javax.swing.JComboBox<String> supervisorComboBox;
+    public javax.swing.JTextField tinNumberField;
+    public javax.swing.JTextField zipCodeField;
     // End of variables declaration//GEN-END:variables
 }
