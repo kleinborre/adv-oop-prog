@@ -2,7 +2,7 @@
 
 package ui.base;
 
-import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 import service.EmployeeService;
 import service.UserService;
 import util.LightButton;
@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public abstract class AbstractEmployeeRegisterPage extends JFrame {
   // UI components (protected for subclass access)
   protected JTextField lastNameField, firstNameField;
-  protected JCalendar  dobCal;
+  protected JDateChooser dobCal;  // Changed from JCalendar to JDateChooser
   protected JTextField provinceField, cityField, barangayField,
                        streetField, houseNoField, zipField;
   protected JTextField phoneField, sssField, philField, tinField, pagibigField;
@@ -52,7 +52,7 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
    * Subclass is responsible for wiring up navigation.
    */
   protected void setupRegisterPage(
-    JTextField ln, JTextField fn, JCalendar dc,
+    JTextField ln, JTextField fn, JDateChooser dc,    // Now uses JDateChooser!
     JTextField prov, JTextField city, JTextField brgy,
     JTextField street, JTextField house, JTextField zip,
     JTextField phone, JTextField sss, JTextField phil,
@@ -64,7 +64,7 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
   ) {
     this.lastNameField   = ln;
     this.firstNameField  = fn;
-    this.dobCal          = dc;
+    this.dobCal          = dc;     // JDateChooser assigned
     this.provinceField   = prov;
     this.cityField       = city;
     this.barangayField   = brgy;
@@ -162,7 +162,6 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     installDigitHighlighter(phil, 12);   // PhilHealth needs 12 digits
     installDigitHighlighter(pagibig, 12); // Pag-IBIG needs 12 digits
 
-
     // Auto-formatters
     installFormatter(sss,   this::formatSSS);
     installFormatter(tin,   this::formatTIN);
@@ -184,7 +183,9 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     ActionListener markDirty = ev->fieldBecameDirty();
     for (var c : List.of(roleC,statusC,posC,deptC,supC,salC))
       c.addActionListener(markDirty);
-    dc.addPropertyChangeListener("calendar", e->fieldBecameDirty());
+
+    // Listen for changes to the JDateChooser (instead of JCalendar)
+    dc.getDateEditor().addPropertyChangeListener("date", e -> fieldBecameDirty());
 
     // Confirm button starts locked until something is modified
     confirmButton.setEnabled(false);
@@ -301,9 +302,11 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
            )) {
         p.setString(1, firstNameField.getText());
         p.setString(2, lastNameField.getText());
-        p.setDate  (3, new java.sql.Date(
-                       dobCal.getCalendar().getTimeInMillis()
-                     ));
+        // JDateChooser returns java.util.Date
+        java.util.Date selectedDate = dobCal.getDate();
+        if (selectedDate == null)
+          throw new SQLException("Please select a valid birth date.");
+        p.setDate  (3, new java.sql.Date(selectedDate.getTime()));
         p.setString(4, phoneFormatted);
         p.setString(5, email);
         p.setString(6, userID);
@@ -429,19 +432,27 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     if (salaryCombo.getSelectedIndex()<0)
       errs.add("Please select a salary.");
 
-    var cal = dobCal.getCalendar();
-    LocalDate dob = LocalDate.of(
-      cal.get(Calendar.YEAR),
-      cal.get(Calendar.MONTH) + 1,
-      cal.get(Calendar.DAY_OF_MONTH)
-    );
-    if (Period.between(dob, LocalDate.now()).getYears() < 18)
-      errs.add("Employee must be at least 18 years old.");
+    // Adjusted: fetch date from JDateChooser (dobCal)
+    java.util.Date selectedDate = dobCal.getDate();
+    if (selectedDate == null) {
+      errs.add("Please select a date of birth.");
+    } else {
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(selectedDate);
+      LocalDate dob = LocalDate.of(
+        cal.get(Calendar.YEAR),
+        cal.get(Calendar.MONTH) + 1,
+        cal.get(Calendar.DAY_OF_MONTH)
+      );
+      if (Period.between(dob, LocalDate.now()).getYears() < 18)
+        errs.add("Employee must be at least 18 years old.");
+    }
 
     return errs;
   }
 
-  // Helpers for input, filter, and formatting
+  // ——— All your existing validators, formatters, and helpers below ———
+
   private void installFilter(JTextField fld, Pattern p, int maxLen) {
     ((AbstractDocument)fld.getDocument())
       .setDocumentFilter(new PatternFilter(p, maxLen));
@@ -529,9 +540,7 @@ public abstract class AbstractEmployeeRegisterPage extends JFrame {
     }
     
     private String formatTIN(String d) {
-        // Remove any non-digit characters
         d = d.replaceAll("\\D", "");
-        // Only format what is entered (no zero padding here)
         if (d.length() == 0) return "";
         if (d.length() <= 3) return d;
         if (d.length() <= 6) return d.substring(0,3) + "-" + d.substring(3);

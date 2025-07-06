@@ -87,7 +87,6 @@ public class PageHREmployeeUpdate extends ui.base.AbstractEmployeeUpdatePage {
         label11 = new javax.swing.JLabel();
         provinceField = new javax.swing.JTextField();
         label12 = new javax.swing.JLabel();
-        dateOfBirthCalendar = new com.toedter.calendar.JCalendar();
         cityMunicipalityField = new javax.swing.JTextField();
         label23 = new javax.swing.JLabel();
         houseNumberField = new javax.swing.JTextField();
@@ -106,6 +105,7 @@ public class PageHREmployeeUpdate extends ui.base.AbstractEmployeeUpdatePage {
         employmentStatusComboBox = new javax.swing.JComboBox<>();
         label15 = new javax.swing.JLabel();
         phoneNumberField = new javax.swing.JTextField();
+        dateOfBirthCalendar = new com.toedter.calendar.JDateChooser();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -255,7 +255,6 @@ public class PageHREmployeeUpdate extends ui.base.AbstractEmployeeUpdatePage {
         label12.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         label12.setText("City / Municipality");
         getContentPane().add(label12, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, 190, -1));
-        getContentPane().add(dateOfBirthCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
 
         cityMunicipalityField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         cityMunicipalityField.setForeground(new java.awt.Color(0, 102, 102));
@@ -353,6 +352,10 @@ public class PageHREmployeeUpdate extends ui.base.AbstractEmployeeUpdatePage {
         phoneNumberField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(phoneNumberField, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 440, 190, -1));
 
+        dateOfBirthCalendar.setForeground(new java.awt.Color(0, 102, 102));
+        dateOfBirthCalendar.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        getContentPane().add(dateOfBirthCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 190, 30));
+
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/HRUpdateEmployee.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -411,7 +414,7 @@ public class PageHREmployeeUpdate extends ui.base.AbstractEmployeeUpdatePage {
     private util.LightButton cancelButton;
     private javax.swing.JTextField cityMunicipalityField;
     private util.BlueButton confirmButton;
-    private com.toedter.calendar.JCalendar dateOfBirthCalendar;
+    private com.toedter.calendar.JDateChooser dateOfBirthCalendar;
     private javax.swing.JComboBox<String> departmentComboBox;
     private javax.swing.JComboBox<String> employeeRoleComboBox;
     private javax.swing.JComboBox<String> employmentStatusComboBox;
