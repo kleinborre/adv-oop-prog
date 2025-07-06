@@ -9,21 +9,17 @@ import java.util.List;
 
 public class PayslipService {
 
-    private PayslipDAO payslipDAO;
+    private final PayslipDAO payslipDAO;
 
     public PayslipService() {
-        try {
-            payslipDAO = new PayslipDAOImpl();
-        } catch (SQLException e) {
-            throw new RuntimeException("Error initializing PayslipDAO", e);
-        }
+        this.payslipDAO = new PayslipDAOImpl();
     }
 
-    public Payslip getPayslipByEmployeeAndPeriod(int employeeID, int payPeriodID) {
+    public Payslip getPayslipByPayslipNo(String payslipNo) {
         try {
-            return payslipDAO.getPayslipByEmployeeAndPeriod(employeeID, payPeriodID);
+            return payslipDAO.getPayslipByPayslipNo(payslipNo);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving payslip by employee and period", e);
+            throw new RuntimeException("Error retrieving payslip by payslipNo", e);
         }
     }
 
@@ -31,15 +27,7 @@ public class PayslipService {
         try {
             return payslipDAO.getPayslipsByEmployeeID(employeeID);
         } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving payslips by employee ID", e);
-        }
-    }
-
-    public List<Payslip> getAllPayslipsByPeriod(int payPeriodID) {
-        try {
-            return payslipDAO.getAllPayslipsByPeriod(payPeriodID);
-        } catch (SQLException e) {
-            throw new RuntimeException("Error retrieving all payslips by period", e);
+            throw new RuntimeException("Error retrieving payslips by employeeID", e);
         }
     }
 

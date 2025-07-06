@@ -169,6 +169,11 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
 
         payslipButton.setForeground(new java.awt.Color(0, 102, 102));
         payslipButton.setText("Payslip");
+        payslipButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payslipButtonActionPerformed(evt);
+            }
+        });
         getContentPane().add(payslipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 180, -1));
 
         leaveButton.setForeground(new java.awt.Color(0, 102, 102));
@@ -196,8 +201,7 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
     }// </editor-fold>//GEN-END:initComponents
 
     private void employeeDataButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeDataButtonActionPerformed
-        // Open PageEmployeeData
-        new PageManagerEmployeeData().setVisible(true); // Temporary: For Testing only!
+        new PageManagerEmployeeData().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_employeeDataButtonActionPerformed
 
@@ -209,6 +213,11 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
         new PageManagerAttendanceRecords().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_attendanceButtonActionPerformed
+
+    private void payslipButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payslipButtonActionPerformed
+        new PageManagerPayslip().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_payslipButtonActionPerformed
 
     /**
      * @param args the command line arguments
