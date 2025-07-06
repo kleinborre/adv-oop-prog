@@ -68,7 +68,6 @@ public class PageITEmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
         provinceField = new javax.swing.JTextField();
         label12 = new javax.swing.JLabel();
         cityMunicipalityField = new javax.swing.JTextField();
-        dateOfBirthCalendar = new com.toedter.calendar.JCalendar();
         label23 = new javax.swing.JLabel();
         houseNumberField = new javax.swing.JTextField();
         label24 = new javax.swing.JLabel();
@@ -82,11 +81,11 @@ public class PageITEmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
         basicSalaryComboBox = new javax.swing.JComboBox<>();
         label3 = new javax.swing.JLabel();
         employeeRoleComboBox = new javax.swing.JComboBox<>();
+        dateOfBirthCalendar = new com.toedter.calendar.JDateChooser();
         background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MotorPH Payroll System");
-        setMaximumSize(new java.awt.Dimension(1040, 590));
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -258,7 +257,6 @@ public class PageITEmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
         cityMunicipalityField.setForeground(new java.awt.Color(0, 102, 102));
         cityMunicipalityField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
         getContentPane().add(cityMunicipalityField, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 190, -1));
-        getContentPane().add(dateOfBirthCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, -1, -1));
 
         label23.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         label23.setForeground(new java.awt.Color(51, 51, 51));
@@ -329,6 +327,10 @@ public class PageITEmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
         employeeRoleComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Employee", "HR", "IT", "Finance", "Manager" }));
         getContentPane().add(employeeRoleComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 190, -1));
 
+        dateOfBirthCalendar.setForeground(new java.awt.Color(0, 102, 102));
+        dateOfBirthCalendar.setFont(new java.awt.Font("Inter", 1, 12)); // NOI18N
+        getContentPane().add(dateOfBirthCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 190, 30));
+
         background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/ITCreateUser.png"))); // NOI18N
         getContentPane().add(background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -387,7 +389,7 @@ public class PageITEmployeeRegister extends ui.base.AbstractEmployeeRegisterPage
     private util.LightButton cancelButton;
     private javax.swing.JTextField cityMunicipalityField;
     private util.BlueButton confirmButton;
-    private com.toedter.calendar.JCalendar dateOfBirthCalendar;
+    private com.toedter.calendar.JDateChooser dateOfBirthCalendar;
     private javax.swing.JComboBox<String> departmentComboBox;
     private javax.swing.JComboBox<String> employeeRoleComboBox;
     private javax.swing.JComboBox<String> employmentStatusComboBox;
