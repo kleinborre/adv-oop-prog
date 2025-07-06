@@ -1,6 +1,6 @@
 package ui.base;
 
-import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
 import service.EmployeeService;
 import util.LightButton;
 import util.BlueButton;
@@ -22,17 +22,17 @@ public abstract class AbstractEmployeeUpdatePage extends AbstractEmployeeRegiste
 
     protected final int selectedEmployeeID = SessionManager.getSelectedEmployeeID();
     private String userID;
-    private boolean loading = false;        // Flag to suppress events during load
-    private JCalendar updateCalendar;       // Store the JCalendar reference
-    private Date initialBirthDate;          // To track original date for isDirty()
-    private JTextField[] trackedFields;     // For isDirty()
-    private String[] initialFieldValues;    // To track original values for isDirty()
+    private boolean loading = false;         // Flag to suppress events during load
+    private JDateChooser updateCalendar;     // Changed: Now JDateChooser instead of JCalendar
+    private Date initialBirthDate;           // To track original date for isDirty()
+    private JTextField[] trackedFields;      // For isDirty()
+    private String[] initialFieldValues;     // To track original values for isDirty()
     private JComboBox<?>[] trackedCombos;
     private int[] initialComboIndexes;
 
     /** Call *after* initComponents() in your subclass */
     protected void setupUpdatePage(
-        JTextField ln, JTextField fn, JCalendar dc,
+        JTextField ln, JTextField fn, JDateChooser dc,
         JTextField prov, JTextField city, JTextField brgy,
         JTextField street, JTextField house, JTextField zip,
         JTextField phone, JTextField sss, JTextField phil,
@@ -42,7 +42,7 @@ public abstract class AbstractEmployeeUpdatePage extends AbstractEmployeeRegiste
         JComboBox<String> supC, JComboBox<String> salC,
         LightButton backB, LightButton cancelB, BlueButton confirmB
     ) {
-        // Set reference for calendar
+        // Set reference for date chooser (now JDateChooser)
         this.updateCalendar = dc;
 
         // Call base registration wiring (for validation and input filtering)
@@ -79,10 +79,10 @@ public abstract class AbstractEmployeeUpdatePage extends AbstractEmployeeRegiste
         ln.setText(e.getLastName());
         fn.setText(e.getFirstName());
 
-        // Set DOB on calendar safely (don't trigger listener)
+        // Set DOB on JDateChooser safely (don't trigger listener)
         initialBirthDate = e.getBirthDate();
         if (initialBirthDate != null) {
-            dc.getCalendar().setTime(initialBirthDate);
+            dc.setDate(initialBirthDate);
         }
 
         prov.setText(e.getProvince());
@@ -134,7 +134,9 @@ public abstract class AbstractEmployeeUpdatePage extends AbstractEmployeeRegiste
         ActionListener comboListener = ev -> { if (!loading) confirmB.setEnabled(true); };
         for (var cb : trackedCombos)
             cb.addActionListener(comboListener);
-        dc.addPropertyChangeListener("calendar", ev -> { if (!loading) confirmB.setEnabled(true); });
+
+        // Listen for JDateChooser changes
+        dc.getDateEditor().addPropertyChangeListener("date", ev -> { if (!loading) confirmB.setEnabled(true); });
 
         // --- UPDATE ACTION LOGIC ---
         confirmB.addActionListener(ev -> {
@@ -171,7 +173,7 @@ public abstract class AbstractEmployeeUpdatePage extends AbstractEmployeeRegiste
             if (trackedCombos[i].getSelectedIndex() != initialComboIndexes[i])
                 return true;
         }
-        // Compare calendar date
+        // Compare date chooser date
         if (!safeDatesEqual(updateCalendar.getDate(), initialBirthDate)) return true;
         return false;
     }
@@ -219,9 +221,11 @@ public abstract class AbstractEmployeeUpdatePage extends AbstractEmployeeRegiste
             )) {
                 String fn = firstNameField.getText().trim();
                 String ln = lastNameField.getText().trim();
+                Date selectedDate = updateCalendar.getDate();
+                if (selectedDate == null) throw new Exception("Please select a birth date.");
                 p.setString(1, fn);
                 p.setString(2, ln);
-                p.setDate(3, new java.sql.Date(updateCalendar.getDate().getTime()));
+                p.setDate(3, new java.sql.Date(selectedDate.getTime()));
                 p.setString(4, phoneField.getText().trim());
                 p.setString(5, makeEmail(fn, ln));
                 p.setInt(6, statusIds.get(statusCombo.getSelectedIndex()));
