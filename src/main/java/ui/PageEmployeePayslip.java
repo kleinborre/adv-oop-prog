@@ -536,16 +536,16 @@ public class PageEmployeePayslip extends ui.base.AbstractPayslipPage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser JDateChooser;
-    private util.LightButton backButton;
+    public com.toedter.calendar.JDateChooser JDateChooser;
+    public util.LightButton backButton;
     private javax.swing.JLabel background;
-    private javax.swing.JTextField benefitsField;
-    private javax.swing.JTextField clothingAllowanceField;
+    public javax.swing.JTextField benefitsField;
+    public javax.swing.JTextField clothingAllowanceField;
     private javax.swing.JTextField daysWorkedField;
-    private javax.swing.JTextField deductionsField;
-    private javax.swing.JTextField grossIncomeField;
-    private javax.swing.JTextField hourlyRateField;
-    private javax.swing.JTextField hoursWorkedField;
+    public javax.swing.JTextField deductionsField;
+    public javax.swing.JTextField grossIncomeField;
+    public javax.swing.JTextField hourlyRateField;
+    public javax.swing.JTextField hoursWorkedField;
     private javax.swing.JLabel label;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label10;
@@ -572,20 +572,20 @@ public class PageEmployeePayslip extends ui.base.AbstractPayslipPage {
     private javax.swing.JLabel label7;
     private javax.swing.JLabel label8;
     private javax.swing.JLabel label9;
-    private javax.swing.JTextField monthlyRateField;
-    private javax.swing.JTextField overtimeField;
-    private javax.swing.JTextField overtimePayField;
-    private javax.swing.JTextField pagibigField;
-    private javax.swing.JComboBox<String> payslipPeriodComboBox;
-    private javax.swing.JTextField philhealthField;
-    private javax.swing.JTextField phoneAllowanceField;
-    private util.LightButton printPayslipButton;
-    private javax.swing.JTextField riceSubsidyField;
-    private javax.swing.JTextField sssField;
-    private javax.swing.JTextField takeHomePayField;
-    private javax.swing.JTextField totalBenefitsField;
-    private javax.swing.JTextField totalDeductionsField;
-    private javax.swing.JTextField totalGrossIncomeField;
-    private javax.swing.JTextField withholdingTaxField;
+    public javax.swing.JTextField monthlyRateField;
+    public javax.swing.JTextField overtimeField;
+    public javax.swing.JTextField overtimePayField;
+    public javax.swing.JTextField pagibigField;
+    public javax.swing.JComboBox<String> payslipPeriodComboBox;
+    public javax.swing.JTextField philhealthField;
+    public javax.swing.JTextField phoneAllowanceField;
+    public util.LightButton printPayslipButton;
+    public javax.swing.JTextField riceSubsidyField;
+    public javax.swing.JTextField sssField;
+    public javax.swing.JTextField takeHomePayField;
+    public javax.swing.JTextField totalBenefitsField;
+    public javax.swing.JTextField totalDeductionsField;
+    public javax.swing.JTextField totalGrossIncomeField;
+    public javax.swing.JTextField withholdingTaxField;
     // End of variables declaration//GEN-END:variables
 }
