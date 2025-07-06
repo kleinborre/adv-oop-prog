@@ -148,14 +148,14 @@ public class PageEmployeeAttendance extends ui.base.AbstractAttendancePage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser JDateChooser;
-    private javax.swing.JTable attendanceTable;
+    public com.toedter.calendar.JDateChooser JDateChooser;
+    public javax.swing.JTable attendanceTable;
     private util.LightButton backButton;
     private javax.swing.JLabel background;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label9;
     private util.LightButton printAttendanceButton;
-    private javax.swing.JTextField totalWorkedHoursField;
+    public javax.swing.JTextField totalWorkedHoursField;
     // End of variables declaration//GEN-END:variables
 }
