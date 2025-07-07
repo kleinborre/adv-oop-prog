@@ -1,9 +1,41 @@
 package ui;
 
-public class PageFinanceLeaveRequest extends javax.swing.JFrame {
+import javax.swing.JOptionPane;
+
+public class PageFinanceLeaveRequest extends ui.base.AbstractLeaveRequestPage {
 
     public PageFinanceLeaveRequest() {
+        super();
         initComponents();
+        setComponentReferences(
+            leaveTypeComboBox,
+            startDateCalendar,
+            endDateCalendar,
+            leaveReasonTextArea,
+            leaveAvailableField,
+            submitButton
+        );
+        // You handle navigation logic:
+        cancelButton.addActionListener(e -> tryCancel());
+        backButton.addActionListener(e -> tryCancel());
+    }
+
+    private void tryCancel() {
+        if (isFormDirty()) {
+            int c = JOptionPane.showConfirmDialog(
+                this, "You have unsaved changes. Discard", "Warning", JOptionPane.YES_NO_OPTION
+            );
+            if (c != JOptionPane.YES_OPTION) return;
+        }
+            new PageFinanceLeave().setVisible(true);
+            this.dispose();
+    }
+
+    @Override
+    protected void onRequestSubmitted() {
+        showDialog("Leave request submitted successfully.");
+            new PageFinanceLeave().setVisible(true);
+            this.dispose();
     }
 
     /**

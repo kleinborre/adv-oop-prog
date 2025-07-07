@@ -102,4 +102,18 @@ public class OvertimeDAOImpl implements ManageableRequestDAO<Overtime> {
         overtime.setEmployeeID(rs.getInt("employeeID"));
         return overtime;
     }
+
+    @Override
+    public void updateRequest(Overtime overtime) throws SQLException {
+        String query = "UPDATE overtime SET overtimeStart = ?, overtimeEnd = ?, overtimeReason = ?, approvalStatusID = ?, employeeID = ? WHERE overtimeID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setTimestamp(1, overtime.getOvertimeStart());
+            stmt.setTimestamp(2, overtime.getOvertimeEnd());
+            stmt.setString(3, overtime.getOvertimeReason());
+            stmt.setInt(4, overtime.getApprovalStatusID());
+            stmt.setInt(5, overtime.getEmployeeID());
+            stmt.setInt(6, overtime.getOvertimeID());
+            stmt.executeUpdate();
+        }
+    }
 }

@@ -1,9 +1,41 @@
 package ui;
 
-public class PageITLeaveRequest extends javax.swing.JFrame {
+import javax.swing.JOptionPane;
+
+public class PageITLeaveRequest extends ui.base.AbstractLeaveRequestPage {
 
     public PageITLeaveRequest() {
+        super();
         initComponents();
+        setComponentReferences(
+            leaveTypeComboBox,
+            startDateCalendar,
+            endDateCalendar,
+            leaveReasonTextArea,
+            leaveAvailableField,
+            submitButton
+        );
+        // You handle navigation logic:
+        cancelButton.addActionListener(e -> tryCancel());
+        backButton.addActionListener(e -> tryCancel());
+    }
+
+    private void tryCancel() {
+        if (isFormDirty()) {
+            int c = JOptionPane.showConfirmDialog(
+                this, "You have unsaved changes. Discard", "Warning", JOptionPane.YES_NO_OPTION
+            );
+            if (c != JOptionPane.YES_OPTION) return;
+        }
+            new PageITLeave().setVisible(true);
+            this.dispose();
+    }
+
+    @Override
+    protected void onRequestSubmitted() {
+        showDialog("Leave request submitted successfully.");
+            new PageITLeave().setVisible(true);
+            this.dispose();
     }
 
     /**
@@ -35,7 +67,6 @@ public class PageITLeaveRequest extends javax.swing.JFrame {
         setTitle("MotorPH Payroll System");
         setMaximumSize(new java.awt.Dimension(1040, 590));
         setMinimumSize(new java.awt.Dimension(1040, 590));
-        setPreferredSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

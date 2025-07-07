@@ -52,6 +52,7 @@ public class PageEmployeeHome extends ui.base.AbstractHomePage {
     @Override protected JButton getClockInButton()        { return clockInButton;        }
     @Override protected JButton getClockOutButton()       { return clockOutButton;       }
     @Override protected JLabel  getTotalWorkedHoursText() { return totalWorkedHoursText; }
+    @Override protected JLabel getLeavesAvailableText()   { return leavesAvailableText;  }
 
     /**
      * This method is called from within the constructor to initialize the form.
