@@ -149,12 +149,12 @@ public class PageEmployeeLeave extends ui.base.AbstractLeavePage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser JDateChooser;
-    private util.LightButton backButton;
+    public com.toedter.calendar.JDateChooser JDateChooser;
+    public util.LightButton backButton;
     private javax.swing.JLabel background;
-    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label8;
-    private util.LightButton leaveRequestButton;
-    private javax.swing.JTable leaveTable;
+    public util.LightButton leaveRequestButton;
+    public javax.swing.JTable leaveTable;
     // End of variables declaration//GEN-END:variables
 }
