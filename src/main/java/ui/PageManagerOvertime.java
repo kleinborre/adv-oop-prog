@@ -1,12 +1,10 @@
 package ui;
 
-public class PageManagerOvertime extends javax.swing.JFrame {
+public class PageManagerOvertime extends ui.base.AbstractOvertimePage {
 
-    /**
-     * Creates new form PageManagerOvertime
-     */
     public PageManagerOvertime() {
         initComponents();
+        setComponentReferences(overtimeTable, JDateChooser);
     }
 
     /**

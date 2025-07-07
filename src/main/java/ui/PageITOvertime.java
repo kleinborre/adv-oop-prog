@@ -1,9 +1,10 @@
 package ui;
 
-public class PageITOvertime extends javax.swing.JFrame {
+public class PageITOvertime extends ui.base.AbstractOvertimePage {
 
     public PageITOvertime() {
         initComponents();
+        setComponentReferences(overtimeTable, JDateChooser);
     }
 
     /**
@@ -27,7 +28,6 @@ public class PageITOvertime extends javax.swing.JFrame {
         setTitle("MotorPH Payroll System");
         setMaximumSize(new java.awt.Dimension(1040, 590));
         setMinimumSize(new java.awt.Dimension(1040, 590));
-        setPreferredSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 

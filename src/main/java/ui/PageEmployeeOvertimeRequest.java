@@ -1,9 +1,17 @@
 package ui;
 
-public class PageEmployeeOvertimeRequest extends javax.swing.JFrame {
+import javax.swing.JOptionPane;
+
+public class PageEmployeeOvertimeRequest extends ui.base.AbstractOvertimeRequestPage {
 
     public PageEmployeeOvertimeRequest() {
         initComponents();
+
+        // Link all components and logic from abstract base class
+        setComponentReferences(startDateCalendar, overtimeHoursJSpinner, overtimeReasonTextArea, submitButton);
+
+        // Spinner default: set value to 1 hour initially (not 0)
+        overtimeHoursJSpinner.setValue(1);
     }
 
     /**
@@ -102,15 +110,28 @@ public class PageEmployeeOvertimeRequest extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
+        if (!isFormDirty() || 
+            JOptionPane.showConfirmDialog(this, "Discard changes to your overtime request?", "Cancel Request", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            // Go back to overtime page
+            new PageEmployeeOvertime().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // TODO add your handling code here:
+        if (trySubmitRequest()) {
+            // After successful submit, go back to overtime page
+            new PageEmployeeOvertime().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
+        if (!isFormDirty() || 
+            JOptionPane.showConfirmDialog(this, "Discard changes to your overtime request?", "Go Back", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            new PageEmployeeOvertime().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**

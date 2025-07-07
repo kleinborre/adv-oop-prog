@@ -236,7 +236,7 @@ public class PageManagerHome extends ui.base.AbstractHomePage {
     }//GEN-LAST:event_leaveButtonActionPerformed
 
     private void overtimeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_overtimeButtonActionPerformed
-        new PageManagerOvertimeAdmin().setVisible(true);
+        new PageManagerOvertime().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_overtimeButtonActionPerformed
 

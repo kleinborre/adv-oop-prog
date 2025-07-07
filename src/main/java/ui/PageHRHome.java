@@ -80,6 +80,7 @@ public class PageHRHome extends ui.base.AbstractHomePage {
         leaveButton = new util.BlueButton();
         overtimeButton = new util.BlueButton();
         logoutButton = new util.LightButton();
+        payrollButton = new util.BlueButton();
         Background = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -158,7 +159,7 @@ public class PageHRHome extends ui.base.AbstractHomePage {
                 employeeDataButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(employeeDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 180, -1));
+        getContentPane().add(employeeDataButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, 180, -1));
 
         attendanceButton.setForeground(new java.awt.Color(0, 102, 102));
         attendanceButton.setText("Attendance");
@@ -167,7 +168,7 @@ public class PageHRHome extends ui.base.AbstractHomePage {
                 attendanceButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(attendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 370, 180, -1));
+        getContentPane().add(attendanceButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 350, 180, -1));
 
         payslipButton.setForeground(new java.awt.Color(0, 102, 102));
         payslipButton.setText("Payslip");
@@ -176,7 +177,7 @@ public class PageHRHome extends ui.base.AbstractHomePage {
                 payslipButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(payslipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 420, 180, -1));
+        getContentPane().add(payslipButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 180, -1));
 
         leaveButton.setForeground(new java.awt.Color(0, 102, 102));
         leaveButton.setText("Leave");
@@ -185,7 +186,7 @@ public class PageHRHome extends ui.base.AbstractHomePage {
                 leaveButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(leaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 470, 180, -1));
+        getContentPane().add(leaveButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 450, 180, -1));
 
         overtimeButton.setForeground(new java.awt.Color(0, 102, 102));
         overtimeButton.setText("Overtime");
@@ -194,7 +195,7 @@ public class PageHRHome extends ui.base.AbstractHomePage {
                 overtimeButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 520, 180, -1));
+        getContentPane().add(overtimeButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 500, 180, -1));
 
         logoutButton.setForeground(new java.awt.Color(0, 102, 102));
         logoutButton.setText("Logout");
@@ -204,6 +205,15 @@ public class PageHRHome extends ui.base.AbstractHomePage {
             }
         });
         getContentPane().add(logoutButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 10, 120, -1));
+
+        payrollButton.setForeground(new java.awt.Color(0, 102, 102));
+        payrollButton.setText("Payroll");
+        payrollButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                payrollButtonActionPerformed(evt);
+            }
+        });
+        getContentPane().add(payrollButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 550, 180, -1));
 
         Background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/background/Home.png"))); // NOI18N
         getContentPane().add(Background, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
@@ -241,6 +251,11 @@ public class PageHRHome extends ui.base.AbstractHomePage {
         new PageHROvertime().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_overtimeButtonActionPerformed
+
+    private void payrollButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_payrollButtonActionPerformed
+        new PageHRPayroll().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_payrollButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -293,6 +308,7 @@ public class PageHRHome extends ui.base.AbstractHomePage {
     private util.LightButton logoutButton;
     private javax.swing.JLabel outLabel;
     private util.BlueButton overtimeButton;
+    private util.BlueButton payrollButton;
     private util.BlueButton payslipButton;
     private javax.swing.JLabel positionText;
     private javax.swing.JLabel totalWorkedHoursText;

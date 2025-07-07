@@ -1,9 +1,10 @@
 package ui;
 
-public class PageEmployeeOvertime extends javax.swing.JFrame {
+public class PageEmployeeOvertime extends ui.base.AbstractOvertimePage {
 
     public PageEmployeeOvertime() {
         initComponents();
+        setComponentReferences(overtimeTable, JDateChooser);
     }
 
     /**
