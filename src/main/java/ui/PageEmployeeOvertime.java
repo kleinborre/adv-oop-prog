@@ -1,11 +1,21 @@
 package ui;
 
+import pojo.Overtime;
+
 public class PageEmployeeOvertime extends ui.base.AbstractOvertimePage {
 
     public PageEmployeeOvertime() {
         initComponents();
         setComponentReferences(overtimeTable, JDateChooser);
     }
+    
+    // This needs to be added to other UI ASAP
+    @Override
+    protected void onOvertimeUpdateSelected(Overtime selectedOvertime) {
+        new PageEmployeeOvertimeRequestUpdate(selectedOvertime).setVisible(true);
+        this.dispose();
+    }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

@@ -36,6 +36,9 @@ public abstract class AbstractOvertimePage extends JFrame {
 
         // Always load all overtime records for this employee on startup
         reloadOvertimeTable();
+
+        // Double-click listener for row actions (update/delete)
+        addTableDoubleClickListener();
     }
 
     private void setTableModel() {
@@ -160,4 +163,66 @@ public abstract class AbstractOvertimePage extends JFrame {
             default: return "Unknown";
         }
     }
+
+    // --- Double-click handler for update/delete with Cancel option REMOVED ---
+    private void addTableDoubleClickListener() {
+        overtimeTable.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                if (evt.getClickCount() == 2 && overtimeTable.getSelectedRow() != -1) {
+                    int selectedRow = overtimeTable.getSelectedRow();
+                    if (selectedRow >= 0 && selectedRow < displayedOvertimes.size()) {
+                        Overtime selectedOvertime = displayedOvertimes.get(selectedRow);
+
+                        // Only Update and Delete (no Cancel)
+                        String[] options = {"Update", "Delete"};
+                        int choice = JOptionPane.showOptionDialog(
+                                overtimeTable,
+                                "What do you want to do with this overtime request?",
+                                "Overtime Request",
+                                JOptionPane.YES_NO_OPTION, // Only Yes/No
+                                JOptionPane.QUESTION_MESSAGE,
+                                null,
+                                options,
+                                options[0]
+                        );
+
+                        if (choice == 0) { // Update
+                            onOvertimeUpdateSelected(selectedOvertime);
+                        } else if (choice == 1) { // Delete
+                            int confirm = JOptionPane.showConfirmDialog(
+                                    overtimeTable,
+                                    "Are you sure you want to delete this overtime request?",
+                                    "Confirm Delete",
+                                    JOptionPane.YES_NO_OPTION
+                            );
+                            if (confirm == JOptionPane.YES_OPTION) {
+                                try {
+                                    overtimeService.deleteOvertime(selectedOvertime.getOvertimeID());
+                                    reloadOvertimeTable();
+                                    JOptionPane.showMessageDialog(
+                                            overtimeTable,
+                                            "Overtime request deleted successfully.",
+                                            "Success",
+                                            JOptionPane.INFORMATION_MESSAGE
+                                    );
+                                } catch (Exception ex) {
+                                    JOptionPane.showMessageDialog(
+                                            overtimeTable,
+                                            "Failed to delete overtime request: " + ex.getMessage(),
+                                            "Error",
+                                            JOptionPane.ERROR_MESSAGE
+                                    );
+                                }
+                            }
+                        }
+                        // No Cancel: user can click the window X to dismiss the dialog
+                    }
+                }
+            }
+        });
+    }
+
+    // --- ABSTRACT: UI class must implement what to do on update ---
+    protected abstract void onOvertimeUpdateSelected(Overtime selectedOvertime);
 }
