@@ -145,15 +145,15 @@ public class PageManagerLeaveAdmin extends ui.base.AbstractLeaveAdminPage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser JDateChooser;
-    private util.LightButton backButton;
+    public com.toedter.calendar.JDateChooser JDateChooser;
+    public util.LightButton backButton;
     private javax.swing.JLabel background;
-    private javax.swing.JComboBox<String> employeeIDComboBox;
-    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JComboBox<String> employeeIDComboBox;
+    public javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label8;
-    private javax.swing.JTable leaveTable;
-    private util.BlueButton refreshButton;
-    private util.LightButton viewOwnRecordButton;
+    public javax.swing.JTable leaveTable;
+    public util.BlueButton refreshButton;
+    public util.LightButton viewOwnRecordButton;
     // End of variables declaration//GEN-END:variables
 }
