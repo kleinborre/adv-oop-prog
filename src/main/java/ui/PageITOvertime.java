@@ -1,10 +1,18 @@
 package ui;
 
+import pojo.Overtime;
+
 public class PageITOvertime extends ui.base.AbstractOvertimePage {
 
     public PageITOvertime() {
         initComponents();
         setComponentReferences(overtimeTable, JDateChooser);
+    }
+
+    @Override
+    protected void onOvertimeUpdateSelected(Overtime selectedOvertime) {
+        new PageITOvertimeRequestUpdate(selectedOvertime).setVisible(true);
+        this.dispose();
     }
 
     /**

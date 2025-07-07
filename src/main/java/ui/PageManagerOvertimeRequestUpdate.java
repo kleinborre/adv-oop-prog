@@ -1,9 +1,20 @@
 package ui;
 
-public class PageManagerOvertimeRequestUpdate extends javax.swing.JFrame {
+import javax.swing.JOptionPane;
+import pojo.Overtime;
+
+public class PageManagerOvertimeRequestUpdate extends ui.base.AbstractOvertimeRequestUpdatePage {
 
     public PageManagerOvertimeRequestUpdate() {
         initComponents();
+        setComponentReferences(startDateCalendar, overtimeHoursJSpinner, overtimeReasonTextArea, submitButton);
+    }
+
+    // This constructor is used for "update" (with prefill from selected POJO)
+    public PageManagerOvertimeRequestUpdate(Overtime selectedOvertime) {
+        initComponents();
+        setComponentReferences(startDateCalendar, overtimeHoursJSpinner, overtimeReasonTextArea, submitButton);
+        setOvertimeData(selectedOvertime); // Populate fields for editing
     }
 
     /**
@@ -102,15 +113,29 @@ public class PageManagerOvertimeRequestUpdate extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
+        if (!isFormDirty() ||
+                JOptionPane.showConfirmDialog(this, "Discard changes to your overtime request?", "Cancel Update", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            // Return to main Overtime page for Finance
+            new PageManagerOvertime().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // TODO add your handling code here:
+        // Save the update and only go back if update is successful
+        if (tryUpdateRequest()) {
+            new PageManagerOvertime().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
+        if (!isFormDirty() ||
+                JOptionPane.showConfirmDialog(this, "Discard changes to your overtime request?", "Cancel Update", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            // Return to main Overtime page for Finance
+            new PageManagerOvertime().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**

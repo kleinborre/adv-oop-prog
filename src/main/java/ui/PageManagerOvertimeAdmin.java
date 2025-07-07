@@ -1,9 +1,19 @@
 package ui;
 
-public class PageManagerOvertimeAdmin extends javax.swing.JFrame {
+public class PageManagerOvertimeAdmin extends ui.base.AbstractOvertimeAdminPage {
 
     public PageManagerOvertimeAdmin() {
         initComponents();
+
+        // Connect all UI components to the abstract logic
+        setComponentReferences(
+            overtimeTable,
+            employeeIDComboBox,
+            JDateChooser
+        );
+
+        // Wire up the Refresh button to reload and reset all data and filters
+        refreshButton.addActionListener(evt -> refreshAllData());
     }
 
     /**
@@ -15,6 +25,7 @@ public class PageManagerOvertimeAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        refreshButton = new util.BlueButton();
         employeeIDComboBox = new javax.swing.JComboBox<>();
         label10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -31,6 +42,10 @@ public class PageManagerOvertimeAdmin extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        refreshButton.setForeground(new java.awt.Color(0, 102, 102));
+        refreshButton.setText("Refresh Table");
+        getContentPane().add(refreshButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 160, -1));
 
         employeeIDComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         employeeIDComboBox.setForeground(new java.awt.Color(0, 102, 102));
@@ -94,7 +109,7 @@ public class PageManagerOvertimeAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void viewOwnRecordButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewOwnRecordButtonActionPerformed
-        new PageManagerOvertimeRequest().setVisible(true);
+        new PageManagerOvertime().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_viewOwnRecordButtonActionPerformed
 
@@ -147,6 +162,7 @@ public class PageManagerOvertimeAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label8;
     private javax.swing.JTable overtimeTable;
+    private util.BlueButton refreshButton;
     private util.LightButton viewOwnRecordButton;
     // End of variables declaration//GEN-END:variables
 }

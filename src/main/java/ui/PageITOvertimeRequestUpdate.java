@@ -1,9 +1,20 @@
 package ui;
 
-public class PageITOvertimeRequestUpdate extends javax.swing.JFrame {
+import javax.swing.JOptionPane;
+import pojo.Overtime;
+
+public class PageITOvertimeRequestUpdate extends ui.base.AbstractOvertimeRequestUpdatePage {
 
     public PageITOvertimeRequestUpdate() {
         initComponents();
+        setComponentReferences(startDateCalendar, overtimeHoursJSpinner, overtimeReasonTextArea, submitButton);
+    }
+
+    // This constructor is used for "update" (with prefill from selected POJO)
+    public PageITOvertimeRequestUpdate(Overtime selectedOvertime) {
+        initComponents();
+        setComponentReferences(startDateCalendar, overtimeHoursJSpinner, overtimeReasonTextArea, submitButton);
+        setOvertimeData(selectedOvertime); // Populate fields for editing
     }
 
     /**
@@ -22,7 +33,7 @@ public class PageITOvertimeRequestUpdate extends javax.swing.JFrame {
         label4 = new javax.swing.JLabel();
         label1 = new javax.swing.JLabel();
         startDateCalendar = new com.toedter.calendar.JDateChooser();
-        cancelButton1 = new util.LightButton();
+        cancelButton = new util.LightButton();
         submitButton = new util.BlueButton();
         backButton = new util.LightButton();
         background = new javax.swing.JLabel();
@@ -66,14 +77,14 @@ public class PageITOvertimeRequestUpdate extends javax.swing.JFrame {
         startDateCalendar.setFont(new java.awt.Font("Inter", 0, 12)); // NOI18N
         getContentPane().add(startDateCalendar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 210, 230, 30));
 
-        cancelButton1.setForeground(new java.awt.Color(0, 102, 102));
-        cancelButton1.setText("Cancel");
-        cancelButton1.addActionListener(new java.awt.event.ActionListener() {
+        cancelButton.setForeground(new java.awt.Color(0, 102, 102));
+        cancelButton.setText("Cancel");
+        cancelButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelButton1ActionPerformed(evt);
+                cancelButtonActionPerformed(evt);
             }
         });
-        getContentPane().add(cancelButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 80, 120, -1));
+        getContentPane().add(cancelButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 80, 120, -1));
 
         submitButton.setForeground(new java.awt.Color(0, 102, 102));
         submitButton.setText("Submit");
@@ -100,17 +111,30 @@ public class PageITOvertimeRequestUpdate extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void cancelButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cancelButton1ActionPerformed
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
+        if (!isFormDirty() ||
+                JOptionPane.showConfirmDialog(this, "Discard changes to your overtime request?", "Cancel Update", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            // Return to main Overtime page for Finance
+            new PageITOvertime().setVisible(true);
+            this.dispose();
+        }
+    }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        // TODO add your handling code here:
+        // Save the update and only go back if update is successful
+        if (tryUpdateRequest()) {
+            new PageITOvertime().setVisible(true);
+            this.dispose();
+        }
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_backButtonActionPerformed
+        if (!isFormDirty() ||
+                JOptionPane.showConfirmDialog(this, "Discard changes to your overtime request?", "Cancel Update", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+            // Return to main Overtime page for Finance
+            new PageITOvertime().setVisible(true);
+            this.dispose();
+        }    }//GEN-LAST:event_backButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -150,7 +174,7 @@ public class PageITOvertimeRequestUpdate extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private util.LightButton backButton;
     private javax.swing.JLabel background;
-    private util.LightButton cancelButton1;
+    private util.LightButton cancelButton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label4;

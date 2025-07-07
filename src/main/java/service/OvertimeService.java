@@ -66,4 +66,13 @@ public class OvertimeService {
             throw new RuntimeException("Error deleting overtime", e);
         }
     }
+    
+    public void updateOvertime(Overtime overtime) {
+        try {
+            overtimeDAO.updateRequest(overtime);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating overtime request", e);
+        }
+    }
+
 }

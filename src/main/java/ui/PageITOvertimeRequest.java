@@ -118,9 +118,7 @@ public class PageITOvertimeRequest extends  ui.base.AbstractOvertimeRequestPage 
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
-        if (!isFormDirty() || 
-            JOptionPane.showConfirmDialog(this, "Discard changes to your overtime request?", "Cancel Request", JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-            // Go back to overtime page
+        if (trySubmitRequest()) {
             new PageITOvertime().setVisible(true);
             this.dispose();
         }
