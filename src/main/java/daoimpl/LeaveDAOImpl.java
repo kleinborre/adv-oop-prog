@@ -108,4 +108,44 @@ public class LeaveDAOImpl implements ManageableRequestDAO<Leave> {
         leave.setLeaveTypeID(rs.getInt("leaveTypeID"));
         return leave;
     }
+
+    // Add at the bottom of LeaveDAOImpl
+    public String getApprovalStatusName(int approvalStatusID) throws SQLException {
+        String query = "SELECT approvalStatus FROM approvalstatus WHERE approvalStatusID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, approvalStatusID);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getString("approvalStatus");
+            }
+        }
+        return "";
+    }
+
+    public String getLeaveTypeName(int leaveTypeID) throws SQLException {
+        String query = "SELECT leaveType FROM leavetype WHERE leaveTypeID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setInt(1, leaveTypeID);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) return rs.getString("leaveType");
+            }
+        }
+        return "";
+    }
+
+    @Override
+    public void updateRequest(Leave leave) throws SQLException {
+        String query = "UPDATE leaves SET leaveAllowance = ?, leaveStart = ?, leaveEnd = ?, leaveReason = ?, dateCreated = ?, employeeID = ?, approvalStatusID = ?, leaveTypeID = ? WHERE leaveID = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+            stmt.setDouble(1, leave.getLeaveAllowance());
+            stmt.setDate(2, leave.getLeaveStart());
+            stmt.setDate(3, leave.getLeaveEnd());
+            stmt.setString(4, leave.getLeaveReason());
+            stmt.setDate(5, leave.getDateCreated());
+            stmt.setInt(6, leave.getEmployeeID());
+            stmt.setInt(7, leave.getApprovalStatusID());
+            stmt.setInt(8, leave.getLeaveTypeID());
+            stmt.setInt(9, leave.getLeaveID());
+            stmt.executeUpdate();
+        }
+    }
 }

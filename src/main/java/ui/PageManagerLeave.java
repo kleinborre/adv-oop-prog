@@ -1,9 +1,33 @@
 package ui;
 
-public class PageManagerLeave extends javax.swing.JFrame {
+import pojo.Leave;
+
+public class PageManagerLeave extends ui.base.AbstractLeavePage {
 
     public PageManagerLeave() {
+        super();
         initComponents();
+        // Connect abstract logic to concrete NetBeans components
+        setComponentReferences(leaveTable, JDateChooser);
+        // Button listeners: handled ONLY in this subclass
+        backButton.addActionListener(e -> {
+            // Go to Home Dashboard
+            new PageManagerHome().setVisible(true);
+            this.dispose();
+        });
+        leaveRequestButton.addActionListener(e -> {
+            new PageManagerLeaveRequest().setVisible(true);
+            this.dispose();
+        });
+    }
+
+    @Override
+    protected void onUpdateLeave(Leave selectedLeave) {
+        // Launch the update page and pass selectedLeave
+        PageManagerLeaveRequestUpdate updatePage = new PageManagerLeaveRequestUpdate();
+        updatePage.loadLeaveForUpdate(selectedLeave); // You'll add this method, see below
+        updatePage.setVisible(true);
+        this.dispose();
     }
 
     /**
@@ -96,12 +120,12 @@ public class PageManagerLeave extends javax.swing.JFrame {
     }//GEN-LAST:event_backButtonActionPerformed
 
     private void viewLeaveRecordsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewLeaveRecordsButtonActionPerformed
-        // TODO add your handling code here:
+        new PageManagerLeaveAdmin().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_viewLeaveRecordsButtonActionPerformed
 
     private void leaveRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveRequestButtonActionPerformed
-        new PageManagerLeaveRequest().setVisible(true);
-        this.dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_leaveRequestButtonActionPerformed
 
     /**

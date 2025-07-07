@@ -1,9 +1,33 @@
 package ui;
 
-public class PageFinanceLeave extends javax.swing.JFrame {
+import pojo.Leave;
+
+public class PageFinanceLeave extends ui.base.AbstractLeavePage {
 
     public PageFinanceLeave() {
+        super();
         initComponents();
+        // Connect abstract logic to concrete NetBeans components
+        setComponentReferences(leaveTable, JDateChooser);
+        // Button listeners: handled ONLY in this subclass
+        backButton.addActionListener(e -> {
+            // Go to Home Dashboard
+            new PageFinanceHome().setVisible(true);
+            this.dispose();
+        });
+        leaveRequestButton.addActionListener(e -> {
+            new PageFinanceLeaveRequest().setVisible(true);
+            this.dispose();
+        });
+    }
+    
+    @Override
+    protected void onUpdateLeave(Leave selectedLeave) {
+        // Launch the update page and pass selectedLeave
+        PageFinanceLeaveRequestUpdate updatePage = new PageFinanceLeaveRequestUpdate();
+        updatePage.loadLeaveForUpdate(selectedLeave); // You'll add this method, see below
+        updatePage.setVisible(true);
+        this.dispose();
     }
 
     /**
@@ -82,13 +106,11 @@ public class PageFinanceLeave extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void leaveRequestButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leaveRequestButtonActionPerformed
-        new PageFinanceLeaveRequest().setVisible(true);
-        this.dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_leaveRequestButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        new PageFinanceHome().setVisible(true);
-        this.dispose();
+        // TODO add your handling code here:
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**
