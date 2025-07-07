@@ -159,15 +159,15 @@ public class PageFinanceAttendanceRecords extends ui.base.AbstractAdminAttendanc
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser JDateChooser;
-    private javax.swing.JTable attendanceTable;
-    private util.LightButton backButton;
+    public com.toedter.calendar.JDateChooser JDateChooser;
+    public javax.swing.JTable attendanceTable;
+    public util.LightButton backButton;
     private javax.swing.JLabel background;
-    private javax.swing.JComboBox<String> employeeIDComboBox;
-    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JComboBox<String> employeeIDComboBox;
+    public javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label10;
     private javax.swing.JLabel label9;
-    private util.LightButton printAttendanceButton;
-    private util.LightButton viewOwnRecordButton;
+    public util.LightButton printAttendanceButton;
+    public util.LightButton viewOwnRecordButton;
     // End of variables declaration//GEN-END:variables
 }

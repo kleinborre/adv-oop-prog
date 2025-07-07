@@ -5,14 +5,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import pojo.User;
 import service.LoginService;
 
-class LoginServiceTest {
+class ITLoginServiceTest {
 
     @Test
     void validCredentialsReturnUser() throws Exception {
         LoginService svc = new LoginService();
-        User user = svc.login("aromualdez@motor.ph", "Romualdez@10008");
+        User user = svc.login("ehernandez@motor.ph", "Hernandez@10005");
         assertNotNull(user);
-        assertEquals("U10008", user.getUserID());
+        assertEquals("U10005", user.getUserID());
     }
 
     @Test
@@ -25,8 +25,8 @@ class LoginServiceTest {
     @Test
     void validLoginUsingUserIDReturnsUser() throws Exception {
         LoginService svc = new LoginService();
-        User user = svc.login("U10008", "Romualdez@10008");
+        User user = svc.login("U10005", "Hernandez@10005");
         assertNotNull(user);
-        assertEquals("U10008", user.getUserID());
+        assertEquals("U10005", user.getUserID());
     }
 }

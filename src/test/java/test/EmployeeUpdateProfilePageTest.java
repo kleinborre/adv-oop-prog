@@ -13,7 +13,6 @@ class EmployeeUpdateProfilePageTest {
     private PageEmployeeDataUpdateProfile page;
 
     // ---- Configure these for any employee you want to test ----
-    // e.g. set these to the expected values for employeeID 10012
     private final String expectedEmployeeID     = "10012";
     private final String expectedFirstName      = "Josie";
     private final String expectedLastName       = "Lopez";
@@ -122,6 +121,7 @@ class EmployeeUpdateProfilePageTest {
     @Test
     void testZipCodeField() {
         JTextField field = page.getZipCodeField();
+        // Assert initial value
         assertEquals(expectedZipCode, field.getText());
     }
 
@@ -155,9 +155,13 @@ class EmployeeUpdateProfilePageTest {
         JButton updateButton = getButton(page, "Update");
         JTextField field = page.getCityField();
         assertFalse(updateButton.isEnabled());
+
+        // Simulate user changing the city
         field.setText("ChangedCity");
-        // simulate user typing
-        field.postActionEvent();
+        // Simulate event
+        for (var listener : field.getActionListeners()) {
+            listener.actionPerformed(new ActionEvent(field, ActionEvent.ACTION_PERFORMED, ""));
+        }
         // updateButton should now be enabled
         assertTrue(updateButton.isEnabled());
     }
@@ -165,7 +169,10 @@ class EmployeeUpdateProfilePageTest {
     @Test
     void testPhoneNumberFormatter() throws Exception {
         JTextField field = page.getPhoneNumberField();
-        field.setText("123456789");
+        SwingUtilities.invokeAndWait(() -> {
+            field.setText("123456789");
+        });
+        // Depending on implementation, formatting might be async—wait for EDT
         SwingUtilities.invokeAndWait(() -> {});
         assertEquals("123-456-789", field.getText());
     }
@@ -173,7 +180,10 @@ class EmployeeUpdateProfilePageTest {
     @Test
     void testZipCodeFormatter() throws Exception {
         JTextField field = page.getZipCodeField();
-        field.setText("10010");
+        // Explicitly set a zip code longer than 4 digits, expect formatter trims to 4 digits
+        SwingUtilities.invokeAndWait(() -> {
+            field.setText("10010");
+        });
         SwingUtilities.invokeAndWait(() -> {});
         assertEquals("1001", field.getText());
     }

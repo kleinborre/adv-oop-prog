@@ -215,20 +215,20 @@ public class PageFinancePayroll extends ui.base.AbstractPayrollPage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser JDateChooser;
-    private util.LightButton backButton;
+    public com.toedter.calendar.JDateChooser JDateChooser;
+    public util.LightButton backButton;
     private javax.swing.JLabel background;
-    private javax.swing.JScrollPane jScrollPane1;
+    public javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label2;
     private javax.swing.JLabel label3;
     private javax.swing.JLabel label4;
-    private javax.swing.JTable payrollTable;
-    private util.LightButton printPayrollButton;
-    private javax.swing.JTextField totalContributionsField;
-    private javax.swing.JTextField totalDeductionsField;
-    private javax.swing.JTextField totalGrossField;
-    private javax.swing.JTextField totalNetPayField;
+    public javax.swing.JTable payrollTable;
+    public util.LightButton printPayrollButton;
+    public javax.swing.JTextField totalContributionsField;
+    public javax.swing.JTextField totalDeductionsField;
+    public javax.swing.JTextField totalGrossField;
+    public javax.swing.JTextField totalNetPayField;
     // End of variables declaration//GEN-END:variables
 }
