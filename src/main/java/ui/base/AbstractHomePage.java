@@ -1,8 +1,10 @@
 package ui.base;
 
 import pojo.Employee;
+import pojo.Leave;
 import service.AttendanceService;
 import service.EmployeeService;
+import service.LeaveService;
 import util.SessionManager;
 import ui.PageLogin;
 
@@ -15,6 +17,8 @@ import java.sql.SQLException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.time.YearMonth;
+import java.util.Comparator;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,11 +33,11 @@ public abstract class AbstractHomePage extends JFrame {
     public boolean isClockedInToday  = false;
     public boolean isClockedOutToday = false;
 
-    // Track today’s clock‐in/out instants
     private LocalDateTime clockInDateTime  = null;
     private LocalDateTime clockOutDateTime = null;
 
     protected AttendanceService attendanceService = new AttendanceService();
+    protected LeaveService leaveService = new LeaveService(); // Added to support leaveAllowance lookup
 
     /**
      * Call once you have userID & employeeID.
@@ -46,6 +50,7 @@ public abstract class AbstractHomePage extends JFrame {
         installProfileClick(getFullNameText());
         installProfileClick(getPositionText());
 
+        updateLeaveAllowanceDisplay(); // --- Always display most recent leave allowance
         startClock();
         refreshClockInOutStatus();
     }
@@ -129,6 +134,10 @@ public abstract class AbstractHomePage extends JFrame {
                 Logger.getLogger(AbstractHomePage.class.getName())
                       .log(Level.SEVERE, null, ex);
             }
+
+            // update leave allowance display dynamically every tick
+            updateLeaveAllowanceDisplay();
+
         });
         clockTimer.setInitialDelay(0);
         clockTimer.start();
@@ -256,11 +265,29 @@ public abstract class AbstractHomePage extends JFrame {
 
             updateClockInButtonAvailability();
             updateWorkedHoursDisplay(LocalDateTime.now());
+            updateLeaveAllowanceDisplay();
+
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this,
               "Error refreshing attendance status: " + ex.getMessage(),
               "Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
+        }
+    }
+
+    // Dynamically update leavesAvailableText
+    protected void updateLeaveAllowanceDisplay() {
+        try {
+            List<Leave> leaves = leaveService.getLeavesByEmployeeID(employeeID);
+            double allowance = 0;
+            if (leaves != null && !leaves.isEmpty()) {
+                // Find the latest (most recent) leave by dateCreated
+                leaves.sort(Comparator.comparing(Leave::getDateCreated).reversed());
+                allowance = leaves.get(0).getLeaveAllowance();
+            }
+            getLeavesAvailableText().setText(String.format("%.0f", allowance));
+        } catch (Exception ex) {
+            getLeavesAvailableText().setText("0");
         }
     }
 
@@ -283,12 +310,7 @@ public abstract class AbstractHomePage extends JFrame {
       }
     }
 
-    /**
-     * Updates the “month total” and the “today” stopwatch.
-     * Today’s elapsed time now shown as “X hrs, Y min, Z sec”.
-     */
     private void updateWorkedHoursDisplay(LocalDateTime now) throws SQLException {
-        // monthly total
         YearMonth ym = YearMonth.now();
         BigDecimal decHrs = attendanceService
           .getMonthlyWorkedHours(employeeID, ym.getYear(), ym.getMonthValue());
@@ -298,7 +320,6 @@ public abstract class AbstractHomePage extends JFrame {
         long mH = totalMin / 60, mM = totalMin % 60;
         String monthPart = String.format("%d hrs, %d min", mH, mM);
 
-        // today’s stopwatch
         String dailyPart = null;
         if (clockInDateTime != null && clockInDateTime.toLocalDate().equals(now.toLocalDate())) {
             LocalDateTime end = (clockOutDateTime!=null ? clockOutDateTime : now);
@@ -349,4 +370,5 @@ public abstract class AbstractHomePage extends JFrame {
     protected abstract JButton getClockInButton();
     protected abstract JButton getClockOutButton();
     protected abstract JLabel  getTotalWorkedHoursText();
+    protected abstract JLabel  getLeavesAvailableText();
 }

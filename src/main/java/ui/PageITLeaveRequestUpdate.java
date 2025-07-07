@@ -1,9 +1,45 @@
 package ui;
 
-public class PageITLeaveRequestUpdate extends javax.swing.JFrame {
+import pojo.Leave;
+
+public class PageITLeaveRequestUpdate extends ui.base.AbstractLeaveRequestUpdatePage {
 
     public PageITLeaveRequestUpdate() {
         initComponents();
+        // Always set component references after initializing UI
+        setComponentReferences(
+            leaveTypeComboBox,
+            startDateCalendar,
+            endDateCalendar,
+            leaveReasonTextArea,
+            leaveAvailableField,
+            submitButton
+        );
+        // Disable all fields until a leave is loaded
+        setFieldsEnabled(false);
+    }
+
+    // Loads leave data into the form for editing
+    public void loadLeaveForUpdate(Leave leave) {
+        setLeaveData(leave);
+        setFieldsEnabled(true);
+    }
+
+    // Disables or enables all inputs (except cancel/back)
+    private void setFieldsEnabled(boolean enabled) {
+        leaveTypeComboBox.setEnabled(enabled);
+        startDateCalendar.setEnabled(enabled);
+        endDateCalendar.setEnabled(enabled);
+        leaveReasonTextArea.setEnabled(enabled);
+        submitButton.setEnabled(enabled);
+    }
+
+    @Override
+    protected void onUpdateRequestSubmitted() {
+        // After successful update, go back to leave history and show message
+        javax.swing.JOptionPane.showMessageDialog(this, "Leave request updated successfully.", "Notice", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        new PageITLeave().setVisible(true);
+        this.dispose();
     }
 
     /**
@@ -129,7 +165,8 @@ public class PageITLeaveRequestUpdate extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
-        // TODO add your handling code here:
+        new PageITLeave().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void submitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonActionPerformed
@@ -137,7 +174,8 @@ public class PageITLeaveRequestUpdate extends javax.swing.JFrame {
     }//GEN-LAST:event_submitButtonActionPerformed
 
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
-        // TODO add your handling code here:
+        new PageITLeave().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
     /**

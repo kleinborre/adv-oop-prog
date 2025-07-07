@@ -16,4 +16,6 @@ public interface ManageableRequestDAO<T> {
     void updateApprovalStatus(int requestID, int approvalStatusID) throws SQLException;
 
     void deleteRequest(int requestID) throws SQLException;
+    
+    void updateRequest(T request) throws SQLException;
 }

@@ -66,4 +66,28 @@ public class LeaveService {
             throw new RuntimeException("Error deleting leave", e);
         }
     }
+
+    public String getApprovalStatusName(int approvalStatusID) {
+        try {
+            return ((LeaveDAOImpl) leaveDAO).getApprovalStatusName(approvalStatusID);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error getting approval status", e);
+        }
+    }
+
+    public String getLeaveTypeName(int leaveTypeID) {
+        try {
+            return ((LeaveDAOImpl) leaveDAO).getLeaveTypeName(leaveTypeID);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error getting leave type", e);
+        }
+    }
+
+    public void updateLeave(Leave leave) {
+        try {
+            leaveDAO.updateRequest(leave);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error updating leave request", e);
+        }
+    }
 }
