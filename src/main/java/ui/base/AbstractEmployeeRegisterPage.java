@@ -1,5 +1,3 @@
-// File: ui/base/AbstractEmployeeRegisterPage.java
-
 package ui.base;
 
 import com.toedter.calendar.JDateChooser;
