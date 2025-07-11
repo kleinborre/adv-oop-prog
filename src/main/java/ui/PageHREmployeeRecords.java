@@ -41,8 +41,6 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        label10 = new javax.swing.JLabel();
-        totalWorkedHoursField = new javax.swing.JTextField();
         label9 = new javax.swing.JLabel();
         ownRecordButton = new util.LightButton();
         newEmployeeButton = new util.LightButton();
@@ -57,20 +55,6 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        label10.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
-        label10.setForeground(new java.awt.Color(51, 51, 51));
-        label10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        label10.setText("Total Hours:");
-        getContentPane().add(label10, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 120, 100, 30));
-
-        totalWorkedHoursField.setEditable(false);
-        totalWorkedHoursField.setBackground(new java.awt.Color(204, 204, 204));
-        totalWorkedHoursField.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
-        totalWorkedHoursField.setForeground(new java.awt.Color(0, 102, 102));
-        totalWorkedHoursField.setHorizontalAlignment(javax.swing.JTextField.LEFT);
-        totalWorkedHoursField.setText("00 hrs, 00 min");
-        getContentPane().add(totalWorkedHoursField, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 120, 130, 30));
 
         label9.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         label9.setForeground(new java.awt.Color(51, 51, 51));
@@ -171,15 +155,13 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public util.LightButton backButton;
+    private util.LightButton backButton;
     private javax.swing.JLabel background;
-    public javax.swing.JTable employeeRecordsTable;
-    public javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel label10;
+    private javax.swing.JTable employeeRecordsTable;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label9;
-    public util.LightButton newEmployeeButton;
-    public util.LightButton ownRecordButton;
-    public javax.swing.JComboBox<String> statusFilter;
-    private javax.swing.JTextField totalWorkedHoursField;
+    private util.LightButton newEmployeeButton;
+    private util.LightButton ownRecordButton;
+    private javax.swing.JComboBox<String> statusFilter;
     // End of variables declaration//GEN-END:variables
 }
