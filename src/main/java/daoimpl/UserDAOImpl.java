@@ -1,4 +1,3 @@
-// in daoimpl/UserDAOImpl.java
 package daoimpl;
 
 import dao.UserDAO;

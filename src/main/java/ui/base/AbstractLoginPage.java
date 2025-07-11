@@ -1,4 +1,3 @@
-// File: ui/base/AbstractLoginPage.java
 package ui.base;
 
 import service.LoginService;
