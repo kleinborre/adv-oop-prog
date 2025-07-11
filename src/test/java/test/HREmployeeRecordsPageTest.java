@@ -5,42 +5,43 @@ import static org.junit.jupiter.api.Assertions.*;
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.event.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 import ui.PageHREmployeeRecords;
+import util.FieldAccessTest; // Use your shared helper!
 
+/**
+ * Tests for HR Employee Records page functionality and UI.
+ * Uses FieldAccessTest to robustly access and validate private fields.
+ */
 public class HREmployeeRecordsPageTest {
 
     PageHREmployeeRecords page;
 
-    // Helper for private field access
-    @SuppressWarnings("unchecked")
-    private <T> T getPrivateField(Object instance, String fieldName, Class<T> type) {
-        try {
-            java.lang.reflect.Field field = instance.getClass().getDeclaredField(fieldName);
-            field.setAccessible(true);
-            return (T) field.get(instance);
-        } catch (Exception e) {
-            throw new RuntimeException("Could not access field: " + fieldName, e);
-        }
-    }
-
+    /**
+     * Set up an HR session and instantiate the Employee Records page before every test.
+     */
     @BeforeEach
     void setup() throws Exception {
-        util.SessionManager.setSession("U10006", 10006);
+        util.SessionManager.setSession("U10006", 10006); // HR account session
         SwingUtilities.invokeAndWait(() -> page = new PageHREmployeeRecords());
     }
 
+    /**
+     * Dispose of the page and clear static session state after every test.
+     */
     @AfterEach
     void cleanup() throws Exception {
         SwingUtilities.invokeAndWait(() -> page.dispose());
     }
 
+    /**
+     * Test: All expected control buttons should exist and be enabled for use.
+     */
     @Test
-    void testButtonsExistAndFunctionality() throws Exception {
-        JButton ownRecordBtn    = getPrivateField(page, "ownRecordButton", JButton.class);
-        JButton newEmployeeBtn  = getPrivateField(page, "newEmployeeButton", JButton.class);
-        JButton backBtn         = getPrivateField(page, "backButton", JButton.class);
+    void testButtonsExistAndFunctionality() {
+        JButton ownRecordBtn    = FieldAccessTest.getField(page, "ownRecordButton", JButton.class);
+        JButton newEmployeeBtn  = FieldAccessTest.getField(page, "newEmployeeButton", JButton.class);
+        JButton backBtn         = FieldAccessTest.getField(page, "backButton", JButton.class);
 
         assertNotNull(ownRecordBtn, "Own Record button should exist");
         assertNotNull(newEmployeeBtn, "New Employee button should exist");
@@ -51,35 +52,45 @@ public class HREmployeeRecordsPageTest {
         assertTrue(backBtn.isEnabled(), "Back button should be enabled");
     }
 
+    /**
+     * Test: The status filter combo box should exist, have options, and respond to changes.
+     */
     @Test
     void testStatusFilterComboBoxExistsAndCanChange() throws Exception {
-        JComboBox<?> statusFilter = getPrivateField(page, "statusFilter", JComboBox.class);
+        JComboBox<?> statusFilter = FieldAccessTest.getField(page, "statusFilter", JComboBox.class);
         assertNotNull(statusFilter, "Status filter combo box should exist");
         int originalIndex = statusFilter.getSelectedIndex();
         assertTrue(statusFilter.getItemCount() > 1, "Status filter should have multiple options");
 
+        // Change filter selection and verify it updates
         SwingUtilities.invokeAndWait(() -> statusFilter.setSelectedItem("Active"));
         assertEquals("Active", statusFilter.getSelectedItem(), "Status filter should change selection to Active");
 
+        // Restore previous filter state for test isolation
         SwingUtilities.invokeAndWait(() -> statusFilter.setSelectedIndex(originalIndex));
     }
 
+    /**
+     * Test: The employee records table must exist, load the correct column headers,
+     * and have zero or more rows (rows may be empty if database is empty).
+     */
     @Test
     void testEmployeeRecordsTableExistsAndLoadsRows() throws Exception {
-        JTable table = getPrivateField(page, "employeeRecordsTable", JTable.class);
+        JTable table = FieldAccessTest.getField(page, "employeeRecordsTable", JTable.class);
         assertNotNull(table, "Employee records table should exist");
 
-        // Wait for table to load (up to 2 seconds)
+        // Wait for the table to load at least once (max 2 seconds)
         int retries = 0;
         while (table.getRowCount() == 0 && retries < 20) {
             Thread.sleep(100);
             retries++;
         }
-        assertTrue(table.getRowCount() >= 0, "Table should be loaded with zero or more rows"); // Accept 0 if DB is empty
+        assertTrue(table.getRowCount() >= 0, "Table should be loaded with zero or more rows"); // Accepts empty if DB empty
         assertEquals(14, table.getColumnCount(), "Table should have 14 columns");
         TableModel model = table.getModel();
         assertTrue(model instanceof DefaultTableModel, "Table model should be DefaultTableModel");
 
+        // Verify each column header
         String[] expectedHeaders = {
             "Employee ID","Account Status","Employment Status","Name",
             "Birthdate","Contact Number","Address","Position",
@@ -91,10 +102,14 @@ public class HREmployeeRecordsPageTest {
         }
     }
 
+    /**
+     * Test: Simulate double-clicking a table row to trigger the update employee flow.
+     * Passes if event triggers with no exception (cannot assert navigation in unit test).
+     */
     @Test
     void testDoubleClickTableRowOpensUpdatePage() throws Exception {
-        JTable table = getPrivateField(page, "employeeRecordsTable", JTable.class);
-        if (table.getRowCount() == 0) return;
+        JTable table = FieldAccessTest.getField(page, "employeeRecordsTable", JTable.class);
+        if (table.getRowCount() == 0) return; // Skip if no data to click
 
         int row = 0;
         table.setRowSelectionInterval(row, row);
@@ -107,9 +122,12 @@ public class HREmployeeRecordsPageTest {
         assertTrue(true, "Double-click event triggered");
     }
 
+    /**
+     * Test: The scroll pane should exist and its view must be the employee records table.
+     */
     @Test
-    void testScrollPaneContainsTable() throws Exception {
-        JScrollPane scroll = getPrivateField(page, "jScrollPane1", JScrollPane.class);
+    void testScrollPaneContainsTable() {
+        JScrollPane scroll = FieldAccessTest.getField(page, "jScrollPane1", JScrollPane.class);
         assertNotNull(scroll, "Scroll pane should exist");
         assertNotNull(scroll.getViewport().getView(), "Scroll pane should contain a view");
         assertTrue(scroll.getViewport().getView() instanceof JTable, "Scroll pane should contain JTable");
