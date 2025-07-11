@@ -8,6 +8,7 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
         setupRecordsPage(
           employeeRecordsTable,
           statusFilter,
+          employeeIDComboBox,
           ownRecordButton,
           newEmployeeButton,
           backButton,
@@ -41,6 +42,8 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        label10 = new javax.swing.JLabel();
+        employeeIDComboBox = new javax.swing.JComboBox<>();
         label9 = new javax.swing.JLabel();
         ownRecordButton = new util.LightButton();
         newEmployeeButton = new util.LightButton();
@@ -55,6 +58,16 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        label10.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        label10.setForeground(new java.awt.Color(51, 51, 51));
+        label10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label10.setText("   Find by ID:");
+        getContentPane().add(label10, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 120, 90, 30));
+
+        employeeIDComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        employeeIDComboBox.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(employeeIDComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 120, 130, 30));
 
         label9.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
         label9.setForeground(new java.awt.Color(51, 51, 51));
@@ -86,7 +99,7 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
 
         statusFilter.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         statusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Pending", "Deactivated", "Rejected" }));
-        getContentPane().add(statusFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 84, 140, 30));
+        getContentPane().add(statusFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 84, 130, 30));
 
         employeeRecordsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -157,8 +170,10 @@ public class PageHREmployeeRecords extends ui.base.AbstractEmployeeRecordsPage {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private util.LightButton backButton;
     private javax.swing.JLabel background;
+    private javax.swing.JComboBox<String> employeeIDComboBox;
     private javax.swing.JTable employeeRecordsTable;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label10;
     private javax.swing.JLabel label9;
     private util.LightButton newEmployeeButton;
     private util.LightButton ownRecordButton;

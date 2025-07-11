@@ -15,10 +15,17 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * AbstractITUserAccountsPage:
+ * - Shared logic for IT's User Accounts Management page.
+ * - Features real-time filtering by Employee ID and account status.
+ * - Reusable with minimal code in PageITUserAccounts.
+ */
 public abstract class AbstractITUserAccountsPage extends JFrame {
 
     protected JTable userAccountsTable;
     protected JComboBox<String> statusFilter;
+    protected JComboBox<String> employeeIDComboBox;
     protected JButton ownAccountButton;
     protected JButton newUserButton;
     protected JButton backButton;
@@ -30,19 +37,54 @@ public abstract class AbstractITUserAccountsPage extends JFrame {
             "Account Status", "User ID", "Full Name", "Email"
     };
 
-    // Must be called after UI's initComponents (fields must be non-null!)
-    protected void setupUserAccountsPage(JTable userAccountsTable, JComboBox<String> statusFilter,
-                                         JButton ownAccountButton, JButton newUserButton, JButton backButton) {
+    /**
+     * Main setup for the IT User Accounts Page.
+     * - Wires up table, status filter, employee ID filter, and navigation buttons.
+     * - DRY and maintains all previous functionality.
+     */
+    protected void setupUserAccountsPage(
+            JTable userAccountsTable,
+            JComboBox<String> statusFilter,
+            JComboBox<String> employeeIDComboBox,
+            JButton ownAccountButton,
+            JButton newUserButton,
+            JButton backButton
+    ) {
         this.userAccountsTable = userAccountsTable;
         this.statusFilter = statusFilter;
+        this.employeeIDComboBox = employeeIDComboBox;
         this.ownAccountButton = ownAccountButton;
         this.newUserButton = newUserButton;
         this.backButton = backButton;
 
-        populateUserAccountsTable(getCurrentFilter());
-        setupStatusFilterListener();
+        // --- EMPLOYEEID FILTER SETUP ---
+        // Populate the employeeIDComboBox with "All" and all employeeIDs.
+        reloadEmployeeIDComboBox();
+
+        // Add listeners for filter logic
+        employeeIDComboBox.addActionListener(e -> {
+            String selected = (String) employeeIDComboBox.getSelectedItem();
+            boolean isAll = selected == null || selected.equals("All");
+            statusFilter.setEnabled(isAll);
+            if (isAll) {
+                populateUserAccountsTable(getCurrentStatusFilter());
+            } else {
+                int employeeID = Integer.parseInt(selected);
+                populateUserAccountsTableForEmployee(employeeID);
+            }
+        });
+
+        // When statusFilter changes, reload table (only if enabled)
+        statusFilter.addActionListener(e -> {
+            if (statusFilter.isEnabled()) {
+                populateUserAccountsTable(getCurrentStatusFilter());
+            }
+        });
+
+        // Table actions
         setupRowDoubleClickListener();
 
+        // Button navigation
         ownAccountButton.addActionListener(e -> {
             new ui.PageITEmployeeData().setVisible(true);
             this.dispose();
@@ -57,18 +99,37 @@ public abstract class AbstractITUserAccountsPage extends JFrame {
             new ui.PageITHome().setVisible(true);
             this.dispose();
         });
+
+        // Initial load: Show all users
+        populateUserAccountsTable(getCurrentStatusFilter());
     }
 
-    protected String getCurrentFilter() {
+    /**
+     * Fills employeeIDComboBox with "All" plus all employee IDs.
+     */
+    protected void reloadEmployeeIDComboBox() {
+        employeeIDComboBox.removeAllItems();
+        employeeIDComboBox.addItem("All");
+        for (Employee emp : employeeService.getAllEmployees()) {
+            employeeIDComboBox.addItem(String.valueOf(emp.getEmployeeID()));
+        }
+    }
+
+    /**
+     * Returns the current status filter, or "All" if not set.
+     */
+    protected String getCurrentStatusFilter() {
         if (statusFilter == null) return "All";
         Object selected = statusFilter.getSelectedItem();
         return selected == null ? "All" : selected.toString();
     }
 
+    /**
+     * Populates the table with all users filtered by status.
+     */
     protected void populateUserAccountsTable(String filter) {
         List<User> users = userService.getAllUsers();
-        // Sort by userID ascending (U00001, U00002, ...)
-        List<User> sortedUsers = users.stream()
+        List<User> filtered = users.stream()
             .filter(u -> filter.equals("All") || u.getAccountStatus().equalsIgnoreCase(filter))
             .sorted(Comparator.comparing(User::getUserID))
             .collect(Collectors.toList());
@@ -76,7 +137,8 @@ public abstract class AbstractITUserAccountsPage extends JFrame {
         DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
         };
-        for (User u : sortedUsers) {
+
+        for (User u : filtered) {
             Employee emp = employeeService.getEmployeeByUserID(u.getUserID());
             String fullName = (emp != null) ? emp.getLastName() + ", " + emp.getFirstName() : "";
             String email = (emp != null) ? emp.getEmail() : "";
@@ -84,17 +146,43 @@ public abstract class AbstractITUserAccountsPage extends JFrame {
         }
         userAccountsTable.setModel(model);
 
-        // Center the Account Status and User ID columns
+        // Center "Account Status" and "User ID" columns
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         userAccountsTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
         userAccountsTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
     }
 
-    private void setupStatusFilterListener() {
-        statusFilter.addActionListener(e -> populateUserAccountsTable(getCurrentFilter()));
+    /**
+     * Populates the table with the account of the given employee ID (if user exists).
+     */
+    protected void populateUserAccountsTableForEmployee(int employeeID) {
+        Employee emp = employeeService.getEmployeeByID(employeeID);
+        if (emp == null) {
+            // Show empty table if not found
+            userAccountsTable.setModel(new DefaultTableModel(columnNames, 0));
+            return;
+        }
+        User u = userService.getUserByUserID(emp.getUserID());
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
+            @Override public boolean isCellEditable(int r, int c) { return false; }
+        };
+        if (u != null) {
+            String fullName = emp.getLastName() + ", " + emp.getFirstName();
+            String email = emp.getEmail();
+            model.addRow(new Object[]{u.getAccountStatus(), u.getUserID(), fullName, email});
+        }
+        userAccountsTable.setModel(model);
+        // Center columns
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        userAccountsTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer);
+        userAccountsTable.getColumnModel().getColumn(1).setCellRenderer(centerRenderer);
     }
 
+    /**
+     * Attaches a double-click handler to the table for record management.
+     */
     private void setupRowDoubleClickListener() {
         userAccountsTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent evt) {
@@ -103,57 +191,70 @@ public abstract class AbstractITUserAccountsPage extends JFrame {
                 if (evt.getClickCount() == 2) {
                     String accountStatus = userAccountsTable.getValueAt(row, 0).toString();
                     String userID = userAccountsTable.getValueAt(row, 1).toString();
-                    handleAccountRowAction(accountStatus, userID);
+                    // Get employeeID for success dialog messages
+                    Employee emp = employeeService.getEmployeeByUserID(userID);
+                    int empID = (emp != null) ? emp.getEmployeeID() : -1;
+                    handleAccountRowAction(accountStatus, userID, empID);
                 }
             }
         });
     }
 
-    // Handler for double-click based on status
-    private void handleAccountRowAction(String accountStatus, String userID) {
+    /**
+     * Handles double-click actions based on account status.
+     * All success dialogs include the Employee ID.
+     */
+    private void handleAccountRowAction(String accountStatus, String userID, int empID) {
         switch (accountStatus) {
             case "Pending":
-                handlePendingAccount(userID);
+                handlePendingAccount(userID, empID);
                 break;
             case "Active":
-                handleActiveAccount(userID);
+                handleActiveAccount(userID, empID);
                 break;
             case "Deactivated":
-                handleDeactivatedAccount(userID);
+                handleDeactivatedAccount(userID, empID);
                 break;
             case "Rejected":
-                JOptionPane.showMessageDialog(this, "This account has been rejected. No further action possible.");
+                JOptionPane.showMessageDialog(this,
+                        "This account has been rejected. No further action possible.");
                 break;
             default:
                 JOptionPane.showMessageDialog(this, "Unknown account status.");
         }
     }
 
-    // For Pending accounts: Accept or Reject (No Cancel)
-    private void handlePendingAccount(String userID) {
-        String[] options = {"Accept", "Reject"};
+    /**
+     * For Pending accounts: Accept or Reject. Dialog always mentions the employee ID.
+     */
+    private void handlePendingAccount(String userID, int empID) {
+        String[] options = {"Approve", "Reject"};
         int choice = JOptionPane.showOptionDialog(this,
-                "Choose action for pending account:",
+                "Approve or reject this account?",
                 "Account Approval",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
         if (choice == 0) {
             updateAccountStatus(userID, "Active");
-            JOptionPane.showMessageDialog(this, "Account approved. User can now log in.");
+            JOptionPane.showMessageDialog(this,
+                "Employee " + empID + " was approved.");
         } else if (choice == 1) {
             updateAccountStatus(userID, "Rejected");
-            JOptionPane.showMessageDialog(this, "Account rejected. User cannot log in.");
+            JOptionPane.showMessageDialog(this,
+                "Employee " + empID + " was rejected.");
         }
-        populateUserAccountsTable(getCurrentFilter());
+        reloadAfterEdit();
     }
 
-    // For Active accounts: Update or Disable (No Cancel)
-    private void handleActiveAccount(String userID) {
-        String[] options = {"Update Account", "Disable Account"};
+    /**
+     * For Active accounts: Update or Deactivate. Dialog always mentions the employee ID.
+     */
+    private void handleActiveAccount(String userID, int empID) {
+        String[] options = {"Update", "Deactivate"};
         int choice = JOptionPane.showOptionDialog(this,
-                "What would you like to do with this active account?",
-                "Manage Active Account",
+                "Update info or deactivate this account?",
+                "Manage Account",
                 JOptionPane.DEFAULT_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
@@ -167,29 +268,44 @@ public abstract class AbstractITUserAccountsPage extends JFrame {
                 JOptionPane.showMessageDialog(this, "Employee not found for this user.");
             }
         } else if (choice == 1) {
-            updateAccountStatus(userID, "Deactivated");
-            JOptionPane.showMessageDialog(this, "Account has been deactivated.");
-            populateUserAccountsTable(getCurrentFilter());
+            int confirm = JOptionPane.showOptionDialog(this,
+                "Are you sure? This cannot be undone.",
+                "Deactivate Account",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null, new String[]{"Confirm", "Cancel"}, "Cancel"
+            );
+            if (confirm == 0) {
+                updateAccountStatus(userID, "Deactivated");
+                JOptionPane.showMessageDialog(this,
+                    "Employee " + empID + " was deactivated.");
+                reloadAfterEdit();
+            }
         }
     }
 
-    // For Deactivated accounts: Reactivate (Only Yes/No)
-    private void handleDeactivatedAccount(String userID) {
-        String[] options = {"Reactivate", "Close"};
+    /**
+     * For Deactivated accounts: Reactivate (Yes/No). Dialog always mentions the employee ID.
+     */
+    private void handleDeactivatedAccount(String userID, int empID) {
+        String[] options = {"Reactivate", "Cancel"};
         int confirm = JOptionPane.showOptionDialog(this,
-                "This account is deactivated. Reactivate account?",
+                "This account is deactivated. Reactivate this account?",
                 "Reactivate Account",
                 JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE,
                 null, options, options[0]);
         if (confirm == 0) {
             updateAccountStatus(userID, "Active");
-            JOptionPane.showMessageDialog(this, "Account has been reactivated.");
-            populateUserAccountsTable(getCurrentFilter());
+            JOptionPane.showMessageDialog(this,
+                "Employee " + empID + " was reactivated.");
+            reloadAfterEdit();
         }
     }
 
-    // DRY: All account status updates in one place
+    /**
+     * DRY: All account status updates in one place.
+     */
     protected void updateAccountStatus(String userID, String newStatus) {
         User user = userService.getUserByUserID(userID);
         if (user == null) {
@@ -198,5 +314,20 @@ public abstract class AbstractITUserAccountsPage extends JFrame {
         }
         user.setAccountStatus(newStatus);
         userService.updateUser(user);
+    }
+
+    /**
+     * After approve/reject/deactivate/reactivate, reloads table and combobox.
+     */
+    protected void reloadAfterEdit() {
+        reloadEmployeeIDComboBox();
+        String selected = (String) employeeIDComboBox.getSelectedItem();
+        boolean isAll = selected == null || selected.equals("All");
+        if (isAll) {
+            populateUserAccountsTable(getCurrentStatusFilter());
+        } else {
+            int employeeID = Integer.parseInt(selected);
+            populateUserAccountsTableForEmployee(employeeID);
+        }
     }
 }

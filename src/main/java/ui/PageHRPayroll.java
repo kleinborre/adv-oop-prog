@@ -16,7 +16,7 @@ public class PageHRPayroll extends ui.base.AbstractPayrollPage {
         );
 
         backButton.addActionListener(e -> {
-            new PageFinanceHome().setVisible(true);
+            new PageHRHome().setVisible(true);
             this.dispose();
         });
 
@@ -54,7 +54,6 @@ public class PageHRPayroll extends ui.base.AbstractPayrollPage {
         setTitle("MotorPH Payroll System");
         setMaximumSize(new java.awt.Dimension(1040, 590));
         setMinimumSize(new java.awt.Dimension(1040, 590));
-        setPreferredSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -213,20 +212,20 @@ public class PageHRPayroll extends ui.base.AbstractPayrollPage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public com.toedter.calendar.JDateChooser JDateChooser;
-    public util.LightButton backButton;
+    private com.toedter.calendar.JDateChooser JDateChooser;
+    private util.LightButton backButton;
     private javax.swing.JLabel background;
-    public javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel label;
     private javax.swing.JLabel label1;
     private javax.swing.JLabel label2;
     private javax.swing.JLabel label3;
     private javax.swing.JLabel label4;
-    public javax.swing.JTable payrollTable;
-    public util.LightButton printPayrollButton;
-    public javax.swing.JTextField totalContributionsField;
-    public javax.swing.JTextField totalDeductionsField;
-    public javax.swing.JTextField totalGrossField;
-    public javax.swing.JTextField totalNetPayField;
+    private javax.swing.JTable payrollTable;
+    private util.LightButton printPayrollButton;
+    private javax.swing.JTextField totalContributionsField;
+    private javax.swing.JTextField totalDeductionsField;
+    private javax.swing.JTextField totalGrossField;
+    private javax.swing.JTextField totalNetPayField;
     // End of variables declaration//GEN-END:variables
 }
