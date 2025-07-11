@@ -7,6 +7,7 @@ public class PageITUserAccounts extends ui.base.AbstractITUserAccountsPage {
         setupUserAccountsPage(
             userAccountsTable,
             statusFilter,
+            employeeIDComboBox,
             ownAccountButton,
             newUserButton,
             backButton
@@ -22,6 +23,8 @@ public class PageITUserAccounts extends ui.base.AbstractITUserAccountsPage {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        label10 = new javax.swing.JLabel();
+        employeeIDComboBox = new javax.swing.JComboBox<>();
         ownAccountButton = new util.LightButton();
         newUserButton = new util.LightButton();
         label9 = new javax.swing.JLabel();
@@ -37,6 +40,16 @@ public class PageITUserAccounts extends ui.base.AbstractITUserAccountsPage {
         setMinimumSize(new java.awt.Dimension(1040, 590));
         setResizable(false);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        label10.setFont(new java.awt.Font("Inter", 0, 14)); // NOI18N
+        label10.setForeground(new java.awt.Color(51, 51, 51));
+        label10.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        label10.setText("   Find by ID:");
+        getContentPane().add(label10, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 120, 90, 30));
+
+        employeeIDComboBox.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
+        employeeIDComboBox.setForeground(new java.awt.Color(0, 102, 102));
+        getContentPane().add(employeeIDComboBox, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 120, 130, 30));
 
         ownAccountButton.setForeground(new java.awt.Color(0, 102, 102));
         ownAccountButton.setText("View Own Account");
@@ -59,7 +72,7 @@ public class PageITUserAccounts extends ui.base.AbstractITUserAccountsPage {
 
         statusFilter.setFont(new java.awt.Font("Inter", 1, 14)); // NOI18N
         statusFilter.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "Active", "Pending", "Deactivated", "Rejected" }));
-        getContentPane().add(statusFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(850, 84, 140, 30));
+        getContentPane().add(statusFilter, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 84, 130, 30));
 
         backButton.setForeground(new java.awt.Color(0, 102, 102));
         backButton.setText("Back");
@@ -137,13 +150,15 @@ public class PageITUserAccounts extends ui.base.AbstractITUserAccountsPage {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public util.LightButton backButton;
+    private util.LightButton backButton;
     private javax.swing.JLabel background;
-    public javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JComboBox<String> employeeIDComboBox;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label10;
     private javax.swing.JLabel label9;
-    public util.LightButton newUserButton;
-    public util.LightButton ownAccountButton;
-    public javax.swing.JComboBox<String> statusFilter;
-    public javax.swing.JTable userAccountsTable;
+    private util.LightButton newUserButton;
+    private util.LightButton ownAccountButton;
+    private javax.swing.JComboBox<String> statusFilter;
+    private javax.swing.JTable userAccountsTable;
     // End of variables declaration//GEN-END:variables
 }

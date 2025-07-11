@@ -15,6 +15,18 @@ public class HRPayrollPageTest {
 
     PageHRPayroll page;
 
+    // Helper for robust private field access
+    @SuppressWarnings("unchecked")
+    private <T> T getPrivateField(Object instance, String fieldName, Class<T> type) {
+        try {
+            java.lang.reflect.Field field = instance.getClass().getDeclaredField(fieldName);
+            field.setAccessible(true);
+            return (T) field.get(instance);
+        } catch (Exception e) {
+            throw new RuntimeException("Could not access field: " + fieldName, e);
+        }
+    }
+
     @BeforeEach
     void setup() throws Exception {
         util.SessionManager.setSession("U10006", 10006); // HR login
@@ -29,36 +41,56 @@ public class HRPayrollPageTest {
 
     @Test
     void testAllComponentsPresentAndEnabled() {
-        assertNotNull(page.backButton, "Back button exists");
-        assertNotNull(page.printPayrollButton, "Print Payroll button exists");
-        assertNotNull(page.JDateChooser, "JDateChooser exists");
-        assertNotNull(page.payrollTable, "Payroll table exists");
-        assertNotNull(page.jScrollPane1, "Table scroll pane exists");
-        assertNotNull(page.totalGrossField, "Total Gross field exists");
-        assertNotNull(page.totalContributionsField, "Total Contributions field exists");
-        assertNotNull(page.totalDeductionsField, "Total Deductions field exists");
-        assertNotNull(page.totalNetPayField, "Total Net Pay field exists");
+        JButton backButton           = getPrivateField(page, "backButton", JButton.class);
+        JButton printPayrollButton   = getPrivateField(page, "printPayrollButton", JButton.class);
+        com.toedter.calendar.JDateChooser JDateChooser = getPrivateField(page, "JDateChooser", com.toedter.calendar.JDateChooser.class);
+        JTable payrollTable          = getPrivateField(page, "payrollTable", JTable.class);
+        JScrollPane jScrollPane1     = getPrivateField(page, "jScrollPane1", JScrollPane.class);
+        JTextField totalGrossField   = getPrivateField(page, "totalGrossField", JTextField.class);
+        JTextField totalContributionsField = getPrivateField(page, "totalContributionsField", JTextField.class);
+        JTextField totalDeductionsField    = getPrivateField(page, "totalDeductionsField", JTextField.class);
+        JTextField totalNetPayField        = getPrivateField(page, "totalNetPayField", JTextField.class);
 
-        assertTrue(page.backButton.isEnabled(), "Back button enabled");
-        assertTrue(page.printPayrollButton.isEnabled(), "Print Payroll enabled");
-        assertTrue(page.JDateChooser.isEnabled(), "JDateChooser enabled");
+        assertNotNull(backButton, "Back button exists");
+        assertNotNull(printPayrollButton, "Print Payroll button exists");
+        assertNotNull(JDateChooser, "JDateChooser exists");
+        assertNotNull(payrollTable, "Payroll table exists");
+        assertNotNull(jScrollPane1, "Table scroll pane exists");
+        assertNotNull(totalGrossField, "Total Gross field exists");
+        assertNotNull(totalContributionsField, "Total Contributions field exists");
+        assertNotNull(totalDeductionsField, "Total Deductions field exists");
+        assertNotNull(totalNetPayField, "Total Net Pay field exists");
+
+        assertTrue(backButton.isEnabled(), "Back button enabled");
+        assertTrue(printPayrollButton.isEnabled(), "Print Payroll enabled");
+        assertTrue(JDateChooser.isEnabled(), "JDateChooser enabled");
     }
 
     @Test
     void testTableAndScrollPaneSetup() throws Exception {
+        JTable payrollTable         = getPrivateField(page, "payrollTable", JTable.class);
+        JScrollPane jScrollPane1    = getPrivateField(page, "jScrollPane1", JScrollPane.class);
+
         // Set JDateChooser to June 3, 2024 to ensure relevant data is loaded
+        com.toedter.calendar.JDateChooser JDateChooser = getPrivateField(page, "JDateChooser", com.toedter.calendar.JDateChooser.class);
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date june3 = sdf.parse("2024-06-03");
 
         SwingUtilities.invokeAndWait(() -> {
-            page.JDateChooser.setDate(june3);
+            JDateChooser.setDate(june3);
             // The table and fields should auto-refresh via property change
         });
 
-        // Now do assertions
-        assertSame(page.payrollTable, page.jScrollPane1.getViewport().getView(), "Table in scroll pane");
+        // Wait for table to load if needed (max 2s)
+        int retries = 0;
+        while (payrollTable.getRowCount() == 0 && retries < 20) {
+            Thread.sleep(100);
+            retries++;
+        }
 
-        TableModel model = page.payrollTable.getModel();
+        assertSame(payrollTable, jScrollPane1.getViewport().getView(), "Table in scroll pane");
+
+        TableModel model = payrollTable.getModel();
         assertTrue(model.getColumnCount() >= 8, "Table has correct columns");
         assertTrue(model.getRowCount() > 0, "Table has at least one row");
 
@@ -76,59 +108,80 @@ public class HRPayrollPageTest {
 
     @Test
     void testDateChooserFilterForJune2024() throws Exception {
-        // Set JDateChooser to June 3, 2024
+        JTable payrollTable         = getPrivateField(page, "payrollTable", JTable.class);
+        com.toedter.calendar.JDateChooser JDateChooser = getPrivateField(page, "JDateChooser", com.toedter.calendar.JDateChooser.class);
+        JTextField totalGrossField  = getPrivateField(page, "totalGrossField", JTextField.class);
+        JTextField totalContributionsField = getPrivateField(page, "totalContributionsField", JTextField.class);
+        JTextField totalDeductionsField    = getPrivateField(page, "totalDeductionsField", JTextField.class);
+        JTextField totalNetPayField        = getPrivateField(page, "totalNetPayField", JTextField.class);
+
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date june3 = sdf.parse("2024-06-03");
 
         SwingUtilities.invokeAndWait(() -> {
-            page.JDateChooser.setDate(june3);
-            // The table and fields should auto-refresh via property change
+            JDateChooser.setDate(june3);
         });
 
-        TableModel model = page.payrollTable.getModel();
+        // Wait for table data to refresh (up to 2s)
+        int retries = 0;
+        while (payrollTable.getRowCount() == 0 && retries < 20) {
+            Thread.sleep(100);
+            retries++;
+        }
+
+        TableModel model = payrollTable.getModel();
         assertTrue(model.getRowCount() > 0, "Rows present for June 2024");
 
-        // Check summary fields reflect correct format (should be updated by UI logic)
-        assertFalse(page.totalGrossField.getText().isEmpty(), "Total Gross populated");
-        assertFalse(page.totalContributionsField.getText().isEmpty(), "Total Contributions populated");
-        assertFalse(page.totalDeductionsField.getText().isEmpty(), "Total Deductions populated");
-        assertFalse(page.totalNetPayField.getText().isEmpty(), "Total Net Pay populated");
+        // Check summary fields reflect correct format
+        assertFalse(totalGrossField.getText().isEmpty(), "Total Gross populated");
+        assertFalse(totalContributionsField.getText().isEmpty(), "Total Contributions populated");
+        assertFalse(totalDeductionsField.getText().isEmpty(), "Total Deductions populated");
+        assertFalse(totalNetPayField.getText().isEmpty(), "Total Net Pay populated");
 
-        // Validate numeric format: "1,352,876.41" etc.
-        assertTrue(page.totalGrossField.getText().matches("[\\d,]+\\.\\d{2}"), "Gross format ok");
-        assertTrue(page.totalNetPayField.getText().matches("[\\d,]+\\.\\d{2}"), "Net pay format ok");
+        // Validate numeric format
+        assertTrue(totalGrossField.getText().matches("[\\d,]+\\.\\d{2}"), "Gross format ok");
+        assertTrue(totalNetPayField.getText().matches("[\\d,]+\\.\\d{2}"), "Net pay format ok");
     }
 
     @Test
     void testBackButtonHasActionListener() {
-        ActionListener[] listeners = page.backButton.getActionListeners();
+        JButton backButton = getPrivateField(page, "backButton", JButton.class);
+        ActionListener[] listeners = backButton.getActionListeners();
         assertTrue(listeners.length > 0, "Back button should have action listeners");
     }
 
     @Test
     void testPrintPayrollButtonTriggersAction() throws Exception {
+        JButton printPayrollButton = getPrivateField(page, "printPayrollButton", JButton.class);
+        com.toedter.calendar.JDateChooser JDateChooser = getPrivateField(page, "JDateChooser", com.toedter.calendar.JDateChooser.class);
+
         // Ensure at least one payslip is present for June 2024
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date june3 = sdf.parse("2024-06-03");
-        SwingUtilities.invokeAndWait(() -> page.JDateChooser.setDate(june3));
+        SwingUtilities.invokeAndWait(() -> JDateChooser.setDate(june3));
 
         // ActionListener is attached
-        ActionListener[] listeners = page.printPayrollButton.getActionListeners();
+        ActionListener[] listeners = printPayrollButton.getActionListeners();
         assertTrue(listeners.length > 0, "Print Payroll button has action listener");
 
         // Simulate click: just ensure no exceptions (PDF generation handled in UI class)
         SwingUtilities.invokeAndWait(() -> {
             for (ActionListener l : listeners) {
-                l.actionPerformed(new ActionEvent(page.printPayrollButton, ActionEvent.ACTION_PERFORMED, "click"));
+                l.actionPerformed(new ActionEvent(printPayrollButton, ActionEvent.ACTION_PERFORMED, "click"));
             }
         });
     }
 
     @Test
     void testSummaryFieldsAreNonEditable() {
-        assertFalse(page.totalGrossField.isEditable(), "Gross is non-editable");
-        assertFalse(page.totalContributionsField.isEditable(), "Contributions non-editable");
-        assertFalse(page.totalDeductionsField.isEditable(), "Deductions non-editable");
-        assertFalse(page.totalNetPayField.isEditable(), "Net Pay non-editable");
+        JTextField totalGrossField = getPrivateField(page, "totalGrossField", JTextField.class);
+        JTextField totalContributionsField = getPrivateField(page, "totalContributionsField", JTextField.class);
+        JTextField totalDeductionsField = getPrivateField(page, "totalDeductionsField", JTextField.class);
+        JTextField totalNetPayField = getPrivateField(page, "totalNetPayField", JTextField.class);
+
+        assertFalse(totalGrossField.isEditable(), "Gross is non-editable");
+        assertFalse(totalContributionsField.isEditable(), "Contributions non-editable");
+        assertFalse(totalDeductionsField.isEditable(), "Deductions non-editable");
+        assertFalse(totalNetPayField.isEditable(), "Net Pay non-editable");
     }
 }
