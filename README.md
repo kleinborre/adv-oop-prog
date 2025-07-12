@@ -50,6 +50,19 @@ This **AOOP refactor** delivers:
 
 ---
 
+## 💳 Payslip & Payroll Access
+
+To view or generate payslips and payroll summaries, you **must** choose a valid date range using the JDateChooser (or built-in calendar picker).  
+
+1. **Start Date**: cannot be earlier than **June 3, 2024**  
+2. **End Date**: cannot be later than **December 31, 2024**  
+
+> ⚠️ If either date falls outside this window, the system will reject the request.  
+>  
+> After selecting both dates, click **Generate** to compute and display your payslip or payroll report.
+
+---
+
 ## 📦 Installation & First Run
 
 ### 1. Clone
