@@ -94,6 +94,27 @@ Login with the test credentials and explore.
 
 ---
 
+## 🧪 Testing Notes
+
+> **Automation Notice:**  
+> Some tests include GUI interactions and PDF generation. These may trigger pop‑ups or open documents during execution.
+
+### ⚠️ Manual Intervention Required
+When running the full test suite — especially through **Clean and Build** in NetBeans or batch testing tools — keep in mind:
+
+- 🪟 **Modal dialogs** may appear (e.g., confirmation messages, alerts).
+- 📄 **Generated PDFs** will open automatically and may block test progress.
+
+### ✅ Recommendation
+Closely monitor the test execution process and:
+
+- Dismiss modal pop-ups immediately when prompted.
+- Close all opened PDF viewers once each test completes.
+
+This ensures a smooth, uninterrupted test flow.
+
+---
+
 ## 🏗️ Project Layout
 ```
 db/             Singleton MySQL connector
