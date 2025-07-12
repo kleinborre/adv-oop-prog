@@ -1,9 +1,6 @@
 # 🚀 MotorPH Payroll System  
 *Advanced Object‑Oriented Programming (AOOP) • Group 9 • Java Swing • MySQL • JasperReports*
 
-> **Status:** Production‑ready desktop release (Milestone 2).  
-> **Scope:** Employee → HR → Manager → Finance → IT full payroll lifecycle — no CSVs left behind.
-
 ---
 
 ## 👥 Project Team
@@ -66,9 +63,9 @@ cd motorph‑payroll
 ### 3. Configure Connection  
 Edit `src/main/java/db/DatabaseConnection.java`:
 ```java
-private static final String URL      = "jdbc:mysql://localhost:3306/motorph_payroll";
+private static final String URL      = "jdbc:mysql://localhost:3306/payrollsystem_db";
 private static final String USER     = "root";
-private static final String PASSWORD = "your‑mysql‑password";
+private static final String PASSWORD = "your‑mysql‑password"; ⬅️ Please update with your own DB password
 ```
 
 ### 4. Build  
