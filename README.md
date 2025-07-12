@@ -49,9 +49,9 @@ This **AOOP refactor** delivers:
 
 ## 📦 Installation & First Run
 
-### 1. Clone  
-```bash
+### 1. Clone
 Open Terminal or Git Bash then type this to download:
+```bash
 git clone https://github.com/your‑org/motorph‑payroll.git
 ```
 
