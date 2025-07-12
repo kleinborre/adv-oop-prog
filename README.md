@@ -35,13 +35,16 @@ This **AOOP refactor** delivers:
 ---
 
 ## 🔐 Default Test Logins
-| Role | User ID | Password |
-|------|---------|----------|
-| IT         | `U10005` | `Hernandez@10005` |
-| HR         | `U10006` | `Villanueva@10006` |
-| Manager    | `U10002` | `Lim@10002` |
-| Finance    | `U10011` | `Salcedo@10011` |
-| Employee   | `U10008` | `Romualdez@10008` |
+
+| Role      | User ID   | Email                       | Password              |
+|-----------|-----------|-----------------------------|-----------------------|
+| IT        | `U10005`  | `ehernandez@motor.ph`       | `Hernandez@10005`     |
+| HR        | `U10006`  | `avillanueva@motor.ph`      | `Villanueva@10006`    |
+| Manager   | `U10002`  | `alim@motor.ph`             | `Lim@10002`           |
+| Finance   | `U10011`  | `asalcedo@motor.ph`         | `Salcedo@10011`       |
+| Employee  | `U10008`  | `aromualdez@motor.ph`       | `Romualdez@10008`     |
+
+*Users can log in using either their email address or their User ID.*
 
 > ⚠️ Use only for local testing. Replace in production.
 
