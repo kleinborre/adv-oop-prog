@@ -51,8 +51,8 @@ This **AOOP refactor** delivers:
 
 ### 1. Clone  
 ```bash
+Open Terminal or Git Bash then type this to download:
 git clone https://github.com/your‑org/motorph‑payroll.git
-cd motorph‑payroll
 ```
 
 ### 2. Import Database  
